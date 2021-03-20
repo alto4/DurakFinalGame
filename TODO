@@ -1,0 +1,15 @@
+TODO: minimal requirements
+  -put in tutorial 9 functionality
+  -deal cards automatically(with small deliberate delay)
+  -Make first gen Durak AI
+  -put in basic log template(do not keep track of logs yet just make the UI)
+  -put in rules/instructions in frmRules
+  -make 1v1 played with 36 cards instead of 52
+
+
+
+TODO: Recommended features
+  -transferring
+  -better AI
+  -option for number of cards to play with (20 or 36 or 52)
+  -statistics for player(local to machine)
