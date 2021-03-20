@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CardLib;
-using CardBox;
+using ControlsLib;
 
 namespace Durak
 {
@@ -155,7 +155,7 @@ namespace Durak
             // new frmMainMenu instance
             frmMainMenu mainMenu = new frmMainMenu();
 
-            // show the frmGame form
+            // show the frmMainMenu form
             mainMenu.ShowDialog();
 
             // close frmMainMenu
@@ -178,7 +178,11 @@ namespace Durak
         /// <param name="e"></param>
         private void btnRules_Click(object sender, EventArgs e)
         {
+            // new frmMainMenu instance
+            frmRules rules = new frmRules();
 
+            // show the frmRules form
+            rules.ShowDialog();
         }
 
 
