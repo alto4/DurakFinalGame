@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CardLib;
+using ControlsLib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,8 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using CardLib;
-using ControlsLib;
 
 namespace Durak
 {
@@ -24,6 +24,7 @@ namespace Durak
         #endregion
 
         #region FORM AND STATIC CONTROL EVENT HANDLERS 
+
         /// <summary>
         /// Constructor for the main form
         /// </summary>
@@ -31,6 +32,7 @@ namespace Durak
         {
             InitializeComponent();
         }
+
         /// <summary>
         /// When the main form loads
         /// </summary>
@@ -48,6 +50,7 @@ namespace Durak
             //Show the number of cards left in the deck
 
         }
+
         /// <summary>
         /// Event for when the index changes on a combobox
         /// </summary>
@@ -57,6 +60,7 @@ namespace Durak
         {
 
         }
+
         /// <summary>
         /// When the user clicks on the deck
         /// </summary>
@@ -65,49 +69,49 @@ namespace Durak
         private void cbxDeck_Click(object sender, EventArgs e)
         {
             
-        lblClickedState.Text = cbxDeck.ToString() + " was last clicked.";
-        txtPlayHistory.Text += "Loaded!" + Environment.NewLine;
+            lblClickedState.Text = cbxDeck.ToString() + " was last clicked.";
+            txtPlayHistory.Text += "Loaded!" + Environment.NewLine;
 
 
-        if (cbxDeck.CardOrientation == Orientation.Horizontal)
-        {
-            cbxDeck.CardOrientation = Orientation.Vertical;
-        }
-        else
-        {
-            cbxDeck.CardOrientation = Orientation.Horizontal;
-        }
+            if (cbxDeck.CardOrientation == Orientation.Horizontal)
+            {
+                cbxDeck.CardOrientation = Orientation.Vertical;
+            }
+            else
+            {
+                cbxDeck.CardOrientation = Orientation.Horizontal;
+            }
 
-        //If the deck is empty (no image)
-        //if (stmt)
-        //{
-        //Reset the dealer
+            //If the deck is empty (no image)
+            //if (stmt)
+            //{
+            //Reset the dealer
 
-        //}
-        //else //otherwise           
-        CardBox.CardBox card = new CardBox.CardBox(mainDeck.DrawCard());
-        // card.FaceUp = true;
-        txtPlayHistory.Text += card.ToString();
-        if (card != null )
-        {
-            //Draw a card from the deck (if it worked)
-            //if (stmt) 
-            //{ 
-            //TESTING
+            //}
+            //else //otherwise           
+            CardBox.CardBox card = new CardBox.CardBox(mainDeck.DrawCard());
+            // card.FaceUp = true;
+            txtPlayHistory.Text += card.ToString();
+            if (card != null )
+            {
+                //Draw a card from the deck (if it worked)
+                //if (stmt) 
+                //{ 
+                //TESTING
 
-            //wire the event handlers
-            //click or drag logic here at a later date
+                //wire the event handlers
+                //click or drag logic here at a later date
                 
 
-            //wire cardbox mouse enter
+                //wire cardbox mouse enter
 
-            //wire cardbox mouse leave
+                //wire cardbox mouse leave
 
-            //add new controls to the appropriate panel
-            pnlPlayerCards.Controls.Add(card);
-            //realign the controls
+                //add new controls to the appropriate panel
+                pnlPlayerCards.Controls.Add(card);
+                //realign the controls
 
-        }
+            }
 
             //display the number of cards left
 
@@ -205,11 +209,11 @@ namespace Durak
 
         }
 
-        #endregion
-
         private void lblClickedState_Click(object sender, EventArgs e)
         {
 
         }
+
+        #endregion
     }
 }

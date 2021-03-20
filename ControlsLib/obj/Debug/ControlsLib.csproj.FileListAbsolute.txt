@@ -25,3 +25,4 @@ C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\ControlsLib.pdb
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\ControlsLib.Properties.Resources.resources
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\ControlsLib.frmRules.resources
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\ControlsLib.frmLogs.resources

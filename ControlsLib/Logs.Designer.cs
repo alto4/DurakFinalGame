@@ -1,7 +1,7 @@
 ﻿
 namespace ControlsLib
 {
-    partial class frmRules
+    partial class frmLogs
     {
         /// <summary>
         /// Required designer variable.
@@ -29,19 +29,19 @@ namespace ControlsLib
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmRules));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogs));
             this.SuspendLayout();
             // 
-            // frmRules
+            // frmLogs
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(89)))), ((int)(((byte)(208)))));
-            this.ClientSize = new System.Drawing.Size(590, 579);
+            this.ClientSize = new System.Drawing.Size(800, 554);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "frmRules";
+            this.Name = "frmLogs";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Rules";
+            this.Text = "Logs";
             this.ResumeLayout(false);
 
         }

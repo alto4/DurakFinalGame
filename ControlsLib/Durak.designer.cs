@@ -36,10 +36,8 @@ namespace Durak
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGame));
             this.btnFlipCard = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.cbxDeck = new CardBox.CardBox();
             this.lblClickedState = new System.Windows.Forms.Label();
             this.lblFlippedState = new System.Windows.Forms.Label();
-            this.cardBox1 = new CardBox.CardBox();
             this.btnExit = new System.Windows.Forms.Button();
             this.btnReset = new System.Windows.Forms.Button();
             this.pnlActiveCards = new System.Windows.Forms.Panel();
@@ -50,6 +48,8 @@ namespace Durak
             this.cbxRank = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRules = new System.Windows.Forms.Button();
+            this.cardBox1 = new CardBox.CardBox();
+            this.cbxDeck = new CardBox.CardBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -74,28 +74,9 @@ namespace Durak
             "Clubs"});
             this.comboBox1.Location = new System.Drawing.Point(195, 176);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 25);
+            this.comboBox1.Size = new System.Drawing.Size(121, 24);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
-            // 
-            // cbxDeck
-            // 
-            playingCard1.CardValue = 0;
-            playingCard1.FaceUp = false;
-            playingCard1.Rank = CardLib.CardRank.Six;
-            playingCard1.Suit = CardLib.CardSuit.Diamonds;
-            this.cbxDeck.Card = playingCard1;
-            this.cbxDeck.CardOrientation = System.Windows.Forms.Orientation.Vertical;
-            this.cbxDeck.FaceUp = false;
-            this.cbxDeck.Location = new System.Drawing.Point(38, 18);
-            this.cbxDeck.Margin = new System.Windows.Forms.Padding(5);
-            this.cbxDeck.Name = "cbxDeck";
-            this.cbxDeck.Rank = CardLib.CardRank.Six;
-            this.cbxDeck.Size = new System.Drawing.Size(151, 180);
-            this.cbxDeck.Suit = CardLib.CardSuit.Diamonds;
-            this.cbxDeck.TabIndex = 5;
-            this.cbxDeck.Click += new System.EventHandler(this.cbxDeck_Click);
-            this.cbxDeck.Load += new System.EventHandler(this.cbxDeck_Load);
             // 
             // lblClickedState
             // 
@@ -119,23 +100,6 @@ namespace Durak
             this.lblFlippedState.Size = new System.Drawing.Size(261, 20);
             this.lblFlippedState.TabIndex = 7;
             this.lblFlippedState.Text = "The card has not yet been flipped.";
-            // 
-            // cardBox1
-            // 
-            playingCard2.CardValue = 0;
-            playingCard2.FaceUp = false;
-            playingCard2.Rank = CardLib.CardRank.Six;
-            playingCard2.Suit = CardLib.CardSuit.Diamonds;
-            this.cardBox1.Card = playingCard2;
-            this.cardBox1.CardOrientation = System.Windows.Forms.Orientation.Vertical;
-            this.cardBox1.FaceUp = false;
-            this.cardBox1.Location = new System.Drawing.Point(1208, 215);
-            this.cardBox1.Margin = new System.Windows.Forms.Padding(5);
-            this.cardBox1.Name = "cardBox1";
-            this.cardBox1.Rank = CardLib.CardRank.Six;
-            this.cardBox1.Size = new System.Drawing.Size(151, 180);
-            this.cardBox1.Suit = CardLib.CardSuit.Diamonds;
-            this.cardBox1.TabIndex = 10;
             // 
             // btnExit
             // 
@@ -258,6 +222,42 @@ namespace Durak
             this.btnRules.UseVisualStyleBackColor = true;
             this.btnRules.Click += new System.EventHandler(this.btnRules_Click);
             // 
+            // cardBox1
+            // 
+            playingCard1.CardValue = 0;
+            playingCard1.FaceUp = false;
+            playingCard1.Rank = CardLib.CardRank.Six;
+            playingCard1.Suit = CardLib.CardSuit.Diamonds;
+            this.cardBox1.Card = playingCard1;
+            this.cardBox1.CardOrientation = System.Windows.Forms.Orientation.Vertical;
+            this.cardBox1.FaceUp = false;
+            this.cardBox1.Location = new System.Drawing.Point(1208, 215);
+            this.cardBox1.Margin = new System.Windows.Forms.Padding(5);
+            this.cardBox1.Name = "cardBox1";
+            this.cardBox1.Rank = CardLib.CardRank.Six;
+            this.cardBox1.Size = new System.Drawing.Size(151, 180);
+            this.cardBox1.Suit = CardLib.CardSuit.Diamonds;
+            this.cardBox1.TabIndex = 10;
+            // 
+            // cbxDeck
+            // 
+            playingCard2.CardValue = 0;
+            playingCard2.FaceUp = false;
+            playingCard2.Rank = CardLib.CardRank.Six;
+            playingCard2.Suit = CardLib.CardSuit.Diamonds;
+            this.cbxDeck.Card = playingCard2;
+            this.cbxDeck.CardOrientation = System.Windows.Forms.Orientation.Vertical;
+            this.cbxDeck.FaceUp = false;
+            this.cbxDeck.Location = new System.Drawing.Point(38, 18);
+            this.cbxDeck.Margin = new System.Windows.Forms.Padding(5);
+            this.cbxDeck.Name = "cbxDeck";
+            this.cbxDeck.Rank = CardLib.CardRank.Six;
+            this.cbxDeck.Size = new System.Drawing.Size(151, 180);
+            this.cbxDeck.Suit = CardLib.CardSuit.Diamonds;
+            this.cbxDeck.TabIndex = 5;
+            this.cbxDeck.Click += new System.EventHandler(this.cbxDeck_Click);
+            this.cbxDeck.Load += new System.EventHandler(this.cbxDeck_Load);
+            // 
             // frmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -277,9 +277,12 @@ namespace Durak
             this.Controls.Add(this.cbxDeck);
             this.Controls.Add(this.btnFlipCard);
             this.Controls.Add(this.panel1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximizeBox = false;
             this.Name = "frmGame";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Durak!";
             this.Load += new System.EventHandler(this.Durak_Load);
             this.panel1.ResumeLayout(false);

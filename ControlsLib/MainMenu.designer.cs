@@ -53,6 +53,7 @@ namespace Durak
             this.btnLogs.TabIndex = 1;
             this.btnLogs.Text = "&Logs";
             this.btnLogs.UseVisualStyleBackColor = true;
+            this.btnLogs.Click += new System.EventHandler(this.btnLogs_Click);
             // 
             // btnQuit
             // 
@@ -75,6 +76,7 @@ namespace Durak
             this.Controls.Add(this.btnPlay);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmMainMenu";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "MainMenu";
             this.ResumeLayout(false);
 

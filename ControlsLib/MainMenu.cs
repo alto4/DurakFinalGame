@@ -1,4 +1,13 @@
-﻿using System;
+﻿/** IMAGE ATTRIBUTION
+*   ==================
+*   <div>Icon made by <a href="https://www.flaticon.com/authors/bqlqn" 
+*   title="bqlqn">bqlqn</a> 
+*   from <a href="https://www.flaticon.com/" 
+*   title="Flaticon">www.flaticon.com</a></div>
+*/
+
+using ControlsLib;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -45,6 +54,18 @@ namespace Durak
 
             // close frmMainMenu
             this.Close();
+        }
+
+        /// <summary>
+        /// Show the logs form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnLogs_Click(object sender, EventArgs e)
+        {
+            frmLogs logs = new frmLogs();
+
+            logs.ShowDialog();
         }
     }
 }
