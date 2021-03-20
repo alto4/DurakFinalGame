@@ -1,0 +1,17 @@
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\net5.0-windows\ControlsLib.csprojAssemblyReference.cache
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\net5.0-windows\CardBox.CardBox.resources
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\net5.0-windows\ControlsLib.csproj.GenerateResource.cache
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\net5.0-windows\ControlsLib.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\net5.0-windows\ControlsLib.AssemblyInfoInputs.cache
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\net5.0-windows\ControlsLib.AssemblyInfo.cs
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\net5.0-windows\ControlsLib.csproj.CoreCompileInputs.cache
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\bin\Debug\net5.0-windows\ControlsLib.deps.json
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\bin\Debug\net5.0-windows\ControlsLib.dll
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\bin\Debug\net5.0-windows\ref\ControlsLib.dll
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\bin\Debug\net5.0-windows\ControlsLib.pdb
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\bin\Debug\net5.0-windows\CardLib.dll
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\bin\Debug\net5.0-windows\CardLib.pdb
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\net5.0-windows\ControlsLib.csproj.CopyComplete
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\net5.0-windows\ControlsLib.dll
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\net5.0-windows\ref\ControlsLib.dll
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\net5.0-windows\ControlsLib.pdb

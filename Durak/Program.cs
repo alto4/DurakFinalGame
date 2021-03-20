@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Durak
 {
     static class Program
@@ -16,7 +17,7 @@ namespace Durak
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Durak());
+            Application.Run(new frmMainMenu());
         }
     }
 }

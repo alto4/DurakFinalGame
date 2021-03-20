@@ -12,7 +12,7 @@ using CardBox;
 
 namespace Durak
 {
-    public partial class Durak : Form
+    public partial class frmGame : Form
     {
 
         #region FIELDS AND PROPERTIES
@@ -27,7 +27,7 @@ namespace Durak
         /// <summary>
         /// Constructor for the main form
         /// </summary>
-        public Durak()
+        public frmGame()
         {
             InitializeComponent();
         }
@@ -65,61 +65,62 @@ namespace Durak
         private void cbxDeck_Click(object sender, EventArgs e)
         {
             
-            lblClickedState.Text = cbxDeck.ToString() + " was last clicked.";
-            txtPlayHistory.Text += "Loaded!" + Environment.NewLine;
+        lblClickedState.Text = cbxDeck.ToString() + " was last clicked.";
+        txtPlayHistory.Text += "Loaded!" + Environment.NewLine;
 
 
-            if (cbxDeck.CardOrientation == Orientation.Horizontal)
-            {
-                cbxDeck.CardOrientation = Orientation.Vertical;
-            }
-            else
-            {
-                cbxDeck.CardOrientation = Orientation.Horizontal;
-            }
+        if (cbxDeck.CardOrientation == Orientation.Horizontal)
+        {
+            cbxDeck.CardOrientation = Orientation.Vertical;
+        }
+        else
+        {
+            cbxDeck.CardOrientation = Orientation.Horizontal;
+        }
 
-            //If the deck is empty (no image)
-            //if (stmt)
-            //{
-            //Reset the dealer
+        //If the deck is empty (no image)
+        //if (stmt)
+        //{
+        //Reset the dealer
 
-            //}
-            //else //otherwise           
-            CardBox.CardBox card = new CardBox.CardBox(mainDeck.DrawCard());
-           // card.FaceUp = true;
-            txtPlayHistory.Text += card.ToString();
-            if (card != null )
-            {
-                //Draw a card from the deck (if it worked)
-                //if (stmt) 
-                //{ 
-                //TESTING
+        //}
+        //else //otherwise           
+        CardBox.CardBox card = new CardBox.CardBox(mainDeck.DrawCard());
+        // card.FaceUp = true;
+        txtPlayHistory.Text += card.ToString();
+        if (card != null )
+        {
+            //Draw a card from the deck (if it worked)
+            //if (stmt) 
+            //{ 
+            //TESTING
 
-                //wire the event handlers
-                //click or drag logic here at a later date
+            //wire the event handlers
+            //click or drag logic here at a later date
                 
 
-                //wire cardbox mouse enter
+            //wire cardbox mouse enter
 
-                //wire cardbox mouse leave
+            //wire cardbox mouse leave
 
-                //add new controls to the appropriate panel
-                pnlPlayerCards.Controls.Add(card);
-                //realign the controls
+            //add new controls to the appropriate panel
+            pnlPlayerCards.Controls.Add(card);
+            //realign the controls
 
-            }
+        }
 
-                //display the number of cards left
+            //display the number of cards left
 
-                //}
+            //}
 
-            }
-            /// <summary>
-            /// When the Flip Card button is clicked
-            /// </summary>
-            /// <param name="sender"></param>
-            /// <param name="e"></param>
-            private void btnFlipCard_Click(object sender, EventArgs e)
+        }
+
+        /// <summary>
+        /// When the Flip Card button is clicked
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnFlipCard_Click(object sender, EventArgs e)
         {
             cbxDeck.FaceUp = !cbxDeck.FaceUp;
         }
@@ -148,6 +149,16 @@ namespace Durak
         /// <param name="e"></param>
         private void btnExit_Click(object sender, EventArgs e)
         {
+            // hidding frmGame
+            this.Hide();
+
+            // new frmMainMenu instance
+            frmMainMenu mainMenu = new frmMainMenu();
+
+            // show the frmGame form
+            mainMenu.ShowDialog();
+
+            // close frmMainMenu
             this.Close();
         }
         /// <summary>
@@ -160,6 +171,16 @@ namespace Durak
             cbxDeck.BackgroundImage = null;
         }
 
+        /// <summary>
+        /// Button that shows the rules form
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnRules_Click(object sender, EventArgs e)
+        {
+
+        }
+
 
         #endregion
 
@@ -169,6 +190,22 @@ namespace Durak
         #region HELPER METHODS
         #endregion
 
+        #region EMPTY EVENT HANDLERS
+        private void btnReset_Click(object sender, EventArgs e)
+        {
 
+        }
+
+        private void cbxDeck_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion
+
+        private void lblClickedState_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

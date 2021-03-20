@@ -48,6 +48,18 @@
     <Compile Include="CardBox.Designer.cs">
       <DependentUpon>CardBox.cs</DependentUpon>
     </Compile>
+    <Compile Include="Durak.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Durak.Designer.cs">
+      <DependentUpon>Durak.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -59,6 +71,12 @@
   <ItemGroup>
     <EmbeddedResource Include="CardBox.resx">
       <DependentUpon>CardBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Durak.resx">
+      <DependentUpon>Durak.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainMenu.resx">
+      <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

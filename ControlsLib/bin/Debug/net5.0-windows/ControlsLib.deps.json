@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "ControlsLib/1.0.0": {
+        "dependencies": {
+          "CardLib": "1.0.0"
+        },
+        "runtime": {
+          "ControlsLib.dll": {}
+        }
+      },
+      "CardLib/1.0.0": {
+        "runtime": {
+          "CardLib.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "ControlsLib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CardLib/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
