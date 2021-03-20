@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardLib", "CardLib.csproj", "{36D0DF48-AAB8-4669-86E7-7BE876F08988}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CardBox", "..\CardBox\CardBox.csproj", "{80BA91FA-B447-40B1-88AA-AABFE6B2E987}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Durak", "..\Durak\Durak.csproj", "{8D3CF7A8-FEF1-45A2-A643-47E1AA997B71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36D0DF48-AAB8-4669-86E7-7BE876F08988}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36D0DF48-AAB8-4669-86E7-7BE876F08988}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36D0DF48-AAB8-4669-86E7-7BE876F08988}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36D0DF48-AAB8-4669-86E7-7BE876F08988}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80BA91FA-B447-40B1-88AA-AABFE6B2E987}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80BA91FA-B447-40B1-88AA-AABFE6B2E987}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80BA91FA-B447-40B1-88AA-AABFE6B2E987}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80BA91FA-B447-40B1-88AA-AABFE6B2E987}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D3CF7A8-FEF1-45A2-A643-47E1AA997B71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D3CF7A8-FEF1-45A2-A643-47E1AA997B71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D3CF7A8-FEF1-45A2-A643-47E1AA997B71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D3CF7A8-FEF1-45A2-A643-47E1AA997B71}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {04D160F4-0FC5-46F9-8977-1DDB960BF7B5}
+	EndGlobalSection
+EndGlobal
