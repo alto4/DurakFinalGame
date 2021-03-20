@@ -78,7 +78,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CardBox\ControlsLib.csproj">
+    <ProjectReference Include="..\ControlsLib\ControlsLib.csproj">
       <Project>{80ba91fa-b447-40b1-88aa-aabfe6b2e987}</Project>
       <Name>ControlsLib</Name>
     </ProjectReference>

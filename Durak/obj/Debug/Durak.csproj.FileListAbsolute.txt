@@ -31,9 +31,7 @@ C:\Users\Scott Alton\source\repos\OOP\DurakMain\Durak\obj\Debug\Durak.pdb
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\bin\Debug\Durak.exe.config
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\bin\Debug\Durak.exe
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\bin\Debug\Durak.pdb
-C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\bin\Debug\CardBox.dll
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\bin\Debug\CardLib.dll
-C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\bin\Debug\CardBox.pdb
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\bin\Debug\CardLib.pdb
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\obj\Debug\Durak.csprojAssemblyReference.cache
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\obj\Debug\Durak.Properties.Resources.resources
@@ -42,3 +40,5 @@ C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\obj\Debug\Durak
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\obj\Debug\Durak.csproj.CopyComplete
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\obj\Debug\Durak.exe
 C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\obj\Debug\Durak.pdb
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\bin\Debug\ControlsLib.dll
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\Durak\bin\Debug\ControlsLib.pdb
