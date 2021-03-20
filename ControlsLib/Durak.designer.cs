@@ -129,13 +129,13 @@ namespace Durak
             this.pnlActiveCards.Location = new System.Drawing.Point(455, 215);
             this.pnlActiveCards.Margin = new System.Windows.Forms.Padding(4);
             this.pnlActiveCards.Name = "pnlActiveCards";
-            this.pnlActiveCards.Size = new System.Drawing.Size(709, 187);
+            this.pnlActiveCards.Size = new System.Drawing.Size(709, 276);
             this.pnlActiveCards.TabIndex = 13;
             // 
             // pnlPlayerCards
             // 
             this.pnlPlayerCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(206)))), ((int)(((byte)(164)))), ((int)(((byte)(15)))));
-            this.pnlPlayerCards.Location = new System.Drawing.Point(455, 410);
+            this.pnlPlayerCards.Location = new System.Drawing.Point(455, 499);
             this.pnlPlayerCards.Margin = new System.Windows.Forms.Padding(4);
             this.pnlPlayerCards.Name = "pnlPlayerCards";
             this.pnlPlayerCards.Size = new System.Drawing.Size(709, 180);
@@ -153,11 +153,11 @@ namespace Durak
             // txtPlayHistory
             // 
             this.txtPlayHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(89)))), ((int)(((byte)(208)))));
-            this.txtPlayHistory.Location = new System.Drawing.Point(18, 353);
+            this.txtPlayHistory.Location = new System.Drawing.Point(17, 375);
             this.txtPlayHistory.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayHistory.Multiline = true;
             this.txtPlayHistory.Name = "txtPlayHistory";
-            this.txtPlayHistory.Size = new System.Drawing.Size(429, 237);
+            this.txtPlayHistory.Size = new System.Drawing.Size(429, 304);
             this.txtPlayHistory.TabIndex = 16;
             // 
             // cbxSuit
@@ -206,7 +206,7 @@ namespace Durak
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(89)))), ((int)(((byte)(208)))));
             this.panel1.Controls.Add(this.lblClickedState);
             this.panel1.Controls.Add(this.lblFlippedState);
-            this.panel1.Location = new System.Drawing.Point(95, 273);
+            this.panel1.Location = new System.Drawing.Point(94, 295);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(268, 100);
             this.panel1.TabIndex = 17;
@@ -231,7 +231,7 @@ namespace Durak
             this.cardBox1.Card = playingCard1;
             this.cardBox1.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cardBox1.FaceUp = false;
-            this.cardBox1.Location = new System.Drawing.Point(1208, 215);
+            this.cardBox1.Location = new System.Drawing.Point(1211, 260);
             this.cardBox1.Margin = new System.Windows.Forms.Padding(5);
             this.cardBox1.Name = "cardBox1";
             this.cardBox1.Rank = CardLib.CardRank.Six;
@@ -263,7 +263,7 @@ namespace Durak
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(28)))), ((int)(((byte)(85)))));
-            this.ClientSize = new System.Drawing.Size(1410, 604);
+            this.ClientSize = new System.Drawing.Size(1410, 698);
             this.Controls.Add(this.btnRules);
             this.Controls.Add(this.txtPlayHistory);
             this.Controls.Add(this.pnlComputerCards);

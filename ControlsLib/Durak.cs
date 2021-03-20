@@ -17,8 +17,11 @@ namespace Durak
 
         #region FIELDS AND PROPERTIES
 
-        //generate PlayingCard objects from a Deck
-        Deck mainDeck = new Deck(true, CardSuit.Clubs);
+        // generate PlayingCard objects from a Deck
+        Deck mainDeck = new Deck(true);
+
+        // enlarge a card by this value
+        private const int ENLARGE = 30;
 
 
         #endregion
@@ -72,7 +75,7 @@ namespace Durak
             lblClickedState.Text = cbxDeck.ToString() + " was last clicked.";
             txtPlayHistory.Text += "Loaded!" + Environment.NewLine;
 
-
+            /* NOTE: idk why the cards need to switch between horizontal and vertical
             if (cbxDeck.CardOrientation == Orientation.Horizontal)
             {
                 cbxDeck.CardOrientation = Orientation.Vertical;
@@ -81,6 +84,7 @@ namespace Durak
             {
                 cbxDeck.CardOrientation = Orientation.Horizontal;
             }
+            */
 
             //If the deck is empty (no image)
             //if (stmt)
@@ -144,7 +148,7 @@ namespace Durak
         /// <param name="e"></param>
         private void cbxRank_SelectedIndexChanged(object sender, EventArgs e)
         {
-            cbxDeck.Rank = (CardLib.CardRank)cbxRank.SelectedIndex;
+            cbxDeck.Rank = (CardLib.CardRank)cbxRank.SelectedIndex + 1;
         }
         /// <summary>
         /// When the exit button is clicked by the user

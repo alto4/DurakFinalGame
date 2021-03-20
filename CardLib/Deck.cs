@@ -77,22 +77,27 @@ namespace CardLib
             }
         }
 
-        public Deck(bool isAceHigh) : this() // high aces
+        /// <summary>
+        /// Creates a deck for Durak with high aces and a random trump
+        /// </summary>
+        /// <param name="isAceHigh"></param>
+        /// <param name="useTrumps"></param>
+        public Deck(bool useTrumps) : this()
         {
-            PlayingCard.isAceHigh = isAceHigh;
-        }
-
-        public Deck(bool useTrump, CardSuit trumpSuit) : this() // setting the trump
-        {
-            PlayingCard.useTrumps = useTrump;
-            PlayingCard.trumpSuit = trumpSuit;
-        }
-
-        public Deck(bool isAceHigh, bool useTrumps, CardSuit trumpSuit) : this()
-        {
-            PlayingCard.isAceHigh = isAceHigh;
+            PlayingCard.isAceHigh = true;
             PlayingCard.useTrumps = useTrumps;
-            PlayingCard.trumpSuit = trumpSuit;
+
+            if (useTrumps)
+            {
+                Random rand = new Random();
+                // CardSuit array with all the values
+                var values = (CardSuit[])Enum.GetValues(typeof(CardSuit));
+
+                // gets a random suit from CardSuit enum
+                CardSuit trumpSuit = (CardSuit)values.GetValue(rand.Next(values.Length));
+                
+                PlayingCard.trumpSuit = trumpSuit;
+            }
         }
 
         /// <summary>
@@ -102,7 +107,7 @@ namespace CardLib
         {
             CardCollection randomDeck = new CardCollection();
             Random randSource = new Random();
-            int randIndex = 0;
+            int randIndex;
             PlayingCard tempCardHolder;
 
             for (int j = 0; j < 5; j++)
