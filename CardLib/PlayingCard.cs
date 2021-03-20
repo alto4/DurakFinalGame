@@ -25,7 +25,6 @@ namespace CardLib
         private CardSuit mySuit;
         private CardRank myRank;
         private int myValue;
-        public bool FaceUp { get; set; }
 
         /// <summary>
         /// Enabling allows for a selected card to be valued higher than others
@@ -35,11 +34,14 @@ namespace CardLib
 
         public static bool isAceHigh = true;
 
+        public bool FaceUp { get; set; }
+
         public CardSuit Suit
         {
             get { return mySuit; }
             set { mySuit = value; }
         }
+
         public CardRank Rank
         {
             get { return myRank; }

@@ -23,6 +23,11 @@ namespace Durak
         // enlarge a card by this value
         private const int ENLARGE = 30;
 
+        // The default size of a card
+        static private Size normalCardSize = new Size(151,180);
+
+        // makes card draggable
+        private CardBox.CardBox dragCard;
 
         #endregion
 
@@ -41,12 +46,15 @@ namespace Durak
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Durak_Load(object sender, EventArgs e)
+        private void frmGame_Load(object sender, EventArgs e)
         {
             // TEST SHUFFLE
             mainDeck.Shuffle();
-            //Set the deck image to a card back
-            //cbxDeck.BackgroundImage = (new PlayingCard().GetCardImage());            
+
+            // seeing the order of the deck in debug console for debugging
+            mainDeck.ShowDeck();
+            System.Diagnostics.Debug.WriteLine(mainDeck.ToString());
+            
 
             //Wire out the out of cards event handler
             //mainDeck.OutOfCards MAKE A METHOD TO TRIGGER AN OUT OF CARDS EVENT
@@ -75,7 +83,7 @@ namespace Durak
             lblClickedState.Text = cbxDeck.ToString() + " was last clicked.";
             txtPlayHistory.Text += "Loaded!" + Environment.NewLine;
 
-            /* NOTE: idk why the cards need to switch between horizontal and vertical
+            /* NOTE: idk why the cards need to switch between horizontal and vertical - @Ed
             if (cbxDeck.CardOrientation == Orientation.Horizontal)
             {
                 cbxDeck.CardOrientation = Orientation.Vertical;
@@ -151,23 +159,30 @@ namespace Durak
             cbxDeck.Rank = (CardLib.CardRank)cbxRank.SelectedIndex + 1;
         }
         /// <summary>
-        /// When the exit button is clicked by the user
+        /// When the exit button is clicked by the user. In case user did not mean to press this button
+        /// there is a cancel option.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void btnExit_Click(object sender, EventArgs e)
         {
-            // hidding frmGame
-            this.Hide();
+            // to check if they player meant to go back to the main menu
+            DialogResult result = MessageBox.Show("Are you sure you want to go back to the main menu?", "Back To Main Menu", MessageBoxButtons.YesNo);
 
-            // new frmMainMenu instance
-            frmMainMenu mainMenu = new frmMainMenu();
+            if (result == DialogResult.Yes)
+            {
+                // hidding frmGame
+                this.Hide();
 
-            // show the frmMainMenu form
-            mainMenu.ShowDialog();
+                // new frmMainMenu instance
+                frmMainMenu mainMenu = new frmMainMenu();
 
-            // close frmMainMenu
-            this.Close();
+                // show the frmMainMenu form
+                mainMenu.ShowDialog();
+
+                // close frmMainMenu
+                this.Close();
+            }
         }
         /// <summary>
         /// Sets the card back image to null

@@ -57,11 +57,10 @@ namespace CardLib
         {
             foreach (PlayingCard drawnCard in this)
             {
-                Console.WriteLine("*************");
-                Console.WriteLine("* Rank: {0} \n* Suit: {1}", drawnCard.Rank, drawnCard.Suit);
-                Console.WriteLine("*************");
+                System.Diagnostics.Debug.WriteLine("* Rank: {0} \n* Suit: {1}", drawnCard.Rank, drawnCard.Suit);
             }
         }
 
+        
     }
 }

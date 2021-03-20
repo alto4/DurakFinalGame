@@ -284,7 +284,7 @@ namespace Durak
             this.Name = "frmGame";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Durak!";
-            this.Load += new System.EventHandler(this.Durak_Load);
+            this.Load += new System.EventHandler(this.frmGame_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.ResumeLayout(false);

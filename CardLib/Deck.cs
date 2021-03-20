@@ -137,6 +137,18 @@ namespace CardLib
         }
 
         /// <summary>
+        /// To show all the cards in the deck.
+        /// This is for debugging purposes.
+        /// </summary>
+        public void ShowDeck()
+        {
+            foreach (PlayingCard card in cards)
+            {
+                card.FaceUp = true;
+            }
+        }
+
+        /// <summary>
         /// creates a new deck by passing the private constructor a set of cards
         /// </summary>
         /// <returns>a new deck</returns>
@@ -146,13 +158,19 @@ namespace CardLib
             return newDeck;
         }
 
+        /// <summary>
+        /// Show all of the cards
+        /// </summary>
+        /// <returns>The string to display with all the cards</returns>
         public override string ToString()
         {
             string allTheCards = "";
+            int index = 0;
 
             foreach (PlayingCard card in cards)
             {
-                allTheCards += card.ToString() + "\n";
+                index++;
+                allTheCards += index + " => " + card.ToString() + "\n";
             }
 
             return allTheCards;
