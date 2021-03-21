@@ -108,7 +108,7 @@ namespace CardLib
         /// <param name="card1">first card in comparison</param>
         /// <param name="card2">second card in comparison</param>
         /// <returns>boolean representing equality status</returns>
-        public static bool operator ==(PlayingCard card1, PlayingCard card2) => ((card1.Suit == card2.Suit) && (card1.Rank == card2.Rank));
+        //public static bool operator ==(PlayingCard card1, PlayingCard card2) => ((card1.Suit == card2.Suit) && (card1.Rank == card2.Rank));
 
         /// <summary>
         /// Inequality operator - checks if 2 cards are not made up of the same suit and rank
@@ -116,7 +116,7 @@ namespace CardLib
         /// <param name="card1">first card in comparison</param>
         /// <param name="card2">second card in comparison</param>
         /// <returns>boolean representing inequality status</returns>
-        public static bool operator !=(PlayingCard card1, PlayingCard card2) => !(card1 == card2);
+        //public static bool operator !=(PlayingCard card1, PlayingCard card2) => !(card1 == card2);
 
         /// <summary>
         /// Equals - checks if 2 cards are made up of the same suit and rank
@@ -145,6 +145,7 @@ namespace CardLib
             {
                 imageName = mySuit.ToString() + "_" + myRank.ToString();
             }
+
 
             // Get Card Image
             cardImage = Properties.Resources.ResourceManager.GetObject(imageName) as Image;

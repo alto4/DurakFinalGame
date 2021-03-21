@@ -54,7 +54,12 @@ namespace Durak
             // seeing the order of the deck in debug console for debugging
             mainDeck.ShowDeck();
             System.Diagnostics.Debug.WriteLine(mainDeck.ToString());
-            
+
+            PlayingCard firstCard = mainDeck.DrawCard();
+            this.cbxDeck.Card = firstCard;
+
+            txtPlayHistory.Text += firstCard.Suit + " is the initial trump suit.";
+            //txtPlayHistory.Text += "\nThere are now " + mainDeck.Count() + " cards left in the deck";
 
             //Wire out the out of cards event handler
             //mainDeck.OutOfCards MAKE A METHOD TO TRIGGER AN OUT OF CARDS EVENT
@@ -101,7 +106,13 @@ namespace Durak
 
             //}
             //else //otherwise           
-            CardBox.CardBox card = new CardBox.CardBox(mainDeck.DrawCard());
+            cbxDeck.Card =  mainDeck.DrawCard(2);
+
+            txtPlayHistory.Text += cbxDeck.Card.ToString();
+            
+            PlayingCard card = cbxDeck.Card;
+            card.FaceUp = true;
+
             // card.FaceUp = true;
             txtPlayHistory.Text += card.ToString();
             if (card != null )
@@ -113,16 +124,36 @@ namespace Durak
 
                 //wire the event handlers
                 //click or drag logic here at a later date
-                
+
 
                 //wire cardbox mouse enter
 
                 //wire cardbox mouse leave
-
                 //add new controls to the appropriate panel
-                pnlPlayerCards.Controls.Add(card);
-                //realign the controls
 
+                pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
+                txtPlayHistory.Text += Environment.NewLine + "Cards in players deck: " + (pnlPlayerCards.Controls.Count.ToString());
+                //txtPlayHistory.Text += Environment.NewLine + "Cards in dealer deck: " + mainDeck.ToString();
+                foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
+                {
+                    if (card.GetType().ToString() == "CardLib.PlayingCard")
+                    {
+
+                        //txtPlayHistory.Text += "Player card observed";
+
+                        //playerCard.Card.FaceUp = true
+                        ;
+                        playerCard.FaceUp = true;
+                        txtPlayHistory.Text += Environment.NewLine + playerCard.Card.DebugString();
+                    }
+                    else
+                    {
+                        txtPlayHistory.Text += card.GetType().ToString();
+                    }
+                }
+
+                //realign the controls
+                RealignCards(pnlPlayerCards);
             }
 
             //display the number of cards left
@@ -215,6 +246,66 @@ namespace Durak
         #endregion
 
         #region HELPER METHODS
+         /// <summary>
+        /// Repositions the cards in a panel so that they are evenly distributed in the area available.
+        /// </summary>
+        /// <param name="panelHand"></param>
+        private void RealignCards(Panel panelHand)
+        {
+            // Determine the number of cards/controls in the panel.
+            int myCount = panelHand.Controls.Count;
+
+            // If there are any cards in the panel
+            if (myCount > 0)
+            {
+                // Determine how wide one card/control is.
+                int cardWidth = panelHand.Controls[0].Width;
+
+                // Determine where the left-hand edge of a card/control placed 
+                // in the middle of the panel should be  
+                int startPoint = (panelHand.Width - cardWidth) / 2;
+
+                // An offset for the remaining cards
+                int offset = 0;
+
+                // If there are more than one cards/controls in the panel
+                if (myCount > 1)
+                {
+                    // Determine what the offset should be for each card based on the 
+                    // space available and the number of card/controls
+                    offset = (panelHand.Width - cardWidth - 2 * ENLARGE) / (myCount - 1);
+
+                    // If the offset is bigger than the card/control width, i.e. there is lots of room, 
+                    // set the offset to the card width. The cards/controls will not overlap at all.
+                    if (offset > cardWidth)
+                        offset = cardWidth;
+
+                    // Determine width of all the cards/controls 
+                    int allCardsWidth = (myCount - 1) * offset + cardWidth;
+                    // Set the start point to where the left-hand edge of the "first" card should be.
+                    startPoint = (panelHand.Width - allCardsWidth) / 2;
+                }
+
+                // Aligning the cards: Note that I align them in reserve order from how they
+                // are stored in the controls collection. This is so that cards on the left 
+                // appear underneath cards to the right. This allows the user to see the rank
+                // and suit more easily.
+
+                // Align the "first" card (which is the last control in the collection)
+                panelHand.Controls[myCount - 1].Top = ENLARGE;
+                System.Diagnostics.Debug.Write(panelHand.Controls[myCount - 1].Top.ToString() + "\n");
+                panelHand.Controls[myCount - 1].Left = startPoint;
+
+                // for each of the remaining controls, in reverse order.
+                for (int index = myCount - 2; index >= 0; index--)
+                {
+                    // Align the current card
+                    panelHand.Controls[index].Top = ENLARGE;
+                    panelHand.Controls[index].Left = panelHand.Controls[index + 1].Left + offset;
+                }
+            }
+        }
+
         #endregion
 
         #region EMPTY EVENT HANDLERS

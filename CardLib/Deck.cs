@@ -67,6 +67,7 @@ namespace CardLib
         {
             if (cardIndex >= 0 && cardIndex <= 51)
             {
+                cards[cardIndex].FaceUp = true;
                 PlayingCard tempCard = cards[cardIndex];
                 cards.RemoveAt(cardIndex);
                 return cards[cardIndex]; // card number 0 to SIZE_OF_DECK

@@ -80,7 +80,7 @@ namespace CardBox
             get { return myOrientation; }
         }
 
-        private void UpdateCardImage()
+        public void UpdateCardImage()
         {
             pbMyPictureBox.Image = myCard.GetCardImage();
 
@@ -101,7 +101,7 @@ namespace CardBox
         {
             InitializeComponent();
             myOrientation = orientation;
-            myCard = new PlayingCard();
+            myCard = card;
         }
 
         /// <summary>
