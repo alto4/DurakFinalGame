@@ -70,7 +70,7 @@ namespace CardLib
                 cards[cardIndex].FaceUp = true;
                 PlayingCard tempCard = cards[cardIndex];
                 cards.RemoveAt(cardIndex);
-                return cards[cardIndex]; // card number 0 to SIZE_OF_DECK
+                return tempCard; // card number 0 to SIZE_OF_DECK
             }
             else
             {

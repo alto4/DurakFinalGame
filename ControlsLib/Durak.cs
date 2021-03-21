@@ -55,6 +55,8 @@ namespace Durak
             mainDeck.ShowDeck();
             System.Diagnostics.Debug.WriteLine(mainDeck.ToString());
 
+            //initialDeal();
+            InitialDeal();
             PlayingCard firstCard = mainDeck.DrawCard();
             this.cbxDeck.Card = firstCard;
 
@@ -106,8 +108,7 @@ namespace Durak
 
             //}
             //else //otherwise           
-            cbxDeck.Card =  mainDeck.DrawCard(2);
-
+            
             txtPlayHistory.Text += cbxDeck.Card.ToString();
             
             PlayingCard card = cbxDeck.Card;
@@ -134,6 +135,8 @@ namespace Durak
                 pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
                 txtPlayHistory.Text += Environment.NewLine + "Cards in players deck: " + (pnlPlayerCards.Controls.Count.ToString());
                 //txtPlayHistory.Text += Environment.NewLine + "Cards in dealer deck: " + mainDeck.ToString();
+                cbxDeck.Card =  mainDeck.DrawCard();
+
                 foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
                 {
                     if (card.GetType().ToString() == "CardLib.PlayingCard")
@@ -306,6 +309,53 @@ namespace Durak
             }
         }
 
+        /// <summary>
+        /// initialDeal - deals players 6 cards to start
+        /// </summary>
+        private void InitialDeal()
+        {
+            for (int i = 0; i <= 6; i++)
+            {
+                PlayingCard card = cbxDeck.Card;
+                card.FaceUp = true;
+
+                pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
+                cbxDeck.Card = mainDeck.DrawCard();
+
+                card = cbxDeck.Card;
+                card.FaceUp = true;
+                pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
+                cbxDeck.Card = mainDeck.DrawCard();
+            }
+            RealignCards(pnlPlayerCards);
+            RealignCards(pnlComputerCards);
+        }
+
+        /// <summary>
+        /// RoundDeal - deals both the computer and players card until they have 6 cards in their hand to proceed to the round
+        /// </summary>
+        private void RoundDeal()
+        {
+            for (int i = pnlPlayerCards.Controls.Count; i <= 6; i++)
+            {
+                PlayingCard card = cbxDeck.Card;
+                card.FaceUp = true;
+
+                pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
+                cbxDeck.Card = mainDeck.DrawCard();
+            }
+            RealignCards(pnlPlayerCards);
+
+            for (int i = pnlComputerCards.Controls.Count; i <= 6; i++)
+            {
+                PlayingCard card = cbxDeck.Card;
+                card.FaceUp = true;
+                pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
+                cbxDeck.Card = mainDeck.DrawCard();
+            }
+            RealignCards(pnlComputerCards);
+        }
+
         #endregion
 
         #region EMPTY EVENT HANDLERS
@@ -325,5 +375,6 @@ namespace Durak
         }
 
         #endregion
+        
     }
 }
