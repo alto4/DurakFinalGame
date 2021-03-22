@@ -87,7 +87,7 @@ namespace Durak
         private void cbxDeck_Click(object sender, EventArgs e)
         {
             
-            lblClickedState.Text = cbxDeck.ToString() + " was last clicked.";
+            lblClickedState.Text = cbxDeck.ToString() + " was last clicked." + Environment.NewLine;
             txtPlayHistory.Text += "Loaded!" + Environment.NewLine;
 
             /* NOTE: idk why the cards need to switch between horizontal and vertical - @Ed
@@ -100,36 +100,34 @@ namespace Durak
                 cbxDeck.CardOrientation = Orientation.Horizontal;
             }
             */
-
             //If the deck is empty (no image)
             //if (stmt)
             //{
             //Reset the dealer
-
             //}
             //else //otherwise           
             
             txtPlayHistory.Text += cbxDeck.Card.ToString();
             
+            //Create a new card
             PlayingCard card = cbxDeck.Card;
             card.FaceUp = true;
 
-            // card.FaceUp = true;
             txtPlayHistory.Text += card.ToString();
             if (card != null )
             {
-                //Draw a card from the deck (if it worked)
-                //if (stmt) 
-                //{ 
-                //TESTING
+                //Create new cardbox control based on card drawn
+                CardBox.CardBox aCardBox = new CardBox.CardBox(card);
+                txtPlayHistory.Text += "A cardbox equals " + aCardBox.ToString();
 
                 //wire the event handlers
+                aCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
+
                 //click or drag logic here at a later date
 
+                aCardBox.MouseEnter += CardBox_MouseEnter; //wire cardbox mouse enter
+                aCardBox.MouseLeave += CardBox_MouseLeave; //wire cardbox mouse leave
 
-                //wire cardbox mouse enter
-
-                //wire cardbox mouse leave
                 //add new controls to the appropriate panel
 
                 pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
@@ -246,6 +244,78 @@ namespace Durak
         #endregion
 
         #region CARDBOX EVENT HANDLERS
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void CardBox_Click(object sender, EventArgs e)
+        {
+            //Convert sender to a cardbox
+            CardBox.CardBox aCardBox = sender as CardBox.CardBox;
+
+            //if the conversion worked
+            if (aCardBox != null)
+            {
+                //if the card is in the home panel
+                if (aCardBox.Parent == pnlPlayerCards)
+                {
+                    //Remove the card from player hand
+                    aCardBox.Controls.Remove(aCardBox);
+                    //Add card to the active play area
+                    pnlActiveCards.Controls.Add(aCardBox);
+                    txtPlayHistory.Text += "Card Clicked";
+                }
+                else //otherwise
+                {
+                    txtPlayHistory.Text += "Something is wrong";
+                }
+
+                RealignCards(pnlPlayerCards);
+                RealignCards(pnlActiveCards);
+            }
+            
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void CardBox_MouseEnter(object sender, EventArgs e)
+        {
+            //Convert sender to a cardbox
+            CardBox.CardBox aCardBox = sender as CardBox.CardBox;
+            txtPlayHistory.Text += "Mouse Entered";
+
+            //if the conversion worked
+            if (aCardBox != null)
+            {
+                //Enlarge
+                aCardBox.Size = new Size(normalCardSize.Width + ENLARGE, normalCardSize.Height + ENLARGE);
+
+                //Move the card to the top edge of the panel
+                aCardBox.Top = 0;
+            }
+        }
+
+        void CardBox_MouseLeave(object sender, EventArgs e)
+        {
+            //Convert sender to a cardbox
+            CardBox.CardBox aCardBox = sender as CardBox.CardBox;
+            txtPlayHistory.Text += "Mouse Left";
+
+            //if the conversion worked
+            if (aCardBox != null)
+            {
+                //Return to normal
+                aCardBox.Size = normalCardSize;
+
+                //Move the card to the top edge of the panel
+                aCardBox.Top = 0;
+            }
+        }
+
         #endregion
 
         #region HELPER METHODS
