@@ -129,8 +129,9 @@ namespace Durak
                 aCardBox.MouseLeave += CardBox_MouseLeave; //wire cardbox mouse leave
 
                 //add new controls to the appropriate panel
+                pnlPlayerCards.Controls.Add(aCardBox);
 
-                pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
+
                 txtPlayHistory.Text += Environment.NewLine + "Cards in players deck: " + (pnlPlayerCards.Controls.Count.ToString());
                 //txtPlayHistory.Text += Environment.NewLine + "Cards in dealer deck: " + mainDeck.ToString();
                 cbxDeck.Card =  mainDeck.DrawCard();
@@ -387,15 +388,30 @@ namespace Durak
             for (int i = 0; i <= 6; i++)
             {
                 PlayingCard card = cbxDeck.Card;
-                card.FaceUp = true;
 
-                pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
-                cbxDeck.Card = mainDeck.DrawCard();
+                if (card != null) //if card isn't null
+                {
+                    card.FaceUp = true;
 
-                card = cbxDeck.Card;
-                card.FaceUp = true;
-                pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
-                cbxDeck.Card = mainDeck.DrawCard();
+                    //Make it a cardbox for the player
+                    CardBox.CardBox playerCardBox = new CardBox.CardBox(card);
+                    //Wire events
+                    playerCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
+                    //click or drag logic here at a later date
+                    playerCardBox.MouseEnter += CardBox_MouseEnter; //wire cardbox mouse enter
+                    playerCardBox.MouseLeave += CardBox_MouseLeave; //wire cardbox mouse leave
+
+                    //Add cardbox to panel
+                    pnlPlayerCards.Controls.Add(playerCardBox);
+                    cbxDeck.Card = mainDeck.DrawCard();
+
+                    //Make a cardbox for the computer
+                    card = cbxDeck.Card;
+                    card.FaceUp = true;
+
+                    pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
+                    cbxDeck.Card = mainDeck.DrawCard();
+                }
             }
             RealignCards(pnlPlayerCards);
             RealignCards(pnlComputerCards);
