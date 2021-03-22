@@ -118,9 +118,8 @@ namespace Durak
             {
                 //Create new cardbox control based on card drawn
                 CardBox.CardBox aCardBox = new CardBox.CardBox(card);
-                txtPlayHistory.Text += "A cardbox equals " + aCardBox.ToString();
 
-                //wire the event handlers
+                //wire the event handlers (NEEDS TO BE A CARDBOX)
                 aCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
 
                 //click or drag logic here at a later date
@@ -299,7 +298,11 @@ namespace Durak
                 aCardBox.Top = 0;
             }
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         void CardBox_MouseLeave(object sender, EventArgs e)
         {
             //Convert sender to a cardbox
@@ -313,7 +316,7 @@ namespace Durak
                 aCardBox.Size = normalCardSize;
 
                 //Move the card to the top edge of the panel
-                aCardBox.Top = 0;
+                aCardBox.Top = ENLARGE;
             }
         }
 
@@ -396,10 +399,11 @@ namespace Durak
                     //Make it a cardbox for the player
                     CardBox.CardBox playerCardBox = new CardBox.CardBox(card);
                     //Wire events
-                    playerCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
-                    //click or drag logic here at a later date
                     playerCardBox.MouseEnter += CardBox_MouseEnter; //wire cardbox mouse enter
                     playerCardBox.MouseLeave += CardBox_MouseLeave; //wire cardbox mouse leave
+                    playerCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
+                    //click or drag logic here at a later date
+                    
 
                     //Add cardbox to panel
                     pnlPlayerCards.Controls.Add(playerCardBox);
