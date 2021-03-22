@@ -1,1 +1,2 @@
--when you select king of hearts is does not show
+-when you select king of hearts is does not show (Fixed)
+-
