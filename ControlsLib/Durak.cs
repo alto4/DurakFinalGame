@@ -1,6 +1,7 @@
 ﻿using CardLib;
 using ControlsLib;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -29,6 +30,10 @@ namespace Durak
         // makes card draggable
         private CardBox.CardBox dragCard;
 
+        // to collect all of the card panels
+        List<Panel> cardPanels = new List<Panel>();
+
+
         #endregion
 
         #region FORM AND STATIC CONTROL EVENT HANDLERS 
@@ -48,11 +53,11 @@ namespace Durak
         /// <param name="e"></param>
         private void frmGame_Load(object sender, EventArgs e)
         {
-            // TEST SHUFFLE
+            // shuffle
             mainDeck.Shuffle();
 
             // seeing the order of the deck in debug console for debugging
-            mainDeck.ShowDeck();
+            mainDeck.ShowDeck(); // This shows all cards, turn this off when done development
             System.Diagnostics.Debug.WriteLine(mainDeck.ToString());
 
             //initialDeal();
@@ -67,7 +72,12 @@ namespace Durak
             //mainDeck.OutOfCards MAKE A METHOD TO TRIGGER AN OUT OF CARDS EVENT
             //Show the number of cards left in the deck
 
+            // adding all of the card panels to a list
+            cardPanels.Add(pnlActiveCards);
+            cardPanels.Add(pnlComputerCards);
+            cardPanels.Add(pnlPlayerCards);
         }
+
 
         /// <summary>
         /// Event for when the index changes on a combobox
@@ -154,7 +164,7 @@ namespace Durak
                 }
 
                 //realign the controls
-                RealignCards(pnlPlayerCards);
+                RealignAllCards();
             }
 
             //display the number of cards left
@@ -271,8 +281,7 @@ namespace Durak
                     txtPlayHistory.Text += "Something is wrong";
                 }
 
-                RealignCards(pnlPlayerCards);
-                RealignCards(pnlActiveCards);
+                RealignAllCards();
             }
             
         }
@@ -318,11 +327,24 @@ namespace Durak
                 //Move the card to the top edge of the panel
                 aCardBox.Top = ENLARGE;
             }
+
         }
 
         #endregion
 
         #region HELPER METHODS
+
+        /// <summary>
+        /// This called RealignCards() to realign all the cards in the form.
+        /// </summary>
+        private void RealignAllCards()
+        {
+            foreach (var control in cardPanels)
+            {
+                RealignCards(control);
+            }
+        }
+
          /// <summary>
         /// Repositions the cards in a panel so that they are evenly distributed in the area available.
         /// </summary>
@@ -388,7 +410,7 @@ namespace Durak
         /// </summary>
         private void InitialDeal()
         {
-            for (int i = 0; i <= 6; i++)
+            for (int i = 0; i < 6; i++)
             {
                 PlayingCard card = cbxDeck.Card;
 
@@ -411,7 +433,7 @@ namespace Durak
 
                     //Make a cardbox for the computer
                     card = cbxDeck.Card;
-                    card.FaceUp = true;
+                    //card.FaceUp = true;
 
                     pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
                     cbxDeck.Card = mainDeck.DrawCard();
