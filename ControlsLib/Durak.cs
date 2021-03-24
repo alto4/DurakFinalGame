@@ -53,6 +53,11 @@ namespace Durak
         /// <param name="e"></param>
         private void frmGame_Load(object sender, EventArgs e)
         {
+            // adding all of the card panels to a list
+            cardPanels.Add(pnlActiveCards);
+            cardPanels.Add(pnlComputerCards);
+            cardPanels.Add(pnlPlayerCards);
+
             // shuffle
             mainDeck.Shuffle();
 
@@ -60,7 +65,6 @@ namespace Durak
             mainDeck.ShowDeck(); // This shows all cards, turn this off when done development
             System.Diagnostics.Debug.WriteLine(mainDeck.ToString());
 
-            //initialDeal();
             InitialDeal();
             PlayingCard firstCard = mainDeck.DrawCard();
             this.cbxDeck.Card = firstCard;
@@ -72,10 +76,7 @@ namespace Durak
             //mainDeck.OutOfCards MAKE A METHOD TO TRIGGER AN OUT OF CARDS EVENT
             //Show the number of cards left in the deck
 
-            // adding all of the card panels to a list
-            cardPanels.Add(pnlActiveCards);
-            cardPanels.Add(pnlComputerCards);
-            cardPanels.Add(pnlPlayerCards);
+            
         }
 
 
@@ -151,9 +152,7 @@ namespace Durak
                     {
 
                         //txtPlayHistory.Text += "Player card observed";
-
-                        //playerCard.Card.FaceUp = true
-                        ;
+                        
                         playerCard.FaceUp = true;
                         txtPlayHistory.Text += Environment.NewLine + playerCard.Card.DebugString();
                     }
@@ -169,7 +168,7 @@ namespace Durak
 
             //display the number of cards left
 
-            //}
+            
 
         }
 
