@@ -133,10 +133,10 @@ namespace Durak
                 //wire the event handlers (NEEDS TO BE A CARDBOX)
                 aCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
 
-                //click or drag logic here at a later date
-
-                aCardBox.MouseEnter += CardBox_MouseEnter; //wire cardbox mouse enter
-                aCardBox.MouseLeave += CardBox_MouseLeave; //wire cardbox mouse leave
+                //wire cardbox mouse enter
+                aCardBox.MouseEnter += CardBox_MouseEnter;
+                //wire cardbox mouse leave
+                aCardBox.MouseLeave += CardBox_MouseLeave; 
 
                 //add new controls to the appropriate panel
                 pnlPlayerCards.Controls.Add(aCardBox);
@@ -144,16 +144,14 @@ namespace Durak
 
                 txtPlayHistory.Text += Environment.NewLine + "Cards in players deck: " + (pnlPlayerCards.Controls.Count.ToString());
                 //txtPlayHistory.Text += Environment.NewLine + "Cards in dealer deck: " + mainDeck.ToString();
-                cbxDeck.Card =  mainDeck.DrawCard();
+                cbxDeck.Card = mainDeck.DrawCard();
 
                 foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
                 {
                     if (card.GetType().ToString() == "CardLib.PlayingCard")
                     {
-
                         //txtPlayHistory.Text += "Player card observed";
-                        
-                        playerCard.FaceUp = true;
+                        //playerCard.FaceUp = true;
                         txtPlayHistory.Text += Environment.NewLine + playerCard.Card.DebugString();
                     }
                     else
