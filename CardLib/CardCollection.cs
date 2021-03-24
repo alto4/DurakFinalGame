@@ -5,7 +5,7 @@
  *@author           Eduardo San Martin Celi, Scott Alton, Nick Sturch-Flint
  *@modified         This program is based on the code presented in chapter 11 of our course textbook. 
  *@see              Beginning Visual C# 2012 Programming by Karli Watson et al.
- *@description      Implements a class that acts as a collection of any amount of Card objects.
+ *@description      Implements a class that acts as a collection of any amount of Card objects less than or equal to 52.
  */
 
 using System;
@@ -61,6 +61,5 @@ namespace CardLib
             }
         }
 
-        
     }
 }

@@ -49,7 +49,6 @@
     <Compile Include="CardRank.cs" />
     <Compile Include="Cards.cs" />
     <Compile Include="CardSuit.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Deck.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Player.cs" />
@@ -60,6 +59,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="SizeOfDecks.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

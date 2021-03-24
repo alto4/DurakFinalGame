@@ -19,7 +19,7 @@ namespace Durak
         #region FIELDS AND PROPERTIES
 
         // generate PlayingCard objects from a Deck
-        Deck mainDeck = new Deck(true);
+        Deck mainDeck = new Deck(SizeOfDecks.Normal);
 
         // enlarge a card by this value
         private const int ENLARGE = 30;

@@ -22,7 +22,7 @@ namespace CardLib
     public class Deck : ICloneable
     {
         // define the standard size of a deck
-        public static readonly int SIZE_OF_DECK = 52;
+        public static readonly int SIZE_OF_STANDARD_DECK = 52;
 
         // instantiate a CardCollection object
         private CardCollection cards = new CardCollection();
@@ -32,49 +32,20 @@ namespace CardLib
         /// </summary>
         public Deck()
         {
-            foreach (CardSuit suit in (CardSuit[])Enum.GetValues(typeof(CardSuit))) // for each suit in the Suit enum
+            foreach (CardRank rank in (CardRank[])Enum.GetValues(typeof(CardRank))) // for each rank in the Rank enum
             {
-                foreach (CardRank rank in (CardRank[])Enum.GetValues(typeof(CardRank))) // for each rank in the Rank enum
+                foreach (CardSuit suit in (CardSuit[])Enum.GetValues(typeof(CardSuit))) // for each suit in the Suit enum
                 {
                     cards.Add(new PlayingCard(suit, rank));
                 }
             }
-        }
 
-        /// <summary>
-        /// return the card at the param index
-        /// </summary>
-        /// <param name="cardIndex">The cards index</param>
-        /// <returns>The Card at this index</returns>
-        public PlayingCard GetCard(int cardIndex)
-        {
-            if (cardIndex >= 0 && cardIndex <= 51)
+            // move the aces in front of the kings, that is the order or ranks in Durak
+            for (int cardIndex = 0; cardIndex < 4; cardIndex++)
             {
-                return cards[cardIndex]; // card number 0 to SIZE_OF_DECK
-            }
-            else
-            {
-                throw new IndexOutOfRangeException(string.Format(" * Card index must be between {0} and {1}", 0, SIZE_OF_DECK - 1));
-            }
-        }
-
-        /// <summary>
-        /// return the card at the param index and remove it from the deck
-        /// </summary>
-        /// <param name="cardIndex">The cards index</param>
-        /// <returns>The Card at this index</returns>
-        public PlayingCard DrawCard(int cardIndex = 0)
-        {
-            if (cardIndex >= 0 && cardIndex <= 51)
-            {
-                cards[cardIndex].FaceUp = true;
-                PlayingCard tempCard = cards[cardIndex];
-                cards.RemoveAt(cardIndex);
-                return tempCard; // card number 0 to SIZE_OF_DECK
-            }
-            else
-            {
-                throw new IndexOutOfRangeException(string.Format(" * Card index must be between {0} and {1}", 0, SIZE_OF_DECK - 1));
+                PlayingCard cardToMove = cards[0];
+                cards.RemoveAt(0);
+                cards.Add(cardToMove);
             }
         }
 
@@ -96,8 +67,77 @@ namespace CardLib
 
                 // gets a random suit from CardSuit enum
                 CardSuit trumpSuit = (CardSuit)values.GetValue(rand.Next(values.Length));
-                
+
                 PlayingCard.trumpSuit = trumpSuit;
+            }
+        }
+
+        /// <summary>
+        /// This constructor creates a deck with the top SizeOfDeck cards to the deck aka the top 20, 36 or 52 cards in a ordered deck
+        /// This Deck makes acesHigh always true
+        /// </summary>
+        /// <param name="sizeOfDeck">20, 36, or 52</param>
+        public Deck(SizeOfDecks sizeOfDeck) : this(true)
+        {
+            // to collect the top cards
+            CardCollection properSizedDeck = new CardCollection();
+
+            // adding the cards to a deck with the right cards
+            switch (sizeOfDeck)
+            {
+                case SizeOfDecks.Small:
+                    for (int cardIndex = SIZE_OF_STANDARD_DECK - 1; cardIndex > (SIZE_OF_STANDARD_DECK - (int)SizeOfDecks.Small) - 1; cardIndex--)
+                        properSizedDeck.Add(cards[cardIndex]);
+                    break;
+
+                case SizeOfDecks.Normal:
+                    for (int cardIndex = SIZE_OF_STANDARD_DECK - 1; cardIndex > (SIZE_OF_STANDARD_DECK - (int)SizeOfDecks.Normal) - 1; cardIndex--)
+                        properSizedDeck.Add(cards[cardIndex]);
+                    break;
+
+                default:
+                    // do override the cards created
+                    break;
+            }
+
+            if (sizeOfDeck != SizeOfDecks.Large)
+                cards = properSizedDeck;
+        }
+
+        /// <summary>
+        /// return the card at the param index
+        /// </summary>
+        /// <param name="cardIndex">The cards index</param>
+        /// <returns>The Card at this index</returns>
+        public PlayingCard GetCard(int cardIndex)
+        {
+            if (cardIndex >= 0 && cardIndex <= 51)
+            {
+                return cards[cardIndex]; // card number 0 to SIZE_OF_STANDARD_DECK
+            }
+            else
+            {
+                throw new IndexOutOfRangeException(string.Format(" * Card index must be between {0} and {1}", 0, SIZE_OF_STANDARD_DECK - 1));
+            }
+        }
+
+        /// <summary>
+        /// return the card at the param index and remove it from the deck
+        /// </summary>
+        /// <param name="cardIndex">The cards index</param>
+        /// <returns>The Card at this index</returns>
+        public PlayingCard DrawCard(int cardIndex = 0)
+        {
+            if (cardIndex >= 0 && cardIndex <= 51)
+            {
+                cards[cardIndex].FaceUp = true;
+                PlayingCard tempCard = cards[cardIndex];
+                cards.RemoveAt(cardIndex);
+                return tempCard; // card number 0 to SIZE_OF_STANDARD_DECK
+            }
+            else
+            {
+                throw new IndexOutOfRangeException(string.Format(" * Card index must be between {0} and {1}", 0, SIZE_OF_STANDARD_DECK - 1));
             }
         }
 
@@ -113,10 +153,10 @@ namespace CardLib
 
             for (int j = 0; j < 5; j++)
             {
-                for (int i = 0; i < SIZE_OF_DECK; i++)
+                for (int i = 0; i < cards.Count(); i++)
                 {
                     // Random index for each position
-                    randIndex = i + randSource.Next(SIZE_OF_DECK - i);
+                    randIndex = i + randSource.Next(cards.Count() - i);
 
                     // swap the cards
                     tempCardHolder = cards[randIndex];

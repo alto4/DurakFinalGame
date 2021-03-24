@@ -23,7 +23,6 @@ namespace CardLib
     /// </summary>
     public enum CardRank : byte
     {
-       
         Ace = 1,
         King = 13,
         Queen = 12,
