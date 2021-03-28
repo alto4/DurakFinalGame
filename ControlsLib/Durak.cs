@@ -272,6 +272,23 @@ namespace Durak
                     //Add card to the active play area
                     pnlActiveCards.Controls.Add(aCardBox);
                     txtPlayHistory.Text += "Card Clicked";
+
+                    // WHERE GAME LOGIN KICKS OFF 
+                    // This could also be a separate event handler triggering AI function to consider best choice - currently just choosing the first card
+                    // NOTE index 0 is on right side of computer panel of cards
+
+
+                    // AI Function to determine best card
+                    determineBestPlay(pnlComputerCards);
+
+
+                    CardBox.CardBox computerCardBox = pnlComputerCards.Controls[0] as CardBox.CardBox ;
+                    aCardBox.Controls.Remove(computerCardBox);
+                    pnlActiveCards.Controls.Add(computerCardBox);
+                    txtPlayHistory.Text += "Computer responds with card immediately." + Environment.NewLine;
+
+
+                    // Determine winner
                 }
                 else //otherwise
                 {
@@ -484,6 +501,66 @@ namespace Durak
         }
 
         #endregion
-        
+
+        #region AI LOGIC
+
+
+        /// <summary>
+        /// determineBestPlay - Basic algorithm to determine best choice, based on lowest value card that can be opposing hand. If no options exist, defaults to index 9.
+        ///                   - Consider level of difficulty selected to alter quality of decision-making (easy, medium, hard, etc.)
+        /// </summary>
+        /// <returns>bestChoiceIndex - the best possible choice the computer could make by considering entire hand.</returns>
+        protected int determineBestPlay(Panel cardPanel)
+        {
+            Panel hand  = cardPanel;
+            
+
+            txtPlayHistory.Text += "Computer is considering it's best choice.";
+
+            
+
+            txtPlayHistory.Text += hand.ToString();
+            // See what is being retrieved from the computer's hand of cards
+            for (int i = 0; i <hand.Controls.Count; i++)
+            {
+                txtPlayHistory.Text += hand.Controls[i].GetType().ToString();
+                if (hand.Controls[i].GetType().ToString().Contains("CardBox"))
+                {
+                    CardBox.CardBox currentCard = hand.Controls[i] as CardBox.CardBox;
+                    
+                    txtPlayHistory.Text += currentCard.Rank + " of " + currentCard.Suit + " acknowledged for processing.";
+                };
+            }
+
+
+
+            // Keep track of best player choice based on nearest winnable rank to attacking card
+            int idealChoiceIndex = 0;
+            /*
+            // Check for all cards in hand that are potential plays to beat current card
+            for(int i = 0; i < hand.Count; i++)
+            {
+                if (hand[i].Rank > startingTrumpCard.Rank)
+                {
+                    Console.WriteLine("Card #{0}, {1} of {2} IS an option to beat the {3} of {4}.", (i + 1), hand1[i].Rank, hand1[i].Suit, startingTrumpCard.Rank, startingTrumpCard.Suit);
+                    // Check for relationship between higher card in hand and card defending against
+                    Console.WriteLine("Card #{0}, {1} of {2} is {3} rank higher than {4} of {5}.", (i + 1), hand1[i].Rank, hand1[i].Suit, (hand1[i].Rank - startingTrumpCard.Rank), startingTrumpCard.Rank, startingTrumpCard.Suit);
+
+                    if (((int)hand1[i].Rank - (int)startingTrumpCard.Rank) < ((int)hand1[idealChoiceIndex].Rank - (int)startingTrumpCard.Rank)) 
+                    {
+                        idealChoiceIndex = i;
+                    }
+                } 
+                else
+                {
+                    Console.WriteLine("Card #{0}, {1} of {2} IS NOT an option to beat the {3} of {4}.", (i + 1), hand1[i].Rank, hand1[i].Suit, startingTrumpCard.Rank, startingTrumpCard.Suit);
+                }
+            }
+            */
+
+
+            return idealChoiceIndex;
+        }
+        #endregion
     }
 }

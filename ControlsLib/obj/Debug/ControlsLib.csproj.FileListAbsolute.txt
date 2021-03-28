@@ -74,3 +74,19 @@ C:\Users\Nick\Source\Repos\DurakGame\ControlsLib\obj\Debug\ControlsLib.csproj.Co
 C:\Users\Nick\Source\Repos\DurakGame\ControlsLib\obj\Debug\ControlsLib.csproj.CopyComplete
 C:\Users\Nick\Source\Repos\DurakGame\ControlsLib\obj\Debug\ControlsLib.dll
 C:\Users\Nick\Source\Repos\DurakGame\ControlsLib\obj\Debug\ControlsLib.pdb
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\bin\Debug\ControlsLib.dll
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\bin\Debug\ControlsLib.pdb
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\bin\Debug\CardLib.dll
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\bin\Debug\CardLib.pdb
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\ControlsLib.csprojAssemblyReference.cache
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\CardBox.CardBox.resources
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\Durak.frmGame.resources
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\ControlsLib.frmLogs.resources
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\Durak.frmMainMenu.resources
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\ControlsLib.Properties.Resources.resources
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\ControlsLib.frmRules.resources
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\ControlsLib.csproj.GenerateResource.cache
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\ControlsLib.csproj.CoreCompileInputs.cache
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\ControlsLib.csproj.CopyComplete
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\ControlsLib.dll
+C:\Users\Scott Alton\Source\Repos\DurakGame3\ControlsLib\obj\Debug\ControlsLib.pdb
