@@ -515,20 +515,27 @@ namespace Durak
             Panel hand  = cardPanel;
             
 
-            txtPlayHistory.Text += "Computer is considering it's best choice.";
+            CardBox.CardBox cardToBeat = pnlActiveCards.Controls[pnlActiveCards.Controls.Count - 1] as CardBox.CardBox;
 
-            
+            txtPlayHistory.Text += "Computer is considering it's best choice.";                    
 
             txtPlayHistory.Text += hand.ToString();
             // See what is being retrieved from the computer's hand of cards
             for (int i = 0; i <hand.Controls.Count; i++)
             {
-                txtPlayHistory.Text += hand.Controls[i].GetType().ToString();
+                
+                //txtPlayHistory.Text += hand.Controls[i].GetType().ToString();
+                
+                // Ensure only CardBox instances are being compared to the player's selected card
                 if (hand.Controls[i].GetType().ToString().Contains("CardBox"))
                 {
                     CardBox.CardBox currentCard = hand.Controls[i] as CardBox.CardBox;
-                    
-                    txtPlayHistory.Text += currentCard.Rank + " of " + currentCard.Suit + " acknowledged for processing.";
+                   
+                    if ((currentCard.Card.Rank >= cardToBeat.Card.Rank))
+                    {
+                        txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
+                    }
+
                 };
             }
 
