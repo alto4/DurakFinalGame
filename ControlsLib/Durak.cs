@@ -279,14 +279,19 @@ namespace Durak
 
 
                     // AI Function to determine best card
-                    determineBestPlay(pnlComputerCards);
+                    int computerChoiceIndex = determineBestPlay(pnlComputerCards);
 
-
-                    CardBox.CardBox computerCardBox = pnlComputerCards.Controls[0] as CardBox.CardBox ;
-                    aCardBox.Controls.Remove(computerCardBox);
-                    pnlActiveCards.Controls.Add(computerCardBox);
-                    txtPlayHistory.Text += "Computer responds with card immediately." + Environment.NewLine;
-
+                    if (computerChoiceIndex >= 0)
+                    {
+                        CardBox.CardBox computerCardBox = pnlComputerCards.Controls[computerChoiceIndex] as CardBox.CardBox;
+                        aCardBox.Controls.Remove(computerCardBox);
+                        pnlActiveCards.Controls.Add(computerCardBox);
+                        txtPlayHistory.Text += "Computer responds with card immediately." + Environment.NewLine;
+                    } 
+                    else
+                    {
+                        txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
+                    }
 
                     // Determine winner
                 }
@@ -510,61 +515,50 @@ namespace Durak
         ///                   - Consider level of difficulty selected to alter quality of decision-making (easy, medium, hard, etc.)
         /// </summary>
         /// <returns>bestChoiceIndex - the best possible choice the computer could make by considering entire hand.</returns>
-        protected int determineBestPlay(Panel cardPanel)
+        protected int determineBestPlay(Panel computerHand)
         {
-            Panel hand  = cardPanel;
+            bool noGoodChoice = true;
+            // Keep track of best player choice based on nearest winnable rank to attacking card
+            int idealChoiceIndex = 0;
+            CardBox.CardBox idealChoice  = computerHand.Controls[idealChoiceIndex] as CardBox.CardBox;
             
-
             CardBox.CardBox cardToBeat = pnlActiveCards.Controls[pnlActiveCards.Controls.Count - 1] as CardBox.CardBox;
 
             txtPlayHistory.Text += "Computer is considering it's best choice.";                    
-
-            txtPlayHistory.Text += hand.ToString();
+            txtPlayHistory.Text += computerHand.ToString();
             // See what is being retrieved from the computer's hand of cards
-            for (int i = 0; i <hand.Controls.Count; i++)
-            {
-                
-                //txtPlayHistory.Text += hand.Controls[i].GetType().ToString();
-                
+            for (int i = 0; i < computerHand.Controls.Count; i++)
+            {                
+                //txtPlayHistory.Text += hand.Controls[i].GetType().ToString(); -> DEBUG LINE FOR REFERENCE ON HANDLING CONTROLS PASSED INTO FUNCTION  
                 // Ensure only CardBox instances are being compared to the player's selected card
-                if (hand.Controls[i].GetType().ToString().Contains("CardBox"))
+                if (computerHand.Controls[i].GetType().ToString().Contains("CardBox"))
                 {
-                    CardBox.CardBox currentCard = hand.Controls[i] as CardBox.CardBox;
+                    CardBox.CardBox currentCard = computerHand.Controls[i] as CardBox.CardBox;
                    
-                    if ((currentCard.Card.Rank >= cardToBeat.Card.Rank))
+                    if ((currentCard.Card.Rank > cardToBeat.Card.Rank))
                     {
+                        noGoodChoice = false;
                         txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
-                    }
 
+                        // Check to see if option to beat player card is a more efficient (AKA lower value card that current selection) way to beat the opponent and reserve high ranking cards for later
+                        if (((int)currentCard.Card.Rank) < (int)idealChoice.Card.Rank)
+                        {
+                            idealChoiceIndex = i;
+                        }
+                    }
                 };
             }
 
 
-
-            // Keep track of best player choice based on nearest winnable rank to attacking card
-            int idealChoiceIndex = 0;
-            /*
-            // Check for all cards in hand that are potential plays to beat current card
-            for(int i = 0; i < hand.Count; i++)
+            if (noGoodChoice == false)
             {
-                if (hand[i].Rank > startingTrumpCard.Rank)
-                {
-                    Console.WriteLine("Card #{0}, {1} of {2} IS an option to beat the {3} of {4}.", (i + 1), hand1[i].Rank, hand1[i].Suit, startingTrumpCard.Rank, startingTrumpCard.Suit);
-                    // Check for relationship between higher card in hand and card defending against
-                    Console.WriteLine("Card #{0}, {1} of {2} is {3} rank higher than {4} of {5}.", (i + 1), hand1[i].Rank, hand1[i].Suit, (hand1[i].Rank - startingTrumpCard.Rank), startingTrumpCard.Rank, startingTrumpCard.Suit);
-
-                    if (((int)hand1[i].Rank - (int)startingTrumpCard.Rank) < ((int)hand1[idealChoiceIndex].Rank - (int)startingTrumpCard.Rank)) 
-                    {
-                        idealChoiceIndex = i;
-                    }
-                } 
-                else
-                {
-                    Console.WriteLine("Card #{0}, {1} of {2} IS NOT an option to beat the {3} of {4}.", (i + 1), hand1[i].Rank, hand1[i].Suit, startingTrumpCard.Rank, startingTrumpCard.Suit);
-                }
+                txtPlayHistory.Text += idealChoiceIndex + " is the index a wise AI would choose here.";
             }
-            */
-
+            else { 
+                txtPlayHistory.Text += "AI has no good choices. Human player is wins this one!";
+                return -1;
+            }
+                
 
             return idealChoiceIndex;
         }
