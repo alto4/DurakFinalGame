@@ -272,6 +272,28 @@ namespace Durak
                     //Add card to the active play area
                     pnlActiveCards.Controls.Add(aCardBox);
                     txtPlayHistory.Text += "Card Clicked";
+
+                    // WHERE GAME LOGIN KICKS OFF 
+                    // This could also be a separate event handler triggering AI function to consider best choice - currently just choosing the first card
+                    // NOTE index 0 is on right side of computer panel of cards
+
+
+                    // AI Function to determine best card
+                    int computerChoiceIndex = determineBestPlay(pnlComputerCards);
+
+                    if (computerChoiceIndex >= 0)
+                    {
+                        CardBox.CardBox computerCardBox = pnlComputerCards.Controls[computerChoiceIndex] as CardBox.CardBox;
+                        aCardBox.Controls.Remove(computerCardBox);
+                        pnlActiveCards.Controls.Add(computerCardBox);
+                        txtPlayHistory.Text += "Computer responds with card immediately." + Environment.NewLine;
+                    } 
+                    else
+                    {
+                        txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
+                    }
+
+                    // Determine winner
                 }
                 else //otherwise
                 {
@@ -484,6 +506,62 @@ namespace Durak
         }
 
         #endregion
-        
+
+        #region AI LOGIC
+
+
+        /// <summary>
+        /// determineBestPlay - Basic algorithm to determine best choice, based on lowest value card that can be opposing hand. If no options exist, defaults to index 9.
+        ///                   - Consider level of difficulty selected to alter quality of decision-making (easy, medium, hard, etc.)
+        /// </summary>
+        /// <returns>bestChoiceIndex - the best possible choice the computer could make by considering entire hand.</returns>
+        protected int determineBestPlay(Panel computerHand)
+        {
+            bool noGoodChoice = true;
+            // Keep track of best player choice based on nearest winnable rank to attacking card
+            int idealChoiceIndex = 0;
+            CardBox.CardBox idealChoice  = computerHand.Controls[idealChoiceIndex] as CardBox.CardBox;
+            
+            CardBox.CardBox cardToBeat = pnlActiveCards.Controls[pnlActiveCards.Controls.Count - 1] as CardBox.CardBox;
+
+            txtPlayHistory.Text += "Computer is considering it's best choice.";                    
+            txtPlayHistory.Text += computerHand.ToString();
+            // See what is being retrieved from the computer's hand of cards
+            for (int i = 0; i < computerHand.Controls.Count; i++)
+            {                
+                //txtPlayHistory.Text += hand.Controls[i].GetType().ToString(); -> DEBUG LINE FOR REFERENCE ON HANDLING CONTROLS PASSED INTO FUNCTION  
+                // Ensure only CardBox instances are being compared to the player's selected card
+                if (computerHand.Controls[i].GetType().ToString().Contains("CardBox"))
+                {
+                    CardBox.CardBox currentCard = computerHand.Controls[i] as CardBox.CardBox;
+                   
+                    if ((currentCard.Card.Rank > cardToBeat.Card.Rank))
+                    {
+                        noGoodChoice = false;
+                        txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
+
+                        // Check to see if option to beat player card is a more efficient (AKA lower value card that current selection) way to beat the opponent and reserve high ranking cards for later
+                        if (((int)currentCard.Card.Rank) < (int)idealChoice.Card.Rank)
+                        {
+                            idealChoiceIndex = i;
+                        }
+                    }
+                };
+            }
+
+
+            if (noGoodChoice == false)
+            {
+                txtPlayHistory.Text += idealChoiceIndex + " is the index a wise AI would choose here.";
+            }
+            else { 
+                txtPlayHistory.Text += "AI has no good choices. Human player is wins this one!";
+                return -1;
+            }
+                
+
+            return idealChoiceIndex;
+        }
+        #endregion
     }
 }
