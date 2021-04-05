@@ -67,7 +67,10 @@ namespace Durak
 
             InitialDeal();
             PlayingCard firstCard = mainDeck.DrawCard();
-            this.cbxDeck.Card = firstCard;
+            PlayingCard firstPlayableCard = mainDeck.DrawCard();
+
+            this.cbxTrumpCard.Card = firstCard;
+            this.cbxDeck.Card = firstPlayableCard;
 
             txtPlayHistory.Text += firstCard.Suit + " is the initial trump suit.";
             //txtPlayHistory.Text += "\nThere are now " + mainDeck.Count() + " cards left in the deck";

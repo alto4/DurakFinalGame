@@ -25,7 +25,7 @@ namespace CardLib
         public static readonly int SIZE_OF_STANDARD_DECK = 52;
 
         // instantiate a CardCollection object
-        private CardCollection cards = new CardCollection();
+        private readonly CardCollection cards = new CardCollection();
 
         /// <summary>
         /// Default constructor for a deck of cards.
@@ -61,12 +61,8 @@ namespace CardLib
 
             if (useTrumps)
             {
-                Random rand = new Random();
-                // CardSuit array with all the values
-                var values = (CardSuit[])Enum.GetValues(typeof(CardSuit));
-
-                // gets a random suit from CardSuit enum
-                CardSuit trumpSuit = (CardSuit)values.GetValue(rand.Next(values.Length));
+                // The first card drawn
+                CardSuit trumpSuit = cards[0].Suit;
 
                 PlayingCard.trumpSuit = trumpSuit;
             }
@@ -74,7 +70,8 @@ namespace CardLib
 
         /// <summary>
         /// This constructor creates a deck with the top SizeOfDeck cards to the deck aka the top 20, 36 or 52 cards in a ordered deck
-        /// This Deck makes acesHigh always true
+        /// This Deck makes acesHigh always true.
+        /// The trump card is determined as the first card that in drawn in the game.
         /// </summary>
         /// <param name="sizeOfDeck">20, 36, or 52</param>
         public Deck(SizeOfDecks sizeOfDeck) : this(true)

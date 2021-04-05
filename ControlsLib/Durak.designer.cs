@@ -32,6 +32,7 @@ namespace Durak
         private void InitializeComponent()
         {
             CardLib.PlayingCard playingCard1 = new CardLib.PlayingCard();
+            CardLib.PlayingCard playingCard2 = new CardLib.PlayingCard();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGame));
             this.btnFlipCard = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -47,7 +48,9 @@ namespace Durak
             this.cbxRank = new System.Windows.Forms.ComboBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRules = new System.Windows.Forms.Button();
+            this.lblTrumpCard = new System.Windows.Forms.Label();
             this.cbxDeck = new CardBox.CardBox();
+            this.cbxTrumpCard = new CardBox.CardBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,7 +75,7 @@ namespace Durak
             "Clubs"});
             this.comboBox1.Location = new System.Drawing.Point(195, 176);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 25);
+            this.comboBox1.Size = new System.Drawing.Size(121, 24);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -220,6 +223,17 @@ namespace Durak
             this.btnRules.UseVisualStyleBackColor = true;
             this.btnRules.Click += new System.EventHandler(this.btnRules_Click);
             // 
+            // lblTrumpCard
+            // 
+            this.lblTrumpCard.AutoSize = true;
+            this.lblTrumpCard.BackColor = System.Drawing.Color.White;
+            this.lblTrumpCard.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblTrumpCard.Location = new System.Drawing.Point(52, 13);
+            this.lblTrumpCard.Name = "lblTrumpCard";
+            this.lblTrumpCard.Size = new System.Drawing.Size(121, 24);
+            this.lblTrumpCard.TabIndex = 20;
+            this.lblTrumpCard.Text = "Trump Card";
+            // 
             // cbxDeck
             // 
             playingCard1.CardValue = 0;
@@ -229,7 +243,7 @@ namespace Durak
             this.cbxDeck.Card = playingCard1;
             this.cbxDeck.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cbxDeck.FaceUp = false;
-            this.cbxDeck.Location = new System.Drawing.Point(38, 18);
+            this.cbxDeck.Location = new System.Drawing.Point(38, 86);
             this.cbxDeck.Margin = new System.Windows.Forms.Padding(5);
             this.cbxDeck.Name = "cbxDeck";
             this.cbxDeck.Rank = CardLib.CardRank.Six;
@@ -239,12 +253,32 @@ namespace Durak
             this.cbxDeck.Click += new System.EventHandler(this.cbxDeck_Click);
             this.cbxDeck.Load += new System.EventHandler(this.cbxDeck_Load);
             // 
+            // cbxTrumpCard
+            // 
+            playingCard2.CardValue = 0;
+            playingCard2.FaceUp = true;
+            playingCard2.Rank = CardLib.CardRank.Ace;
+            playingCard2.Suit = CardLib.CardSuit.Diamonds;
+            this.cbxTrumpCard.Card = playingCard2;
+            this.cbxTrumpCard.CardOrientation = System.Windows.Forms.Orientation.Vertical;
+            this.cbxTrumpCard.FaceUp = true;
+            this.cbxTrumpCard.Location = new System.Drawing.Point(54, 40);
+            this.cbxTrumpCard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxTrumpCard.Name = "cbxTrumpCard";
+            this.cbxTrumpCard.Rank = CardLib.CardRank.Ace;
+            this.cbxTrumpCard.Size = new System.Drawing.Size(119, 187);
+            this.cbxTrumpCard.Suit = CardLib.CardSuit.Diamonds;
+            this.cbxTrumpCard.TabIndex = 19;
+            // 
             // frmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(28)))), ((int)(((byte)(85)))));
             this.ClientSize = new System.Drawing.Size(1301, 698);
+            this.Controls.Add(this.cbxDeck);
+            this.Controls.Add(this.lblTrumpCard);
+            this.Controls.Add(this.cbxTrumpCard);
             this.Controls.Add(this.btnRules);
             this.Controls.Add(this.txtPlayHistory);
             this.Controls.Add(this.pnlComputerCards);
@@ -254,7 +288,6 @@ namespace Durak
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.cbxSuit);
             this.Controls.Add(this.cbxRank);
-            this.Controls.Add(this.cbxDeck);
             this.Controls.Add(this.btnFlipCard);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -294,6 +327,8 @@ namespace Durak
         private System.Windows.Forms.ComboBox cbxRank;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnRules;
+        private CardBox.CardBox cbxTrumpCard;
+        private System.Windows.Forms.Label lblTrumpCard;
     }
 }
 
