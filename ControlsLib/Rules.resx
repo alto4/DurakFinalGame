@@ -117,6 +117,58 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="richTextBox1.Text" xml:space="preserve">
+    <value>
+Gereral Rules: 
+
+	1. The game is played with 36 cards (but other sizes are available) 6 through aces, were aces are above kings.
+
+	2. The first card drawn is the trump card and is it flipped face up until it is the last card to be drawn.
+
+	3. Each player gets an initial draw of 6 cards.
+
+	4. To win, you must get rid of all of your cards. The last player with cards is the Durak.
+
+Attacking Rules:
+
+	1. The player with the lowest trump card attacks first but can play any card they want.
+	
+	2. An attack can be beat by a higher ranking card in the same suit OR any trump card if the attack card is not a trump card.
+	
+	3. If an attack is defended, another attack can be played but must be the same rank of one of the already played cards.
+	
+	4. If a player defends all attacks, he becomes the new attacker.
+	
+	5. An attack is up to a maximum of 6 cards or if the defender has less than six cards, the maximum is their hand size.
+	
+	6. If a defender can not defend against an attack, other attackers can play any amount of valid attacking card to add to the defenders hand. 
+	
+	7. An attack can end when the attackers choose to stop attacking or they can not attack anymore.
+	
+Defending Rules:
+	
+	1. The defender is the person next of the current attacker.
+
+	2. If a player can not defend an attack, he must draw all of the cards to his/her hand and loses their turn to attack.
+	
+	3. If the defender defends all of the attacks, the cards in the middle are discarded.
+	
+Drawing Rules:
+	
+	1. At the end of the round, any player with less than 6 cards must draw cards until they are up to 6 again.
+	
+	2. Once the deck runs out, the trump card is drawn
+	
+Draw Rule:
+
+	1. If the final two players run out of cards in the same turn, the game ends in a draw.
+	
+	
+Useful Video: 
+	https://www.youtube.com/watch?v=3JagmUmUJOc&amp;t=5s&amp;ab_channel=GatherTogetherGames
+	
+	By Gather Together Games</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

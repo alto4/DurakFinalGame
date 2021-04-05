@@ -12,9 +12,31 @@ namespace ControlsLib
 {
     public partial class frmRules : Form
     {
+
         public frmRules()
         {
             InitializeComponent();
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmRules_Load(object sender, EventArgs e)
+        {
+            lblTitle.Focus();
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox1_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            
+        }
+
     }
 }
