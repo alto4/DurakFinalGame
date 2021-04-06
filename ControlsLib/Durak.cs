@@ -19,7 +19,9 @@ namespace Durak
         #region FIELDS AND PROPERTIES
 
         //Testing Player Class Methods
-        StatsPlayer nick = new StatsPlayer();
+        //StatsPlayer nick = new StatsPlayer();
+        //String used to reference the player in the logs and stats
+        string playerName;
         
         // generate PlayingCard objects from a Deck
         Deck mainDeck = new Deck(SizeOfDecks.Normal);
@@ -47,6 +49,15 @@ namespace Durak
         public frmGame()
         {
             InitializeComponent();
+
+            playerName = "Player 1";
+        }
+
+        public frmGame(string name)
+        {
+            InitializeComponent();
+
+            playerName = name;
         }
 
         /// <summary>
@@ -64,7 +75,7 @@ namespace Durak
             StartGame();
 
             //Testing StatsPlayer Methods
-            txtPlayHistory.Text += nick.ToString();
+            txtPlayHistory.Text += Environment.NewLine + playerName + "! Welcome to the game!";
 
 
             //txtPlayHistory.Text += "\nThere are now " + mainDeck.Count() + " cards left in the deck";

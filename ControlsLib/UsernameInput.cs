@@ -66,7 +66,7 @@ namespace ControlsLib
                 Hide();
 
                 //Finally open the game
-                frmGame game = new frmGame(); //create an instance
+                frmGame game = new frmGame(username); //create an instance
                 game.ShowDialog(); //show the form
 
                 // close username input form
