@@ -123,11 +123,17 @@ namespace CardBox
             UpdateCardImage();
         }
 
-        public event EventHandler CardFlipped;
         /// <summary>
-        /// Event delegation for card picture box click event
+        /// Event Delegates
         /// </summary>
+
+        public event EventHandler CardFlipped;
+
         new public event EventHandler Click;
+
+        new public event EventHandler MouseEnter;
+
+        new public event EventHandler MouseLeave;
 
         /// <summary>
         /// Event handler for when user clicks on the card picturebox
@@ -140,6 +146,31 @@ namespace CardBox
             {
                 Click(this, e);
             }
+        }
+
+        private void pbMyPictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            //MouseEnter.Invoke(this, EventArgs.Empty);
+
+            if (MouseEnter != null)
+            {
+                MouseEnter(this, e);
+            }
+        }
+
+        private void pbMyPictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            //MouseLeave.Invoke(this, EventArgs.Empty);
+
+            if (MouseLeave != null)
+            {
+                MouseLeave(this, e);
+            }
+        }
+
+        private void pbMyPictureBox_DragEnter(object sender, DragEventArgs e)
+        {
+
         }
     }
 }

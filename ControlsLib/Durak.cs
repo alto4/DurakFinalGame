@@ -22,10 +22,10 @@ namespace Durak
         Deck mainDeck = new Deck(SizeOfDecks.Normal);
 
         // enlarge a card by this value
-        private const int ENLARGE = 30;
+        private const int ENLARGE = 35;
 
         // The default size of a card
-        static private Size normalCardSize = new Size(151,180);
+        static private Size normalCardSize = new Size(100,135);
 
         // makes card draggable
         private CardBox.CardBox dragCard;
@@ -58,31 +58,7 @@ namespace Durak
             cardPanels.Add(pnlComputerCards);
             cardPanels.Add(pnlPlayerCards);
 
-            // shuffle
-            mainDeck.Shuffle();
-
-            // seeing the order of the deck in debug console for debugging
-            mainDeck.ShowDeck(); // This shows all cards, turn this off when done development
-            System.Diagnostics.Debug.WriteLine(mainDeck.ToString());
-            try
-            {
-                InitialDeal();
-
-                PlayingCard firstCard = mainDeck.DrawCard();
-                PlayingCard firstPlayableCard = mainDeck.DrawCard();
-
-                this.cbxTrumpCard.Card = firstCard;
-                this.cbxDeck.Card = firstPlayableCard;
-
-                // add the trump card back but at the last place in the deck
-                mainDeck.AddCardAtBottom(firstCard);
-
-                txtPlayHistory.Text += firstCard.Suit + " is the initial trump suit.";
-            } 
-            catch (IndexOutOfRangeException)
-            {
-                System.Diagnostics.Debug.WriteLine("Exception catched when trying to draw card out of index.");
-            }
+            StartGame();
 
                
 
@@ -148,13 +124,20 @@ namespace Durak
                     //Create new cardbox control based on card drawn
                     CardBox.CardBox aCardBox = new CardBox.CardBox(card);
 
+                    aCardBox.Size = normalCardSize;
+
                     //wire the event handlers (NEEDS TO BE A CARDBOX)
                     aCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
 
                     //wire cardbox mouse enter
                     aCardBox.MouseEnter += CardBox_MouseEnter;
                     //wire cardbox mouse leave
-                    aCardBox.MouseLeave += CardBox_MouseLeave; 
+                    aCardBox.MouseLeave += CardBox_MouseLeave;
+
+                    // wire drag drop
+                    //aCardBox.MouseDown += CardBox_MouseDown;
+                    //aCardBox.DragEnter += CardBox_DragEnter;
+                    //aCardBox.DragDrop += CardBox_DragDrop;
 
                     //add new controls to the appropriate panel
                     pnlPlayerCards.Controls.Add(aCardBox);
@@ -282,12 +265,58 @@ namespace Durak
             rules.ShowDialog();
         }
 
+        /// <summary>
+        /// Make the mouse pointer a "move" pointer when a drag enters a Panel.
+        /// </summary>
+        private void Panel_DragEnter(object sender, DragEventArgs e)
+        {
+            // Make the mouse pointer a "move" pointer
+            e.Effect = DragDropEffects.Move;
+        }
+
+        /// <summary>
+        /// Move a card/control when it is dropped from one Panel to another.
+        /// </summary>
+        private void Panel_DragDrop(object sender, DragEventArgs e)
+        {
+            if (dragCard != null)
+            {
+                Panel thisPanel = sender as Panel;
+                Panel fromPanel = dragCard.Parent as Panel;
+
+                if (thisPanel != null && fromPanel != null)
+                {
+                    if (thisPanel != fromPanel)
+                    {
+                        fromPanel.Controls.Remove(dragCard);
+                        thisPanel.Controls.Add(dragCard);
+
+                        RealignCards(thisPanel);
+                        RealignCards(fromPanel);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Clicking the restart button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            
+        }
+
 
         #endregion
 
         #region CARDBOX EVENT HANDLERS
+
+
+
         /// <summary>
-        /// 
+        /// When a CardBox is clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -341,7 +370,39 @@ namespace Durak
         }
 
         /// <summary>
-        /// 
+        /// When a drag is enters a card, enter the parent panel instead.
+        /// </summary>
+        private void CardBox_DragEnter(object sender, DragEventArgs e)
+        {
+            //// Convert sender to a CardBox
+            CardBox.CardBox aCardBox = sender as CardBox.CardBox;
+
+            // If the conversion worked
+            if (aCardBox != null)
+            {
+                // Do the operation on the parent panel instead
+                Panel_DragEnter(aCardBox.Parent, e);
+            }
+        }
+
+        /// <summary>
+        /// When a drag is dropped on a card, drop on the parent panel instead.
+        /// </summary>
+        private void CardBox_DragDrop(object sender, DragEventArgs e)
+        {
+            // Convert sender to a CardBox
+            CardBox.CardBox aCardBox = sender as CardBox.CardBox;
+
+            // If the conversion worked
+            if (aCardBox != null)
+            {
+                // Do the operation on the parent panel instead
+                Panel_DragDrop(aCardBox.Parent, e);
+            }
+        }
+
+        /// <summary>
+        /// Make a card bigger when entering its box
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -361,6 +422,7 @@ namespace Durak
                 aCardBox.Top = 0;
             }
         }
+
         /// <summary>
         /// 
         /// </summary>
@@ -384,9 +446,55 @@ namespace Durak
 
         }
 
+        /// <summary>
+        /// Start a card move on drag
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CardBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            // Set dragCard 
+            dragCard = sender as CardBox.CardBox;
+
+            if (dragCard != null)
+            {
+                // Set the data to be dragged and the allowed effect dragging will have.
+                DoDragDrop(dragCard, DragDropEffects.Move);
+            }
+        }
+
         #endregion
 
         #region HELPER METHODS
+
+        private void StartGame()
+        {
+            // shuffle
+            mainDeck.Shuffle();
+
+            // seeing the order of the deck in debug console for debugging
+            mainDeck.ShowDeck(); // This shows all cards, turn this off when done development
+            System.Diagnostics.Debug.WriteLine(mainDeck.ToString());
+            try
+            {
+                InitialDeal();
+
+                PlayingCard firstCard = mainDeck.DrawCard();
+                PlayingCard firstPlayableCard = mainDeck.DrawCard();
+
+                this.cbxTrumpCard.Card = firstCard;
+                this.cbxDeck.Card = firstPlayableCard;
+
+                // add the trump card back but at the last place in the deck
+                mainDeck.AddCardAtBottom(firstCard);
+
+                txtPlayHistory.Text += firstCard.Suit + " is the initial trump suit.";
+            }
+            catch (IndexOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception catched when trying to draw card out of index.");
+            }
+        }
 
         /// <summary>
         /// This called RealignCards() to realign all the cards in the form.
@@ -497,27 +605,35 @@ namespace Durak
 
                     //Make it a cardbox for the player
                     CardBox.CardBox playerCardBox = new CardBox.CardBox(card);
+
+                    playerCardBox.Size = normalCardSize;
+
                     //Wire events
                     playerCardBox.MouseEnter += CardBox_MouseEnter; //wire cardbox mouse enter
                     playerCardBox.MouseLeave += CardBox_MouseLeave; //wire cardbox mouse leave
+                    //playerCardBox.MouseDown += CardBox_MouseDown;
+                    //playerCardBox.DragEnter += CardBox_DragEnter;
+                    //playerCardBox.DragDrop += CardBox_DragDrop;
                     playerCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
                     //click or drag logic here at a later date
-                    
+
 
                     //Add cardbox to panel
                     pnlPlayerCards.Controls.Add(playerCardBox);
                     cbxDeck.Card = mainDeck.DrawCard();
 
+                    CardBox.CardBox computerCardBox = new CardBox.CardBox(card);
+
+                    computerCardBox.Size = normalCardSize;
                     //Make a cardbox for the computer
-                    card = cbxDeck.Card;
+                    //card = cbxDeck.Card;
                     //card.FaceUp = true;
 
-                    pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
+                    pnlComputerCards.Controls.Add(computerCardBox);
                     cbxDeck.Card = mainDeck.DrawCard();
                 }
             }
-            RealignCards(pnlPlayerCards);
-            RealignCards(pnlComputerCards);
+            RealignAllCards();
         }
 
         /// <summary>
@@ -550,11 +666,6 @@ namespace Durak
         #region EMPTY EVENT HANDLERS
 
         private void lblOutOfCards_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void btnReset_Click(object sender, EventArgs e)
         {
 
         }
@@ -626,8 +737,7 @@ namespace Durak
 
             return idealChoiceIndex;
         }
-        #endregion
 
-        
+        #endregion
     }
 }

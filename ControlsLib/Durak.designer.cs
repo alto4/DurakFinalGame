@@ -39,7 +39,6 @@ namespace Durak
             this.lblClickedState = new System.Windows.Forms.Label();
             this.lblFlippedState = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
-            this.btnReset = new System.Windows.Forms.Button();
             this.pnlActiveCards = new System.Windows.Forms.Panel();
             this.pnlPlayerCards = new System.Windows.Forms.Panel();
             this.pnlComputerCards = new System.Windows.Forms.Panel();
@@ -105,7 +104,7 @@ namespace Durak
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(211, 238);
+            this.btnExit.Location = new System.Drawing.Point(212, 206);
             this.btnExit.Margin = new System.Windows.Forms.Padding(4);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(100, 28);
@@ -113,17 +112,6 @@ namespace Durak
             this.btnExit.Text = "&Main Menu";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
-            // 
-            // btnReset
-            // 
-            this.btnReset.Location = new System.Drawing.Point(212, 199);
-            this.btnReset.Margin = new System.Windows.Forms.Padding(4);
-            this.btnReset.Name = "btnReset";
-            this.btnReset.Size = new System.Drawing.Size(100, 28);
-            this.btnReset.TabIndex = 12;
-            this.btnReset.Text = "&Reset";
-            this.btnReset.UseVisualStyleBackColor = true;
-            this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
             // pnlActiveCards
             // 
@@ -133,6 +121,8 @@ namespace Durak
             this.pnlActiveCards.Name = "pnlActiveCards";
             this.pnlActiveCards.Size = new System.Drawing.Size(709, 276);
             this.pnlActiveCards.TabIndex = 13;
+            this.pnlActiveCards.DragDrop += new System.Windows.Forms.DragEventHandler(this.Panel_DragDrop);
+            this.pnlActiveCards.DragEnter += new System.Windows.Forms.DragEventHandler(this.Panel_DragEnter);
             // 
             // pnlPlayerCards
             // 
@@ -142,6 +132,8 @@ namespace Durak
             this.pnlPlayerCards.Name = "pnlPlayerCards";
             this.pnlPlayerCards.Size = new System.Drawing.Size(709, 180);
             this.pnlPlayerCards.TabIndex = 14;
+            this.pnlPlayerCards.DragDrop += new System.Windows.Forms.DragEventHandler(this.Panel_DragDrop);
+            this.pnlPlayerCards.DragEnter += new System.Windows.Forms.DragEventHandler(this.Panel_DragEnter);
             // 
             // pnlComputerCards
             // 
@@ -264,8 +256,8 @@ namespace Durak
             this.cbxDeck.Size = new System.Drawing.Size(151, 180);
             this.cbxDeck.Suit = CardLib.CardSuit.Diamonds;
             this.cbxDeck.TabIndex = 5;
+            this.cbxDeck.TabStop = false;
             this.cbxDeck.Click += new System.EventHandler(this.cbxDeck_Click);
-            this.cbxDeck.Load += new System.EventHandler(this.cbxDeck_Load);
             // 
             // cbxTrumpCard
             // 
@@ -277,12 +269,13 @@ namespace Durak
             this.cbxTrumpCard.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cbxTrumpCard.FaceUp = true;
             this.cbxTrumpCard.Location = new System.Drawing.Point(54, 40);
-            this.cbxTrumpCard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxTrumpCard.Margin = new System.Windows.Forms.Padding(4);
             this.cbxTrumpCard.Name = "cbxTrumpCard";
             this.cbxTrumpCard.Rank = CardLib.CardRank.Ace;
-            this.cbxTrumpCard.Size = new System.Drawing.Size(119, 187);
+            this.cbxTrumpCard.Size = new System.Drawing.Size(119, 158);
             this.cbxTrumpCard.Suit = CardLib.CardSuit.Diamonds;
             this.cbxTrumpCard.TabIndex = 19;
+            this.cbxTrumpCard.TabStop = false;
             // 
             // frmGame
             // 
@@ -299,7 +292,6 @@ namespace Durak
             this.Controls.Add(this.pnlComputerCards);
             this.Controls.Add(this.pnlPlayerCards);
             this.Controls.Add(this.pnlActiveCards);
-            this.Controls.Add(this.btnReset);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.cbxSuit);
             this.Controls.Add(this.cbxRank);
@@ -333,7 +325,6 @@ namespace Durak
         private System.Windows.Forms.Label lblClickedState;
         private System.Windows.Forms.Label lblFlippedState;
         private System.Windows.Forms.Button btnExit;
-        private System.Windows.Forms.Button btnReset;
         private System.Windows.Forms.Panel pnlActiveCards;
         private System.Windows.Forms.Panel pnlPlayerCards;
         private System.Windows.Forms.Panel pnlComputerCards;
