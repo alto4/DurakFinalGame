@@ -61,24 +61,13 @@ namespace ControlsLib.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 						Durak  Logs:
-        ///	Nick SturchF plays the 6 of hearts as an attack.
-        ///	Computer responds with a 7 of diamonds, a trump card! Successful defense.
-        ///	Nick SturchF plays the 8 of diamonds as an attack, a trump card!
-        ///	Computer cannot defend and picks up the cards in play. 
-        ///	Computer plays the 8 of diamonds as an attack, a trump card!
-        ///						
-        ///						
-        ///						
-        ///					 Statistics  List:
-        ///					 
-        ///       | Player Name  |  Wins  |  Ties  | Losses |   				
-        ///	   | Nick SturchF |   99   |   11   |   09   |
-        ///	   | Scott  [rest of string was truncated]&quot;;.
+        ///   Looks up a localized string similar to NICK,15,06,08
+        ///SCOT,11,08,04
+        ///ED  ,18,02,10.
         /// </summary>
-        internal static string LogsAndStats {
+        internal static string DurakStats {
             get {
-                return ResourceManager.GetString("LogsAndStats", resourceCulture);
+                return ResourceManager.GetString("DurakStats", resourceCulture);
             }
         }
     }

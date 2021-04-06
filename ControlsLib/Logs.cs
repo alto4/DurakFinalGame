@@ -15,6 +15,20 @@ namespace ControlsLib
         public frmLogs()
         {
             InitializeComponent();
+
+            Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>(StatsPlayer.CreatePlayerDictionary());
+
+            lblTestLabel.Text = "Player Name | Wins | Ties | Losses";
+            foreach (KeyValuePair<string, StatsPlayer> player in allPlayers)
+            {
+
+                lblTestLabel.Text += Environment.NewLine + player.ToString();
+            }
+        }
+
+        public void frmLogs_Load(object sender, EventArgs e)
+        {
+            
         }
     }
 }

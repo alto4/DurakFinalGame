@@ -95,20 +95,22 @@ namespace ControlsLib
         {
             const int NUM_OF_COLUMNS = 4;//we know the number of columns in this case
             //Creates an array of strings that equal an individual line from LogsAndStats.dat
-            string[] lineCount = Properties.Resources.LogsAndStats.Split('\n');
-            int numberOfLines = lineCount.Length; //gives us the number of lines
-            StatsPlayer[] players = new StatsPlayer[numberOfLines]; //a place to hold our players
+            string[] playersRaw = Properties.Resources.DurakStats.Split('\n');
+            //int numberOfLines = playersRaw.Length; //gives us the number of lines
+            //StatsPlayer[] players = new StatsPlayer[numberOfLines]; //a place to hold our players
             // before transferring them to the dictionary
-            var allPlayers = new Dictionary<string, StatsPlayer>(); //Initialize the dictionary
-            //int lineCounter = 0;
-            string line;
+            Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>(); //Initialize the dictionary
+            int lineCounter = 0;
+            //string line;
             //Declare a StreamReader
-            StreamReader file = new StreamReader(Properties.Resources.LogsAndStats);
+           // StreamReader file = new StreamReader(Properties.Resources.DurakStats);
 
-            while ((line = file.ReadLine()) != null) //assigns the current line to our variable, and does so until it is null 
+            //while ((line = file.ReadLine()) != null) //assigns the current line to our variable, and does so until it is null 
+            while (lineCounter < playersRaw.Length)
             {
                 int columnCounter = 0;
-                string[] columns = line.Split(',');
+                string[] columns = playersRaw[lineCounter].Split(','); //splits the line variable into an array using 
+                                                    // a comma as a delimeter
                 StatsPlayer tempPlayer = new StatsPlayer();
 
                 while(columnCounter < NUM_OF_COLUMNS) //this while loop is used for assigning data 
@@ -136,7 +138,7 @@ namespace ControlsLib
                     columnCounter++;
                 }
                 allPlayers.Add(tempPlayer.getPlayerName(), tempPlayer);
-                //lineCounter++;
+                lineCounter++;
             }
             return allPlayers; //return the dictionary
         }
