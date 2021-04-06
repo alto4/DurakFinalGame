@@ -276,6 +276,7 @@ namespace Durak
             {
                 Panel thisPanel = sender as Panel;
                 Panel fromPanel = dragCard.Parent as Panel;
+                CardBox.CardBox aCardBox = new CardBox.CardBox();
 
                 if (thisPanel != null && fromPanel != null)
                 {
@@ -286,8 +287,32 @@ namespace Durak
 
                         RealignCards(thisPanel);
                         RealignCards(fromPanel);
+
+
+                        // WHERE GAME LOGIN KICKS OFF 
+                        // This could also be a separate event handler triggering AI function to consider best choice - currently just choosing the first card
+                        // NOTE index 0 is on right side of computer panel of cards
+
+                        // AI Function to determine best card
+                        int computerChoiceIndex = determineBestPlay(pnlComputerCards);
+
+                        if (computerChoiceIndex >= 0)
+                        {
+                            CardBox.CardBox computerCardBox = pnlComputerCards.Controls[computerChoiceIndex] as CardBox.CardBox;
+                            aCardBox.Controls.Remove(computerCardBox);
+                            pnlActiveCards.Controls.Add(computerCardBox);
+                            txtPlayHistory.Text += "Computer responds with card immediately." + Environment.NewLine;
+                        }
+                        else
+                        {
+                            txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
+                        }
+
+
                     }
                 }
+
+                RealignAllCards();
             }
         }
 
@@ -334,7 +359,6 @@ namespace Durak
                     // This could also be a separate event handler triggering AI function to consider best choice - currently just choosing the first card
                     // NOTE index 0 is on right side of computer panel of cards
 
-
                     // AI Function to determine best card
                     int computerChoiceIndex = determineBestPlay(pnlComputerCards);
 
@@ -344,7 +368,7 @@ namespace Durak
                         aCardBox.Controls.Remove(computerCardBox);
                         pnlActiveCards.Controls.Add(computerCardBox);
                         txtPlayHistory.Text += "Computer responds with card immediately." + Environment.NewLine;
-                    } 
+                    }
                     else
                     {
                         txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
@@ -363,7 +387,7 @@ namespace Durak
         }
 
         /// <summary>
-        /// When a drag is enters a card, enter the parent panel instead.
+        /// When a drag enters a card, enter the parent panel instead.
         /// </summary>
         private void CardBox_DragEnter(object sender, DragEventArgs e)
         {
@@ -391,6 +415,7 @@ namespace Durak
             {
                 // Do the operation on the parent panel instead
                 Panel_DragDrop(aCardBox.Parent, e);
+
             }
         }
 
