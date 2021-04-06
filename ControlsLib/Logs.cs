@@ -18,11 +18,10 @@ namespace ControlsLib
 
             Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>(StatsPlayer.CreatePlayerDictionary());
 
-            lblTestLabel.Text = "Player Name | Wins | Ties | Losses";
-            foreach (KeyValuePair<string, StatsPlayer> player in allPlayers)
+            lblTestLabel.Text = "Player Name | Wins | Ties | Losses"; //prints the header
+            for (int i = 0; i < allPlayers.Count; i++)
             {
-
-                lblTestLabel.Text += Environment.NewLine + player.ToString();
+                lblTestLabel.Text += Environment.NewLine + allPlayers.ElementAt(i).ToString(); //Iterates through the dictionary
             }
         }
 

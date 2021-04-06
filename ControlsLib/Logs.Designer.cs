@@ -35,6 +35,8 @@ namespace ControlsLib
             // 
             // lblTestLabel
             // 
+            this.lblTestLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.lblTestLabel.ForeColor = System.Drawing.SystemColors.Control;
             this.lblTestLabel.Location = new System.Drawing.Point(12, 9);
             this.lblTestLabel.Name = "lblTestLabel";
             this.lblTestLabel.Size = new System.Drawing.Size(576, 245);

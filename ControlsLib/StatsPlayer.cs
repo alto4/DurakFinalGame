@@ -90,7 +90,7 @@ namespace ControlsLib
         /// <summary>
         /// This method will return a dictionary of StatsPlayers that can be used later for output
         /// </summary>
-        /// <returns>StatsPlayer[]</returns>
+        /// <returns>Dictionary<string, StatsPlayer></returns>
         public static Dictionary<string, StatsPlayer> CreatePlayerDictionary()
         {
             const int NUM_OF_COLUMNS = 4;//we know the number of columns in this case
@@ -138,6 +138,7 @@ namespace ControlsLib
                     columnCounter++;
                 }
                 allPlayers.Add(tempPlayer.getPlayerName(), tempPlayer);
+                Console.WriteLine(allPlayers.ElementAt(lineCounter).ToString());
                 lineCounter++;
             }
             return allPlayers; //return the dictionary
