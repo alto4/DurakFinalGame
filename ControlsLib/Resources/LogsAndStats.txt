@@ -1,0 +1,15 @@
+						Durak  Logs:
+	Nick SturchF plays the 6 of hearts as an attack.
+	Computer responds with a 7 of diamonds, a trump card! Successful defense.
+	Nick SturchF plays the 8 of diamonds as an attack, a trump card!
+	Computer cannot defend and picks up the cards in play. 
+	Computer plays the 8 of diamonds as an attack, a trump card!
+						
+						
+						
+					 Statistics  List:
+					 
+       | Player Name  |  Wins  |  Ties  | Losses |   				
+	   | Nick SturchF |   99   |   11   |   09   |
+	   | Scott Alton  |   34   |   15   |   29   |
+	   | Ed Martin    |   46   |   23   |   13   |
