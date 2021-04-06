@@ -74,8 +74,15 @@ namespace Durak
 
             StartGame();
 
+            //When the StreamReader and StreamWriters are incorporated, we will pull a Vector
+            //of players from a csv, or other text file. 
+            //This is where we will pull all the previous stats and put them into a Vector, 
+            //Then we are going to search the vector for the username to see if it exists,
+            //if it does, then our current player equals that player, otherwise, it will be a
+            //new player to add to the stats.
+
             //Testing StatsPlayer Methods
-            txtPlayHistory.Text += Environment.NewLine + playerName + "! Welcome to the game!";
+            txtPlayHistory.Text += Environment.NewLine + "! Welcome to the game, " + playerName + "!";
 
 
             //txtPlayHistory.Text += "\nThere are now " + mainDeck.Count() + " cards left in the deck";

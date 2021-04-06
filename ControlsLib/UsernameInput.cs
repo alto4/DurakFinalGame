@@ -38,7 +38,7 @@ namespace ControlsLib
         {
             string username = txtUsername.Text;
 
-            if (username.Length < MIN_NAME_LENGTH || username.Length > MAX_NAME_LENGTH)
+            if (username.Length <= MIN_NAME_LENGTH || username.Length > MAX_NAME_LENGTH)
             {
                 lblPrompt.Text = "Your username must be 1-4 characters in length";
                 txtUsername.Text = "";
@@ -48,12 +48,7 @@ namespace ControlsLib
                 //Make username all caps
                 username.ToUpper();
 
-                //When the StreamReader and StreamWriters are incorporated, we will pull a Vector
-                //of players from a csv, or other text file. 
-                //This is where we will pull all the previous stats and put them into a Vector, 
-                //Then we are going to search the vector for the username to see if it exists,
-                //if it does, then our current player equals that player, otherwise, it will be a
-                //new player to add to the stats.
+                
 
 
                 //But for now just create a player
