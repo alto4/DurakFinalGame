@@ -127,17 +127,10 @@ namespace Durak
                     aCardBox.Size = normalCardSize;
 
                     //wire the event handlers (NEEDS TO BE A CARDBOX)
-                    aCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
-
-                    //wire cardbox mouse enter
-                    aCardBox.MouseEnter += CardBox_MouseEnter;
-                    //wire cardbox mouse leave
-                    aCardBox.MouseLeave += CardBox_MouseLeave;
+                    //aCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
 
                     // wire drag drop
-                    //aCardBox.MouseDown += CardBox_MouseDown;
-                    //aCardBox.DragEnter += CardBox_DragEnter;
-                    //aCardBox.DragDrop += CardBox_DragDrop;
+                    WireCardBoxEventHandlers(aCardBox);
 
                     //add new controls to the appropriate panel
                     pnlPlayerCards.Controls.Add(aCardBox);
@@ -609,12 +602,8 @@ namespace Durak
                     playerCardBox.Size = normalCardSize;
 
                     //Wire events
-                    playerCardBox.MouseEnter += CardBox_MouseEnter; //wire cardbox mouse enter
-                    playerCardBox.MouseLeave += CardBox_MouseLeave; //wire cardbox mouse leave
-                    //playerCardBox.MouseDown += CardBox_MouseDown;
-                    //playerCardBox.DragEnter += CardBox_DragEnter;
-                    //playerCardBox.DragDrop += CardBox_DragDrop;
-                    playerCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
+                    WireCardBoxEventHandlers(playerCardBox);
+                    //playerCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
                     //click or drag logic here at a later date
 
 
@@ -659,6 +648,18 @@ namespace Durak
                 cbxDeck.Card = mainDeck.DrawCard();
             }
             RealignCards(pnlComputerCards);
+        }
+
+        private void WireCardBoxEventHandlers(CardBox.CardBox aCardBox)
+        {
+            //wire cardbox mouse enter
+            aCardBox.MouseEnter += CardBox_MouseEnter;
+            //wire cardbox mouse leave
+            aCardBox.MouseLeave += CardBox_MouseLeave;
+
+            aCardBox.MouseDown += CardBox_MouseDown;
+            aCardBox.DragEnter += CardBox_DragEnter;
+            aCardBox.DragDrop += CardBox_DragDrop;
         }
 
         #endregion

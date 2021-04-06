@@ -128,12 +128,20 @@ namespace CardBox
         /// </summary>
 
         public event EventHandler CardFlipped;
-
+        // click
         new public event EventHandler Click;
 
+        // for enlarge
         new public event EventHandler MouseEnter;
 
         new public event EventHandler MouseLeave;
+
+        // for drag and drop
+        new public event MouseEventHandler MouseDown;
+
+        new public event DragEventHandler DragEnter;
+
+        new public event DragEventHandler DragDrop;
 
         /// <summary>
         /// Event handler for when user clicks on the card picturebox
@@ -142,35 +150,32 @@ namespace CardBox
         /// <param name="e"></param>
         private void pbMyPictureBox_Click(object sender, EventArgs e)
         {
-            if (Click != null)
-            {
-                Click(this, e);
-            }
+            Click?.Invoke(this, e);
         }
 
         private void pbMyPictureBox_MouseEnter(object sender, EventArgs e)
         {
-            //MouseEnter.Invoke(this, EventArgs.Empty);
-
-            if (MouseEnter != null)
-            {
-                MouseEnter(this, e);
-            }
+            MouseEnter?.Invoke(this, e);
         }
 
         private void pbMyPictureBox_MouseLeave(object sender, EventArgs e)
         {
-            //MouseLeave.Invoke(this, EventArgs.Empty);
+            MouseLeave?.Invoke(this, e);
+        }
 
-            if (MouseLeave != null)
-            {
-                MouseLeave(this, e);
-            }
+        private void pbMyPictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            MouseDown?.Invoke(this, e);
         }
 
         private void pbMyPictureBox_DragEnter(object sender, DragEventArgs e)
         {
+            DragEnter?.Invoke(this, e);
+        }
 
+        private void pbMyPictureBox_DragDrop(object sender, DragEventArgs e)
+        {
+            DragDrop?.Invoke(this, e);
         }
     }
 }

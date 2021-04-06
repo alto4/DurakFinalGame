@@ -115,6 +115,7 @@ namespace Durak
             // 
             // pnlActiveCards
             // 
+            this.pnlActiveCards.AllowDrop = true;
             this.pnlActiveCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
             this.pnlActiveCards.Location = new System.Drawing.Point(455, 215);
             this.pnlActiveCards.Margin = new System.Windows.Forms.Padding(4);
