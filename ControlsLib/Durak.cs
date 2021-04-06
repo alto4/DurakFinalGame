@@ -18,6 +18,9 @@ namespace Durak
 
         #region FIELDS AND PROPERTIES
 
+        //Testing Player Class Methods
+        StatsPlayer nick = new StatsPlayer();
+        
         // generate PlayingCard objects from a Deck
         Deck mainDeck = new Deck(SizeOfDecks.Normal);
 
@@ -60,16 +63,17 @@ namespace Durak
 
             StartGame();
 
-               
+            //Testing StatsPlayer Methods
+            txtPlayHistory.Text += nick.ToString();
 
-           
+
             //txtPlayHistory.Text += "\nThere are now " + mainDeck.Count() + " cards left in the deck";
 
             //Wire out the out of cards event handler
             //mainDeck.OutOfCards MAKE A METHOD TO TRIGGER AN OUT OF CARDS EVENT
             //Show the number of cards left in the deck
 
-            
+
         }
 
 

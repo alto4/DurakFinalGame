@@ -9,7 +9,7 @@ namespace ControlsLib
     /// <summary>
     /// Class will be used for persistant statistics log
     /// </summary>
-    class Player
+    class StatsPlayer
     {
         //Private Variables
         private static string playerName;
@@ -19,7 +19,7 @@ namespace ControlsLib
 
         //Constructors
         //Default Constructor
-        public Player() 
+        public StatsPlayer() 
         {
             //For testing only
             setPlayerName("Nick");
@@ -28,7 +28,7 @@ namespace ControlsLib
             setPlayerLosses(5);
         }
         //Parameterized Constructor
-        public Player(string name, int wins, int ties, int losses)
+        public StatsPlayer(string name, int wins, int ties, int losses)
         {
             setPlayerName(name);
             setPlayerWins(wins);
@@ -81,7 +81,7 @@ namespace ControlsLib
         {
             string tempString="";
 
-            tempString += "  " + getPlayerName() + ": Wins: " + getPlayerWins().ToString();
+            tempString += " " + getPlayerName() + ": Wins: " + getPlayerWins().ToString();
             tempString += "  Ties: " + getPlayerTies().ToString() + "  Losses: " + getPlayerLosses().ToString();
 
             return tempString;

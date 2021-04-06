@@ -60,7 +60,7 @@
     <Compile Include="Logs.Designer.cs">
       <DependentUpon>Logs.cs</DependentUpon>
     </Compile>
-    <Compile Include="Player.cs" />
+    <Compile Include="StatsPlayer.cs" />
     <Compile Include="Rules.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -78,6 +78,12 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="StatsPrompt.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="StatsPrompt.Designer.cs">
+      <DependentUpon>StatsPrompt.cs</DependentUpon>
     </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
@@ -100,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Rules.resx">
       <DependentUpon>Rules.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StatsPrompt.resx">
+      <DependentUpon>StatsPrompt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
