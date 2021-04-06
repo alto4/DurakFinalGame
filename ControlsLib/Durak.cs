@@ -64,15 +64,29 @@ namespace Durak
             // seeing the order of the deck in debug console for debugging
             mainDeck.ShowDeck(); // This shows all cards, turn this off when done development
             System.Diagnostics.Debug.WriteLine(mainDeck.ToString());
+            try
+            {
+                InitialDeal();
 
-            InitialDeal();
-            PlayingCard firstCard = mainDeck.DrawCard();
-            PlayingCard firstPlayableCard = mainDeck.DrawCard();
+                PlayingCard firstCard = mainDeck.DrawCard();
+                PlayingCard firstPlayableCard = mainDeck.DrawCard();
 
-            this.cbxTrumpCard.Card = firstCard;
-            this.cbxDeck.Card = firstPlayableCard;
+                this.cbxTrumpCard.Card = firstCard;
+                this.cbxDeck.Card = firstPlayableCard;
 
-            txtPlayHistory.Text += firstCard.Suit + " is the initial trump suit.";
+                // add the trump card back but at the last place in the deck
+                mainDeck.AddCardAtBottom(firstCard);
+
+                txtPlayHistory.Text += firstCard.Suit + " is the initial trump suit.";
+            } 
+            catch (IndexOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("Exception catched when trying to draw card out of index.");
+            }
+
+               
+
+           
             //txtPlayHistory.Text += "\nThere are now " + mainDeck.Count() + " cards left in the deck";
 
             //Wire out the out of cards event handler
@@ -114,62 +128,80 @@ namespace Durak
                 cbxDeck.CardOrientation = Orientation.Horizontal;
             }
             */
-            //If the deck is empty (no image)
-            //if (stmt)
-            //{
-            //Reset the dealer
-            //}
-            //else //otherwise           
-            
-            txtPlayHistory.Text += cbxDeck.Card.ToString();
-            
-            //Create a new card
-            PlayingCard card = cbxDeck.Card;
-            card.FaceUp = true;
-
-            txtPlayHistory.Text += card.ToString();
-            if (card != null )
+            if (mainDeck.Size >= 0)
             {
-                //Create new cardbox control based on card drawn
-                CardBox.CardBox aCardBox = new CardBox.CardBox(card);
+                PlayingCard card = new PlayingCard();
 
-                //wire the event handlers (NEEDS TO BE A CARDBOX)
-                aCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
+                SettingsWithCards();     
 
-                //wire cardbox mouse enter
-                aCardBox.MouseEnter += CardBox_MouseEnter;
-                //wire cardbox mouse leave
-                aCardBox.MouseLeave += CardBox_MouseLeave; 
+                txtPlayHistory.Text += cbxDeck.Card.ToString();
 
-                //add new controls to the appropriate panel
-                pnlPlayerCards.Controls.Add(aCardBox);
+                //Create a new card
+                card = (mainDeck.Size == 0) ? cbxTrumpCard.Card : cbxDeck.Card;
 
+                card.FaceUp = true;
+                txtPlayHistory.Text += card.ToString();
 
-                txtPlayHistory.Text += Environment.NewLine + "Cards in players deck: " + (pnlPlayerCards.Controls.Count.ToString());
-                //txtPlayHistory.Text += Environment.NewLine + "Cards in dealer deck: " + mainDeck.ToString();
-                cbxDeck.Card = mainDeck.DrawCard();
-
-                foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
+                if (card != null )
                 {
-                    if (card.GetType().ToString() == "CardLib.PlayingCard")
+
+                    //Create new cardbox control based on card drawn
+                    CardBox.CardBox aCardBox = new CardBox.CardBox(card);
+
+                    //wire the event handlers (NEEDS TO BE A CARDBOX)
+                    aCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
+
+                    //wire cardbox mouse enter
+                    aCardBox.MouseEnter += CardBox_MouseEnter;
+                    //wire cardbox mouse leave
+                    aCardBox.MouseLeave += CardBox_MouseLeave; 
+
+                    //add new controls to the appropriate panel
+                    pnlPlayerCards.Controls.Add(aCardBox);
+
+
+                    txtPlayHistory.Text += Environment.NewLine + "Cards in players deck: " + (pnlPlayerCards.Controls.Count.ToString());
+                    //txtPlayHistory.Text += Environment.NewLine + "Cards in dealer deck: " + mainDeck.ToString();
+                
+                    try
                     {
-                        //txtPlayHistory.Text += "Player card observed";
-                        //playerCard.FaceUp = true;
-                        txtPlayHistory.Text += Environment.NewLine + playerCard.Card.DebugString();
+                        if (mainDeck.Size == 0)
+                        {
+                            SettingsOutOfCards();
+                        }
+                        else
+                        {
+                            cbxDeck.Card = mainDeck.DrawCard();
+                        }
+                
+                        foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
+                        {
+                            if (card.GetType().ToString() == "CardLib.PlayingCard")
+                            {
+                                //txtPlayHistory.Text += "Player card observed";
+                                //playerCard.FaceUp = true;
+                                txtPlayHistory.Text += Environment.NewLine + playerCard.Card.DebugString();
+                            }
+                            else
+                            {
+                                txtPlayHistory.Text += card.GetType().ToString();
+                            }
+                        }
+
+                        //realign the controls
+                        RealignAllCards();
                     }
-                    else
+                    catch (IndexOutOfRangeException)
                     {
-                        txtPlayHistory.Text += card.GetType().ToString();
+                        System.Diagnostics.Debug.WriteLine("Exception catched when trying to draw card out of index.");
                     }
+
+
+
                 }
 
-                //realign the controls
-                RealignAllCards();
-            }
-
-            //display the number of cards left
-
-            
+                //display the number of cards left
+            } 
 
         }
 
@@ -367,7 +399,30 @@ namespace Durak
             }
         }
 
-         /// <summary>
+        /// <summary>
+        /// Switching settings of several objects to show the deck is not out of cards
+        /// </summary>
+        private void SettingsWithCards()
+        {
+            lblOutOfCards.Visible = false;
+            cbxDeck.Enabled = true;
+            cbxTrumpCard.Visible = true;
+            lblTrumpCard.Visible = true;
+        }
+
+        /// <summary>
+        /// Switching settings of cbxDeck to show the deck is out of cards
+        /// </summary>
+        private void SettingsOutOfCards()
+        {
+            lblOutOfCards.Visible = true;
+            cbxDeck.Enabled = false;
+            cbxTrumpCard.Visible = false;
+            lblTrumpCard.Visible = false;
+        }
+
+
+        /// <summary>
         /// Repositions the cards in a panel so that they are evenly distributed in the area available.
         /// </summary>
         /// <param name="panelHand"></param>
@@ -493,6 +548,12 @@ namespace Durak
         #endregion
 
         #region EMPTY EVENT HANDLERS
+
+        private void lblOutOfCards_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void btnReset_Click(object sender, EventArgs e)
         {
 
@@ -566,5 +627,7 @@ namespace Durak
             return idealChoiceIndex;
         }
         #endregion
+
+        
     }
 }

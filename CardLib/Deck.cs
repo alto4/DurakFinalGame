@@ -27,6 +27,14 @@ namespace CardLib
         // instantiate a CardCollection object
         private readonly CardCollection cards = new CardCollection();
 
+        public int Size
+        {
+            get
+            {
+                return cards.Count;
+            }
+        }
+
         /// <summary>
         /// Default constructor for a deck of cards.
         /// </summary>
@@ -108,7 +116,7 @@ namespace CardLib
         /// <returns>The Card at this index</returns>
         public PlayingCard GetCard(int cardIndex)
         {
-            if (cardIndex >= 0 && cardIndex <= 51)
+            if (cardIndex >= 0 && cardIndex < cards.Count)
             {
                 return cards[cardIndex]; // card number 0 to SIZE_OF_STANDARD_DECK
             }
@@ -118,6 +126,13 @@ namespace CardLib
             }
         }
 
+        public void AddCardAtBottom(PlayingCard card)
+        {
+            // put new card at botton of deck
+            cards.Insert(cards.Count, card);
+            //System.Diagnostics.Debug.WriteLine(cards.Count);
+        }
+
         /// <summary>
         /// return the card at the param index and remove it from the deck
         /// </summary>
@@ -125,7 +140,7 @@ namespace CardLib
         /// <returns>The Card at this index</returns>
         public PlayingCard DrawCard(int cardIndex = 0)
         {
-            if (cardIndex >= 0 && cardIndex <= 51)
+            if (cardIndex >= 0 && cardIndex < cards.Count)
             {
                 cards[cardIndex].FaceUp = true;
                 PlayingCard tempCard = cards[cardIndex];
@@ -150,7 +165,7 @@ namespace CardLib
 
             for (int j = 0; j < 5; j++)
             {
-                for (int i = 0; i < cards.Count(); i++)
+                for (int i = 0; i < cards.Count; i++)
                 {
                     // Random index for each position
                     randIndex = i + randSource.Next(cards.Count() - i);

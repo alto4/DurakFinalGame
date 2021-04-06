@@ -49,6 +49,7 @@ namespace Durak
             this.panel1 = new System.Windows.Forms.Panel();
             this.btnRules = new System.Windows.Forms.Button();
             this.lblTrumpCard = new System.Windows.Forms.Label();
+            this.lblOutOfCards = new System.Windows.Forms.Label();
             this.cbxDeck = new CardBox.CardBox();
             this.cbxTrumpCard = new CardBox.CardBox();
             this.panel1.SuspendLayout();
@@ -228,11 +229,24 @@ namespace Durak
             this.lblTrumpCard.AutoSize = true;
             this.lblTrumpCard.BackColor = System.Drawing.Color.White;
             this.lblTrumpCard.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTrumpCard.Location = new System.Drawing.Point(52, 13);
+            this.lblTrumpCard.Location = new System.Drawing.Point(53, 13);
             this.lblTrumpCard.Name = "lblTrumpCard";
             this.lblTrumpCard.Size = new System.Drawing.Size(121, 24);
             this.lblTrumpCard.TabIndex = 20;
             this.lblTrumpCard.Text = "Trump Card";
+            // 
+            // lblOutOfCards
+            // 
+            this.lblOutOfCards.AutoSize = true;
+            this.lblOutOfCards.BackColor = System.Drawing.Color.Crimson;
+            this.lblOutOfCards.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblOutOfCards.Location = new System.Drawing.Point(56, 166);
+            this.lblOutOfCards.Name = "lblOutOfCards";
+            this.lblOutOfCards.Size = new System.Drawing.Size(114, 20);
+            this.lblOutOfCards.TabIndex = 21;
+            this.lblOutOfCards.Text = "Out Of Cards!";
+            this.lblOutOfCards.Visible = false;
+            this.lblOutOfCards.Click += new System.EventHandler(this.lblOutOfCards_Click);
             // 
             // cbxDeck
             // 
@@ -276,6 +290,7 @@ namespace Durak
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(28)))), ((int)(((byte)(85)))));
             this.ClientSize = new System.Drawing.Size(1301, 698);
+            this.Controls.Add(this.lblOutOfCards);
             this.Controls.Add(this.cbxDeck);
             this.Controls.Add(this.lblTrumpCard);
             this.Controls.Add(this.cbxTrumpCard);
@@ -329,6 +344,7 @@ namespace Durak
         private System.Windows.Forms.Button btnRules;
         private CardBox.CardBox cbxTrumpCard;
         private System.Windows.Forms.Label lblTrumpCard;
+        private System.Windows.Forms.Label lblOutOfCards;
     }
 }
 
