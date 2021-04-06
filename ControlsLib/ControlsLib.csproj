@@ -60,6 +60,7 @@
     <Compile Include="Logs.Designer.cs">
       <DependentUpon>Logs.cs</DependentUpon>
     </Compile>
+    <Compile Include="Player.cs" />
     <Compile Include="Rules.cs">
       <SubType>Form</SubType>
     </Compile>
