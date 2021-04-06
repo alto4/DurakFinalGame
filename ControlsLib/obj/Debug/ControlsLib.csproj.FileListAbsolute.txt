@@ -106,3 +106,5 @@ D:\Computer Programmer DC\Semester 4\OOP\Final Project\DurakMain\ControlsLib\obj
 D:\Computer Programmer DC\Semester 4\OOP\Final Project\DurakMain\ControlsLib\obj\Debug\ControlsLib.csproj.CopyComplete
 D:\Computer Programmer DC\Semester 4\OOP\Final Project\DurakMain\ControlsLib\obj\Debug\ControlsLib.dll
 D:\Computer Programmer DC\Semester 4\OOP\Final Project\DurakMain\ControlsLib\obj\Debug\ControlsLib.pdb
+D:\Computer Programmer DC\Semester 4\OOP\Final Project\DurakMain\ControlsLib\obj\Debug\ControlsLib.StatsPrompt.resources
+D:\Computer Programmer DC\Semester 4\OOP\Final Project\DurakMain\ControlsLib\obj\Debug\ControlsLib.UsernameInput.resources

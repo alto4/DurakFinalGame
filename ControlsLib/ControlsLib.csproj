@@ -85,6 +85,12 @@
     <Compile Include="StatsPrompt.Designer.cs">
       <DependentUpon>StatsPrompt.cs</DependentUpon>
     </Compile>
+    <Compile Include="UsernameInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UsernameInput.Designer.cs">
+      <DependentUpon>UsernameInput.cs</DependentUpon>
+    </Compile>
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +115,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="StatsPrompt.resx">
       <DependentUpon>StatsPrompt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UsernameInput.resx">
+      <DependentUpon>UsernameInput.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

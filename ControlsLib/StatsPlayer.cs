@@ -27,7 +27,7 @@ namespace ControlsLib
             setPlayerTies(3);
             setPlayerLosses(5);
         }
-        //Parameterized Constructor
+        //Parameterized Constructors
         public StatsPlayer(string name, int wins, int ties, int losses)
         {
             setPlayerName(name);
@@ -35,6 +35,15 @@ namespace ControlsLib
             setPlayerTies(ties);
             setPlayerLosses(losses);
         }
+
+        public StatsPlayer(string name)
+        {
+            setPlayerName(name);
+            setPlayerWins(0);
+            setPlayerTies(0);
+            setPlayerLosses(0);
+        }
+
         //Getters and Setters
         public string getPlayerName()
         {

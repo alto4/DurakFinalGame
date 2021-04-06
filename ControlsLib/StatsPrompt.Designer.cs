@@ -43,6 +43,7 @@ namespace ControlsLib
             this.btnYes.TabIndex = 1;
             this.btnYes.Text = "&Yes!";
             this.btnYes.UseVisualStyleBackColor = true;
+            this.btnYes.Click += new System.EventHandler(this.btnYes_Click);
             // 
             // btnNo
             // 

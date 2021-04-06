@@ -22,27 +22,27 @@ namespace ControlsLib
         private void btnYes_Click(object sender, EventArgs e)
         {
             // hiding frmStatsPrompt
-            this.Hide();
+            Hide();
 
             // show the new form to take user input for their name
-            frmGame game = new frmGame(); //create an instance
-            game.ShowDialog(); //show the form
+            UsernameInput window = new UsernameInput(); //create an instance
+            window.ShowDialog(); //show the form
 
             // close frmStatsPrompt
-            this.Close();
+            Close();
         }
 
         private void btnNo_Click(object sender, EventArgs e)
         {
             // hiding frmStatsPrompt
-            this.Hide();
+            Hide();
 
             // do not take their name, play the game
             frmGame game = new frmGame(); //create an instance
             game.ShowDialog(); //show the form
 
             // close frmMainMenu
-            this.Close();
+            Close();
         }
     }
 }
