@@ -658,6 +658,7 @@ namespace Durak
                     pnlPlayerCards.Controls.Add(playerCardBox);
                     cbxDeck.Card = mainDeck.DrawCard();
 
+                    card = cbxDeck.Card;
                     CardBox.CardBox computerCardBox = new CardBox.CardBox(card);
 
                     computerCardBox.Size = normalCardSize;
