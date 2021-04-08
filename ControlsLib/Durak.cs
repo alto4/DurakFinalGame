@@ -38,7 +38,9 @@ namespace Durak
         // to collect all of the card panels
         List<Panel> cardPanels = new List<Panel>();
 
-
+        CardRank rankOfLastDefense;
+        Boolean playerAttacking = true;
+        Boolean initialAttackDefended = false;
         #endregion
 
         #region FORM AND STATIC CONTROL EVENT HANDLERS 
@@ -324,10 +326,15 @@ namespace Durak
                             aCardBox.Controls.Remove(computerCardBox);
                             pnlActiveCards.Controls.Add(computerCardBox);
                             txtPlayHistory.Text += "Computer responds with card immediately." + Environment.NewLine;
+
+
+                            CompareCards((CardBox.CardBox)pnlActiveCards.Controls[0], computerCardBox, this.initialAttackDefended);
+                                                
                         }
                         else
                         {
                             txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
+                            MessageBox.Show("Attack successful");
                         }
 
 
@@ -758,9 +765,7 @@ namespace Durak
                 if (computerHand.Controls[i].GetType().ToString().Contains("CardBox"))
                 {
                     CardBox.CardBox currentCard = computerHand.Controls[i] as CardBox.CardBox;
-                    
-                    
-                   
+
                     // Compare by rank foremost, unless case where computer possesses a trump suited card and they are up against a non-trump card
                     if ((currentCard.Card.Rank > cardToBeat.Card.Rank) || (currentCard.Card.Suit == cbxTrumpCard.Card.Suit && (cardToBeat.Card.Suit != cbxTrumpCard.Card.Suit)))
                     {
@@ -791,5 +796,37 @@ namespace Durak
         }
 
         #endregion
+
+        
+        private void CompareCards(CardBox.CardBox attackingCard, CardBox.CardBox defendingCard, Boolean initialAttackDefended)
+        {
+            if (initialAttackDefended)
+            {
+                if(!attackingCard.Card.Rank.Equals(defendingCard.Card.Rank))
+                {
+                    MessageBox.Show("Sorry attacker. You can only follow an attack with a card of the same suit as the last defense.");
+                    CardBox.CardBox invalidCard = (CardBox.CardBox)pnlActiveCards.Controls[0];
+                    pnlActiveCards.Controls.RemoveAt(0);
+                    pnlPlayerCards.Controls.Add(invalidCard);
+
+                    return;
+                } 
+            }
+
+            if(defendingCard.Card.Rank > attackingCard.Card.Rank || defendingCard.Card.Suit == cbxTrumpCard.Card.Suit && attackingCard.Card.Suit != cbxTrumpCard.Card.Suit)
+            {
+                MessageBox.Show("Successfully defended. You may attack again, but only with a card with a rank of " + defendingCard.Card.ToString());
+
+                this.rankOfLastDefense = defendingCard.Rank;
+                initialAttackDefended = true;
+            }
+            else
+            {
+                MessageBox.Show("Attacker wins. ");
+            }
+
+            //txtPlayerAttacker.Visible = false;
+            //txtComputerAttacker.Visible = true;
+        }
     }
 }
