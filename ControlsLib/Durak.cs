@@ -401,6 +401,7 @@ namespace Durak
                     else
                     {
                         txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
+                        MessageBox.Show("Computer has no choices.");
                     }
 
                     // Determine winner
@@ -502,7 +503,7 @@ namespace Durak
         {
             // Set dragCard 
             dragCard = sender as CardBox.CardBox;
-
+                       
             if (dragCard != null)
             {
                 // Set the data to be dragged and the allowed effect dragging will have.
@@ -804,7 +805,7 @@ namespace Durak
             {
                 if(!attackingCard.Card.Rank.Equals(defendingCard.Card.Rank))
                 {
-                    MessageBox.Show("Sorry attacker. You can only follow an attack with a card of the same suit as the last defense.");
+                    MessageBox.Show("Sorry attacker. You can only follow an attack with a card of the same rank as the last defense.");
                     CardBox.CardBox invalidCard = (CardBox.CardBox)pnlActiveCards.Controls[0];
                     pnlActiveCards.Controls.RemoveAt(0);
                     pnlPlayerCards.Controls.Add(invalidCard);
@@ -815,7 +816,10 @@ namespace Durak
 
             if(defendingCard.Card.Rank > attackingCard.Card.Rank || defendingCard.Card.Suit == cbxTrumpCard.Card.Suit && attackingCard.Card.Suit != cbxTrumpCard.Card.Suit)
             {
-                MessageBox.Show("Successfully defended. You may attack again, but only with a card with a rank of " + defendingCard.Card.ToString());
+                MessageBox.Show("Successfully defended. You may THROW IN, but only with a card with a rank of " + defendingCard.Card.Rank.ToString() + " or " + attackingCard.Card.Rank.ToString());
+                disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
+
+
 
                 this.rankOfLastDefense = defendingCard.Rank;
                 initialAttackDefended = true;
@@ -824,9 +828,26 @@ namespace Durak
             {
                 MessageBox.Show("Attacker wins. ");
             }
-
+                        
             //txtPlayerAttacker.Visible = false;
             //txtComputerAttacker.Visible = true;
+        }
+
+        private void disableInvalidChoices(CardRank attackingRank, CardRank defendingRank)
+        {
+            foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
+            {
+
+               
+                if (attackingRank == playerCard.Card.Rank || defendingRank == playerCard.Card.Rank)
+                {
+                    playerCard.Enabled = true;
+                }
+                else
+                {
+                    playerCard.Enabled = false;
+                }
+            }
         }
     }
 }
