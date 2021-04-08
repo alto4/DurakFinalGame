@@ -758,8 +758,11 @@ namespace Durak
                 if (computerHand.Controls[i].GetType().ToString().Contains("CardBox"))
                 {
                     CardBox.CardBox currentCard = computerHand.Controls[i] as CardBox.CardBox;
+                    
+                    
                    
-                    if ((currentCard.Card.Rank > cardToBeat.Card.Rank))
+                    // Compare by rank foremost, unless case where computer possesses a trump suited card and they are up against a non-trump card
+                    if ((currentCard.Card.Rank > cardToBeat.Card.Rank) || (currentCard.Card.Suit == cbxTrumpCard.Card.Suit && (cardToBeat.Card.Suit != cbxTrumpCard.Card.Suit)))
                     {
                         noGoodChoice = false;
                         txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
