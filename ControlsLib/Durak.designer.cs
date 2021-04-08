@@ -51,9 +51,9 @@ namespace Durak
             this.lblTrumpCard = new System.Windows.Forms.Label();
             this.lblOutOfCards = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.txtPlayerAttacker = new System.Windows.Forms.TextBox();
             this.cbxDeck = new CardBox.CardBox();
             this.cbxTrumpCard = new CardBox.CardBox();
+            this.btnStopAttacking = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -255,17 +255,6 @@ namespace Durak
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 22;
             // 
-            // txtPlayerAttacker
-            // 
-            this.txtPlayerAttacker.BackColor = System.Drawing.Color.Red;
-            this.txtPlayerAttacker.ForeColor = System.Drawing.Color.White;
-            this.txtPlayerAttacker.Location = new System.Drawing.Point(888, 496);
-            this.txtPlayerAttacker.Name = "txtPlayerAttacker";
-            this.txtPlayerAttacker.Size = new System.Drawing.Size(75, 20);
-            this.txtPlayerAttacker.TabIndex = 23;
-            this.txtPlayerAttacker.Text = "Attacker";
-            this.txtPlayerAttacker.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
             // cbxDeck
             // 
             playingCard1.CardValue = 0;
@@ -302,13 +291,25 @@ namespace Durak
             this.cbxTrumpCard.TabIndex = 19;
             this.cbxTrumpCard.TabStop = false;
             // 
+            // btnStopAttacking
+            // 
+            this.btnStopAttacking.BackColor = System.Drawing.Color.Black;
+            this.btnStopAttacking.ForeColor = System.Drawing.Color.White;
+            this.btnStopAttacking.Location = new System.Drawing.Point(888, 457);
+            this.btnStopAttacking.Name = "btnStopAttacking";
+            this.btnStopAttacking.Size = new System.Drawing.Size(75, 42);
+            this.btnStopAttacking.TabIndex = 24;
+            this.btnStopAttacking.Text = "Stop Attacking";
+            this.btnStopAttacking.UseVisualStyleBackColor = false;
+            this.btnStopAttacking.Click += new System.EventHandler(this.btnStopAttacking_Click);
+            // 
             // frmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(28)))), ((int)(((byte)(85)))));
             this.ClientSize = new System.Drawing.Size(976, 567);
-            this.Controls.Add(this.txtPlayerAttacker);
+            this.Controls.Add(this.btnStopAttacking);
             this.Controls.Add(this.txtComputerAttacker);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lblOutOfCards);
@@ -365,7 +366,7 @@ namespace Durak
         private System.Windows.Forms.Label lblOutOfCards;
         private System.Windows.Forms.TextBox txtComputerAttacker;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox txtPlayerAttacker;
+        private System.Windows.Forms.Button btnStopAttacking;
     }
 }
 

@@ -686,7 +686,7 @@ namespace Durak
         /// </summary>
         private void RoundDeal()
         {
-            for (int i = pnlPlayerCards.Controls.Count; i <= 6; i++)
+            for (int i = pnlPlayerCards.Controls.Count; i < 6; i++)
             {
                 PlayingCard card = cbxDeck.Card;
                 card.FaceUp = true;
@@ -696,7 +696,7 @@ namespace Durak
             }
             RealignCards(pnlPlayerCards);
 
-            for (int i = pnlComputerCards.Controls.Count; i <= 6; i++)
+            for (int i = pnlComputerCards.Controls.Count; i < 6; i++)
             {
                 PlayingCard card = cbxDeck.Card;
                 card.FaceUp = true;
@@ -817,9 +817,8 @@ namespace Durak
             if(defendingCard.Card.Rank > attackingCard.Card.Rank || defendingCard.Card.Suit == cbxTrumpCard.Card.Suit && attackingCard.Card.Suit != cbxTrumpCard.Card.Suit)
             {
                 MessageBox.Show("Successfully defended. You may THROW IN, but only with a card with a rank of " + defendingCard.Card.Rank.ToString() + " or " + attackingCard.Card.Rank.ToString());
+                MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
                 disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
-
-
 
                 this.rankOfLastDefense = defendingCard.Rank;
                 initialAttackDefended = true;
@@ -848,6 +847,29 @@ namespace Durak
                     playerCard.Enabled = false;
                 }
             }
+        }
+
+        private void reenableAllCards() {
+            foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
+            {
+                playerCard.Enabled = true;
+                WireCardBoxEventHandlers(playerCard);
+            }
+        }
+
+
+
+        private void btnStopAttacking_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Computer's turn to attack!");
+            
+            RoundDeal();
+
+            reenableAllCards();
+
+            txtComputerAttacker.Visible = true;
+            btnStopAttacking.Visible = false;
+            
         }
     }
 }
