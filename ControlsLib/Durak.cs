@@ -93,9 +93,7 @@ namespace Durak
             //mainDeck.OutOfCards MAKE A METHOD TO TRIGGER AN OUT OF CARDS EVENT
             //Show the number of cards left in the deck
 
-
         }
-
 
         /// <summary>
         /// Event for when the index changes on a combobox
@@ -117,17 +115,7 @@ namespace Durak
             
             lblClickedState.Text = cbxDeck.ToString() + " was last clicked." + Environment.NewLine;
             txtPlayHistory.Text += "Loaded!" + Environment.NewLine;
-
-            /* NOTE: idk why the cards need to switch between horizontal and vertical - @Ed
-            if (cbxDeck.CardOrientation == Orientation.Horizontal)
-            {
-                cbxDeck.CardOrientation = Orientation.Vertical;
-            }
-            else
-            {
-                cbxDeck.CardOrientation = Orientation.Horizontal;
-            }
-            */
+                       
             if (mainDeck.Size >= 0)
             {
                 PlayingCard card = new PlayingCard();
@@ -158,7 +146,6 @@ namespace Durak
 
                     //add new controls to the appropriate panel
                     pnlPlayerCards.Controls.Add(aCardBox);
-
 
                     txtPlayHistory.Text += Environment.NewLine + "Cards in players deck: " + (pnlPlayerCards.Controls.Count.ToString());
                     //txtPlayHistory.Text += Environment.NewLine + "Cards in dealer deck: " + mainDeck.ToString();
@@ -195,14 +182,9 @@ namespace Durak
                     {
                         System.Diagnostics.Debug.WriteLine("Exception catched when trying to draw card out of index.");
                     }
-
-
-
                 }
-
                 //display the number of cards left
             } 
-
         }
 
         /// <summary>
@@ -214,6 +196,7 @@ namespace Durak
         {
             cbxDeck.FaceUp = !cbxDeck.FaceUp;
         }
+
         /// <summary>
         /// When the selected index is changed for cbxSuit
         /// </summary>
@@ -232,6 +215,7 @@ namespace Durak
         {
             cbxDeck.Rank = (CardLib.CardRank)cbxRank.SelectedIndex + 1;
         }
+
         /// <summary>
         /// When the exit button is clicked by the user. In case user did not mean to press this button
         /// there is a cancel option.
@@ -258,6 +242,7 @@ namespace Durak
                 this.Close();
             }
         }
+
         /// <summary>
         /// Sets the card back image to null
         /// </summary>
@@ -354,7 +339,6 @@ namespace Durak
         {
             
         }
-
 
         #endregion
 
@@ -511,10 +495,32 @@ namespace Durak
             }
         }
 
+        /// <summary>
+        /// Button for when the player decides they are done attacking (whether due to a lack of enabled cards, or strategic move to save valuable cards)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnStopAttacking_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Computer's turn to attack!");
+
+            RoundDeal();
+
+            reenableAllCards();
+
+            txtComputerAttacker.Visible = true;
+            btnStopAttacking.Visible = false;
+
+        }
         #endregion
 
         #region HELPER METHODS
 
+        /// <summary>
+        /// Initiates the gameplay by establishing the first drawn card as the designated trump suit, dealing 6 cards to each player, and declaring the first player to attack
+        /// based on which player possesses the lowest ranking trump card
+        /// </summary>
+        /// ***TODO: Determine first attacker based on lowest trump card in initial hand (rather than assume the player is always the attacked off the bat)*** 
         private void StartGame()
         {
             // shuffle
@@ -641,6 +647,7 @@ namespace Durak
         /// <summary>
         /// initialDeal - deals players 6 cards to start
         /// </summary>
+        /// ***TODO: followup with a function to establish the first attacker based on lowest trump card -> perhaps within this function, or as a separate function***
         private void InitialDeal()
         {
             for (int i = 0; i < 6; i++)
@@ -706,6 +713,10 @@ namespace Durak
             RealignCards(pnlComputerCards);
         }
 
+        /// <summary>
+        /// Adds mouse and drag-and-drop events to each cardbox instance
+        /// </summary>
+        /// <param name="aCardBox">The cardbox that drag-and-drop, as well as click events are to be wired to</param>
         private void WireCardBoxEventHandlers(CardBox.CardBox aCardBox)
         {
             //wire cardbox mouse enter
@@ -716,6 +727,88 @@ namespace Durak
             aCardBox.MouseDown += CardBox_MouseDown;
             aCardBox.DragEnter += CardBox_DragEnter;
             aCardBox.DragDrop += CardBox_DragDrop;
+        }
+
+
+        /// <summary>
+        /// Compares the attacking and defending cards and establishes which cards should have their functionality disabled if they are not possible options for moving 
+        /// the game forward. Modelled on SuperDurak tutorial referenced in final project outline document.
+        /// </summary>
+        /// <param name="attackingCard">The CardBox object presented by the attacking player</param>
+        /// <param name="defendingCard">The CardBox object presented by the defending player</param>
+        /// <param name="initialAttackDefended">A boolean representing the status of the initial attack having been successful defended - significant for disabling of 
+        /// invalid card selections within player hand</param>
+        private void CompareCards(CardBox.CardBox attackingCard, CardBox.CardBox defendingCard, Boolean initialAttackDefended)
+        {
+            // Check if the initial attack was successfully defended
+            if (initialAttackDefended)
+            {
+                // Checks if rank of attacking card is eligible based on initial defense status
+                // ***TODO: Not sure if we need this, as I believe it is used elsewhere in a more suitable way*** 
+                // ***TODO: Unclear on specifics of rules -> just previous defense and attack ranks, or ALL previously played defense/attack ranks***
+                if (!attackingCard.Card.Rank.Equals(defendingCard.Card.Rank))
+                {
+                    MessageBox.Show("Sorry attacker. You can only follow an attack with a card of the same rank as the last defense.");
+                    CardBox.CardBox invalidCard = (CardBox.CardBox)pnlActiveCards.Controls[0];
+                    pnlActiveCards.Controls.RemoveAt(0);
+                    pnlPlayerCards.Controls.Add(invalidCard);
+
+                    return;
+                }
+            }
+
+            // Establish if successful defense occurs based on greater rank, or event where defense card is a trump and attack is not 
+            //(otherwise, if both trump suits, initial rank comparison is already valid)
+            //***TODO: Incorporate class library comparison operators with trump card -> currently something miss with deck/card collection constructor where comparison operators aren't
+            //         accounting for trumps ***
+            if (defendingCard.Card.Rank > attackingCard.Card.Rank || defendingCard.Card.Suit == cbxTrumpCard.Card.Suit && attackingCard.Card.Suit != cbxTrumpCard.Card.Suit)
+            {
+                MessageBox.Show("Successfully defended. You may THROW IN, but only with a card with a rank of " + defendingCard.Card.Rank.ToString() + " or " + attackingCard.Card.Rank.ToString());
+                MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
+                disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
+
+                this.rankOfLastDefense = defendingCard.Rank;
+                initialAttackDefended = true;
+            }
+            else
+            {
+                MessageBox.Show("Attacker wins. ");
+            }
+        }
+
+        /// <summary>
+        /// Disables all cards in the player's hand that are not eligible for play in the ongoing round
+        /// </summary>
+        /// <param name="attackingRank">The rank of the last played attack card</param>
+        /// <param name="defendingRank">The rank of the last played defense card</param>
+        /// ***TODO: Review rules and ensure properly interpreting how eligible cards are figured out (aka just previous two, or ALL played so far in current attack round***
+        /// ***TODO: If pursuing multiplayer -> pass in various panels of controls, rather than assume single player panel needs be disabled
+        private void disableInvalidChoices(CardRank attackingRank, CardRank defendingRank)
+        {
+            // Loop through all cards in the players hand and disable any cards outside of those with valid ranks
+            foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
+            {
+                if (attackingRank == playerCard.Card.Rank || defendingRank == playerCard.Card.Rank)
+                {
+                    playerCard.Enabled = true;
+                }
+                else
+                {
+                    playerCard.Enabled = false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Re-enables potentially disabled controls where an attack is over and all cards are to be re-assigned their event handlers
+        /// </summary>
+        private void reenableAllCards()
+        {
+            foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
+            {
+                playerCard.Enabled = true;
+                WireCardBoxEventHandlers(playerCard);
+            }
         }
 
         #endregion
@@ -741,12 +834,14 @@ namespace Durak
 
         #region AI LOGIC
 
-
         /// <summary>
-        /// determineBestPlay - Basic algorithm to determine best choice, based on lowest value card that can be opposing hand. If no options exist, defaults to index 9.
-        ///                   - Consider level of difficulty selected to alter quality of decision-making (easy, medium, hard, etc.)
+        /// Basic algorithm to determine best choice, based on lowest value card that can be opposing hand. If no options exist, defaults to index 9.
         /// </summary>
+        /// <param name="computerHand">The computer's current hand that the best possible choice is being determines from</param>
         /// <returns>bestChoiceIndex - the best possible choice the computer could make by considering entire hand.</returns>
+        /// ***TODO: add select statement corresponding to level of difficulty selected by player at the start of the game (Possibly in the same form menu where the 
+        ///          choice to use log functionality is displayed????????????***
+        /// ***TODO: remove all debug code (unless we think it would be cool to push it to a file to log the AI/computer's selection process - likely not!**** 
         protected int determineBestPlay(Panel computerHand)
         {
             bool noGoodChoice = true;
@@ -761,7 +856,6 @@ namespace Durak
             // See what is being retrieved from the computer's hand of cards
             for (int i = 0; i < computerHand.Controls.Count; i++)
             {                
-                //txtPlayHistory.Text += hand.Controls[i].GetType().ToString(); -> DEBUG LINE FOR REFERENCE ON HANDLING CONTROLS PASSED INTO FUNCTION  
                 // Ensure only CardBox instances are being compared to the player's selected card
                 if (computerHand.Controls[i].GetType().ToString().Contains("CardBox"))
                 {
@@ -779,97 +873,25 @@ namespace Durak
                             idealChoiceIndex = i;
                         }
                     }
-                };
+                }
             }
 
-
+            // If the computer has no cards prospective to attack or defend, admit defeat and pass the attack or return value that will cause computer to 
+            // take the discarded cards
             if (noGoodChoice == false)
             {
                 txtPlayHistory.Text += idealChoiceIndex + " is the index a wise AI would choose here.";
             }
-            else { 
+            else 
+            { 
                 txtPlayHistory.Text += "AI has no good choices. Human player is wins this one!";
                 return -1;
-            }
-                
+            }              
 
             return idealChoiceIndex;
         }
 
         #endregion
 
-        
-        private void CompareCards(CardBox.CardBox attackingCard, CardBox.CardBox defendingCard, Boolean initialAttackDefended)
-        {
-            if (initialAttackDefended)
-            {
-                if(!attackingCard.Card.Rank.Equals(defendingCard.Card.Rank))
-                {
-                    MessageBox.Show("Sorry attacker. You can only follow an attack with a card of the same rank as the last defense.");
-                    CardBox.CardBox invalidCard = (CardBox.CardBox)pnlActiveCards.Controls[0];
-                    pnlActiveCards.Controls.RemoveAt(0);
-                    pnlPlayerCards.Controls.Add(invalidCard);
-
-                    return;
-                } 
-            }
-
-            if(defendingCard.Card.Rank > attackingCard.Card.Rank || defendingCard.Card.Suit == cbxTrumpCard.Card.Suit && attackingCard.Card.Suit != cbxTrumpCard.Card.Suit)
-            {
-                MessageBox.Show("Successfully defended. You may THROW IN, but only with a card with a rank of " + defendingCard.Card.Rank.ToString() + " or " + attackingCard.Card.Rank.ToString());
-                MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
-                disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
-
-                this.rankOfLastDefense = defendingCard.Rank;
-                initialAttackDefended = true;
-            }
-            else
-            {
-                MessageBox.Show("Attacker wins. ");
-            }
-                        
-            //txtPlayerAttacker.Visible = false;
-            //txtComputerAttacker.Visible = true;
-        }
-
-        private void disableInvalidChoices(CardRank attackingRank, CardRank defendingRank)
-        {
-            foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
-            {
-
-               
-                if (attackingRank == playerCard.Card.Rank || defendingRank == playerCard.Card.Rank)
-                {
-                    playerCard.Enabled = true;
-                }
-                else
-                {
-                    playerCard.Enabled = false;
-                }
-            }
-        }
-
-        private void reenableAllCards() {
-            foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
-            {
-                playerCard.Enabled = true;
-                WireCardBoxEventHandlers(playerCard);
-            }
-        }
-
-
-
-        private void btnStopAttacking_Click(object sender, EventArgs e)
-        {
-            MessageBox.Show("Computer's turn to attack!");
-            
-            RoundDeal();
-
-            reenableAllCards();
-
-            txtComputerAttacker.Visible = true;
-            btnStopAttacking.Visible = false;
-            
-        }
     }
 }
