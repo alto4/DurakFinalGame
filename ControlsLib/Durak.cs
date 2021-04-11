@@ -542,6 +542,7 @@ namespace Durak
 
             playerAttacking = false;
             ComputerAttacks();
+
         }
 
         /// <summary>
@@ -549,7 +550,30 @@ namespace Durak
         /// </summary>
         private void ComputerAttacks()
         {
-            
+            Random rand = new Random();
+
+            int computerChoiceIndex = rand.Next(pnlComputerCards.Controls.Count);
+
+            txtPlayHistory.Text += Environment.NewLine + "Computers chosen attack index: " + computerChoiceIndex;
+
+            if (computerChoiceIndex >= 0)
+            {
+                CardBox.CardBox computerCard = pnlComputerCards.Controls[computerChoiceIndex] as CardBox.CardBox;
+                pnlComputerCards.Controls.Remove(computerCard);
+                pnlActiveCards.Controls.Add(computerCard);
+
+                txtPlayHistory.Text += "Computer attacks with card immediately." + Environment.NewLine;
+
+                CompareCards((CardBox.CardBox)pnlActiveCards.Controls[0], computerCard, this.initialAttackDefended);
+
+            }
+            else
+            {
+                // Turn attack back to human player
+                playerAttacking = true;
+            }
+
+            RealignAllCards();
         }
 
         #endregion
@@ -598,6 +622,7 @@ namespace Durak
             foreach (var control in cardPanels)
             {
                 RealignCards(control);
+                
             }
         }
 
@@ -680,6 +705,13 @@ namespace Durak
                     // Align the current card
                     panelHand.Controls[index].Top = ENLARGE;
                     panelHand.Controls[index].Left = panelHand.Controls[index + 1].Left + offset;
+
+                }
+
+                for (int i = 0; i < panelHand.Controls.Count; i++)
+                {
+                    panelHand.Controls[i].Size = normalCardSize;
+
                 }
             }
         }
