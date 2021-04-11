@@ -320,6 +320,10 @@ namespace Durak
                         {
                             txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
                             MessageBox.Show("Attack successful");
+
+                            // Wire in events to discard pnlActiveCards to pnlComputerCards
+
+
                         }
 
 
@@ -500,10 +504,35 @@ namespace Durak
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        /// ***TODO: Add in draw counter for player stats***
         private void btnStopAttacking_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Computer's turn to attack!");
 
+            // Put previous cards in discard pile
+            
+            // Loop through all cards in the players hand and disable any cards outside of those with valid ranks
+            foreach (CardBox.CardBox playedCard in pnlActiveCards.Controls)
+            {
+                
+                //Make it a cardbox for the player
+                CardBox.CardBox playedCardBox = new CardBox.CardBox(playedCard.Card);
+
+                playedCardBox.Size = normalCardSize;
+                               
+                //Add cardbox to panel
+                pnlDiscard.Controls.Add(playedCardBox);
+                //playedCardBox.Card.FaceUp = false;
+                txtPlayHistory.Text += Environment.NewLine + playedCardBox.ToString();
+               
+            }  
+                        
+            while(pnlActiveCards.Controls.Count > 0)
+            {
+                pnlActiveCards.Controls.RemoveAt(0);
+            }
+
+            // ***TODO: Flip discarded pile to facedown *** 
             RoundDeal();
 
             reenableAllCards();
@@ -511,7 +540,18 @@ namespace Durak
             txtComputerAttacker.Visible = true;
             btnStopAttacking.Visible = false;
 
+            playerAttacking = false;
+            ComputerAttacks();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ComputerAttacks()
+        {
+            
+        }
+
         #endregion
 
         #region HELPER METHODS
@@ -769,6 +809,10 @@ namespace Durak
 
                 this.rankOfLastDefense = defendingCard.Rank;
                 initialAttackDefended = true;
+
+                // 
+
+
             }
             else
             {
@@ -785,17 +829,25 @@ namespace Durak
         /// ***TODO: If pursuing multiplayer -> pass in various panels of controls, rather than assume single player panel needs be disabled
         private void disableInvalidChoices(CardRank attackingRank, CardRank defendingRank)
         {
+            bool playableCard = false;
             // Loop through all cards in the players hand and disable any cards outside of those with valid ranks
             foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
             {
                 if (attackingRank == playerCard.Card.Rank || defendingRank == playerCard.Card.Rank)
                 {
                     playerCard.Enabled = true;
+                    playableCard = true;
                 }
                 else
                 {
                     playerCard.Enabled = false;
                 }
+            }
+
+            if(playableCard == false)
+            {
+                MessageBox.Show("You are out of options for attacking. Click button to end your turn as attacker.");
+                btnStopAttacking.Text = "END TURN";
             }
         }
 

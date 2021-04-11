@@ -54,6 +54,8 @@ namespace Durak
             this.cbxDeck = new CardBox.CardBox();
             this.cbxTrumpCard = new CardBox.CardBox();
             this.btnStopAttacking = new System.Windows.Forms.Button();
+            this.pnlDiscard = new System.Windows.Forms.Panel();
+            this.pnlDefended = new System.Windows.Forms.Panel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -116,9 +118,9 @@ namespace Durak
             // 
             this.pnlActiveCards.AllowDrop = true;
             this.pnlActiveCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
-            this.pnlActiveCards.Location = new System.Drawing.Point(341, 175);
+            this.pnlActiveCards.Location = new System.Drawing.Point(503, 175);
             this.pnlActiveCards.Name = "pnlActiveCards";
-            this.pnlActiveCards.Size = new System.Drawing.Size(532, 224);
+            this.pnlActiveCards.Size = new System.Drawing.Size(321, 224);
             this.pnlActiveCards.TabIndex = 13;
             this.pnlActiveCards.DragDrop += new System.Windows.Forms.DragEventHandler(this.Panel_DragDrop);
             this.pnlActiveCards.DragEnter += new System.Windows.Forms.DragEventHandler(this.Panel_DragEnter);
@@ -303,12 +305,32 @@ namespace Durak
             this.btnStopAttacking.UseVisualStyleBackColor = false;
             this.btnStopAttacking.Click += new System.EventHandler(this.btnStopAttacking_Click);
             // 
+            // pnlDiscard
+            // 
+            this.pnlDiscard.AllowDrop = true;
+            this.pnlDiscard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
+            this.pnlDiscard.Location = new System.Drawing.Point(831, 175);
+            this.pnlDiscard.Name = "pnlDiscard";
+            this.pnlDiscard.Size = new System.Drawing.Size(139, 224);
+            this.pnlDiscard.TabIndex = 25;
+            // 
+            // pnlDefended
+            // 
+            this.pnlDefended.AllowDrop = true;
+            this.pnlDefended.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
+            this.pnlDefended.Location = new System.Drawing.Point(341, 173);
+            this.pnlDefended.Name = "pnlDefended";
+            this.pnlDefended.Size = new System.Drawing.Size(156, 224);
+            this.pnlDefended.TabIndex = 26;
+            // 
             // frmGame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(28)))), ((int)(((byte)(85)))));
             this.ClientSize = new System.Drawing.Size(976, 567);
+            this.Controls.Add(this.pnlDefended);
+            this.Controls.Add(this.pnlDiscard);
             this.Controls.Add(this.btnStopAttacking);
             this.Controls.Add(this.txtComputerAttacker);
             this.Controls.Add(this.textBox1);
@@ -367,6 +389,8 @@ namespace Durak
         private System.Windows.Forms.TextBox txtComputerAttacker;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button btnStopAttacking;
+        private System.Windows.Forms.Panel pnlDiscard;
+        private System.Windows.Forms.Panel pnlDefended;
     }
 }
 

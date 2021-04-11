@@ -177,5 +177,10 @@ namespace CardBox
         {
             DragDrop?.Invoke(this, e);
         }
+
+        public static explicit operator CardBox(ControlCollection v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
