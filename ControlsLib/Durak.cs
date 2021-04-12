@@ -180,7 +180,7 @@ namespace Durak
                     }
                     catch (IndexOutOfRangeException)
                     {
-                        System.Diagnostics.Debug.WriteLine("Exception catched when trying to draw card out of index.");
+                        System.Diagnostics.Debug.WriteLine("Exception caught when trying to draw card out of index.");
                     }
                 }
                 //display the number of cards left
@@ -300,7 +300,7 @@ namespace Durak
 
                         // WHERE GAME LOGIN KICKS OFF 
                         // This could also be a separate event handler triggering AI function to consider best choice - currently just choosing the first card
-                        // NOTE index 0 is on right side of computer panel of cards
+                        // NOTE: index 0 is on right side of computer panel of cards
 
                         // AI Function to determine best card
                         int computerChoiceIndex = determineBestPlay(pnlComputerCards);
@@ -323,14 +323,12 @@ namespace Durak
                             //MessageBox.Show("Attack successful"); //Not necessary atm, and its just annoying for testing hahaha
 
                             //TODO: Wire in events to discard pnlActiveCards to pnlComputerCards (not just to the discard pile)
-
+                            MoveCards(pnlActiveCards, pnlComputerCards);
+                            MoveCards(pnlDefended, pnlComputerCards);
 
                         }
-
-
                     }
                 }
-
                 RealignAllCards();
             }
         }
@@ -342,15 +340,13 @@ namespace Durak
         /// <param name="e"></param>
         private void btnReset_Click(object sender, EventArgs e)
         {
-            
+            //TODO: Set up the reset button
+
         }
 
         #endregion
 
         #region CARDBOX EVENT HANDLERS
-
-
-
         /// <summary>
         /// When a CardBox is clicked
         /// </summary>
@@ -371,7 +367,7 @@ namespace Durak
                     aCardBox.Controls.Remove(aCardBox);
                     //Add card to the active play area
                     pnlActiveCards.Controls.Add(aCardBox);
-                   // txtPlayHistory.Text += "Card Clicked"; //Fills the log with unnecessary filler, delete later (still useful for debugging)
+                   // txtPlayHistory.Text += "Card Clicked"; //Fills the log with unnecessary filler, delete for submission (still useful for debugging)
 
                     //TODO: WHERE GAME LOGIN KICKS OFF 
                     // This could also be a separate event handler triggering AI function to consider best choice - currently just choosing the first card
@@ -390,7 +386,15 @@ namespace Durak
                     else
                     {
                         txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
-                       // MessageBox.Show("Computer has no choices."); //used for debugging, delete for submission
+                        txtPlayHistory.Text += Environment.NewLine + "Player wins this round, computer is attacking now.";
+                        // MessageBox.Show("Computer has no choices."); //used for debugging, delete for submission
+                        //TODO: Add a win counter for the player, increment here
+                        //TODO: Add a loss counter for the computer, increment here
+
+                        //TODO: Intercept the computer playing the next card, end the players attack without asking and proceed to next round
+
+                        //TODO: Move the cards from the active panel to the computers panel
+                        MoveCards(pnlActiveCards, pnlComputerCards); //TODO: Not triggering when the player wins, is there somewhere else we determine a winner?
                     }
 
                     // Determine winner
@@ -399,7 +403,6 @@ namespace Durak
                 {
                     txtPlayHistory.Text += Environment.NewLine + "Something is wrong";
                 }
-
                 RealignAllCards();
             }
             
@@ -512,11 +515,15 @@ namespace Durak
 
             MessageBox.Show("Computer's turn to attack!"); //delete for submission???
 
+            MoveCards(pnlActiveCards, pnlDiscard); //Move cards from the active panel to discard
+            MoveCards(pnlDefended, pnlDiscard); //Move cards from the defended panel to discard
+
+            //TODO: If MoveCards method functioning properly, delete the below for submission
             // Put previous cards in discard pile
             // Loop through all cards in the players hand and disable any cards outside of those with valid ranks <--- IS THIS COMMENT RIGHT?
             //I thought this loop was to move the cards from the active panel and to the discard panel
             //USEFUL CODE for moving cards to the losing player's hand
-            foreach (CardBox.CardBox playedCard in pnlActiveCards.Controls)
+            /*foreach (CardBox.CardBox playedCard in pnlActiveCards.Controls)
             {
                 
                 //Make it a cardbox for the player
@@ -534,13 +541,14 @@ namespace Durak
             while(pnlActiveCards.Controls.Count > 0)
             {
                 pnlActiveCards.Controls.RemoveAt(0);
-            }
+            } */
 
-            // ***TODO: Flip discarded pile to facedown *** 
+            // ***TODO: Flip discarded pile to facedown without flipping every card *** 
             RoundDeal(); //Deal cards until both players have at least 6 cards
 
             reenableAllCards(); //Allows the player to use their cards again
 
+            //USE THESE: for switching the attack roles, at least visibly
             txtComputerAttacker.Visible = true; //Flash the image that shows the computer is attacking
             btnStopAttacking.Visible = false; //remove the button that lets the user end their attacking turn
 
@@ -574,10 +582,11 @@ namespace Durak
             {
                 // Turn attack back to human player
                 playerAttacking = true;
+                txtComputerAttacker.Visible = false; //Flash the image that shows the computer is attacking
+                btnStopAttacking.Visible = true; //remove the button that lets the user end their attacking turn
 
-                //TODO: Turn off the computers attack image 
-                //TODO: Readd the players end attack button
-
+                //TODO: Determine if the computer cannot move on, or decided to end turn? is that necessary??
+                //TODO: Make sure the turns actually switch properly, increment any counters and move on
             }
 
             RealignAllCards();
@@ -928,6 +937,10 @@ namespace Durak
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// TODO: Actually use this method
         private void RealignDefendedCards()
         {
             for (int i = 0; i < pnlDefended.Controls.Count; i++) { 
@@ -983,10 +996,12 @@ namespace Durak
             }
         }
 
-        //TODO: Create a function that will move the cards from one panel to another, the function should take two strings (the name for the panel we're moving from, and moving to)
-        // will look something like:
-        // private void MovePanels(string panelWithCards, string panelCardsGoTo)
-        // then within the function it should act the same as the way we move cards everywhere else but instead of the specific panel names, we use the string inserts to call them
+        /// <summary>
+        /// This helper function will move all the cards from one panel to another. Used for moving active, or successfully defended cards to the discard pile. Or using it to
+        /// move the active cards to a failed defense players hand.
+        /// </summary>
+        /// <param name="panelWithCards">The panel where the cards currently reside</param>
+        /// <param name="panelCardsGoTo">The panel we want the cards to move to</param>
         private void MoveCards(Panel panelWithCards, Panel panelCardsGoTo)
         {
             foreach (CardBox.CardBox card in panelWithCards.Controls)
@@ -1011,6 +1026,11 @@ namespace Durak
                 panelWithCards.Controls.RemoveAt(0);
             }
         }
+
+        //TODO: Create a function that will move a single card from one panel to another
+        // will look something like:
+        // private void MoveACard(PlayingCard cardToBeMoved, Panel panelWithCard, Panel panelCardGoesTo)
+        // then within the function it should act the same as the way we move cards everywhere else but instead of the specific panel names, we use the inserts to call them
 
         #endregion
 
