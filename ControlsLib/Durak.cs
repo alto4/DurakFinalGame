@@ -313,6 +313,7 @@ namespace Durak
                             txtPlayHistory.Text += "Computer responds with card immediately." + Environment.NewLine;
 
 
+                            // ***TODO: Fix cards for comparison based on round circumstances
                             CompareCards((CardBox.CardBox)pnlActiveCards.Controls[0], computerCardBox, this.initialAttackDefended);
                                                 
                         }
@@ -782,6 +783,12 @@ namespace Durak
                 pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
                 cbxDeck.Card = mainDeck.DrawCard();
             }
+
+            while (pnlDefended.Controls.Count > 0)
+            {
+                pnlDefended.Controls.RemoveAt(0);
+            }
+
             RealignCards(pnlComputerCards);
         }
 
@@ -833,10 +840,61 @@ namespace Durak
             //(otherwise, if both trump suits, initial rank comparison is already valid)
             //***TODO: Incorporate class library comparison operators with trump card -> currently something miss with deck/card collection constructor where comparison operators aren't
             //         accounting for trumps ***
-            if (defendingCard.Card.Rank > attackingCard.Card.Rank || defendingCard.Card.Suit == cbxTrumpCard.Card.Suit && attackingCard.Card.Suit != cbxTrumpCard.Card.Suit)
+            if (defendingCard.Card.Rank > attackingCard.Card.Rank || (defendingCard.Card.Suit == cbxTrumpCard.Card.Suit && attackingCard.Card.Suit != cbxTrumpCard.Card.Suit))
             {
-                MessageBox.Show("Successfully defended. You may THROW IN, but only with a card with a rank of " + defendingCard.Card.Rank.ToString() + " or " + attackingCard.Card.Rank.ToString());
-                MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
+                if (playerAttacking)
+                {
+                    MessageBox.Show("Successfully defended. You may THROW IN, but only with a card with a rank of " + defendingCard.Card.Rank.ToString() + " or " + attackingCard.Card.Rank.ToString());
+                    MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
+
+                    // Put successfully defendeded card into stacks of two in associated panel
+                    // Loop through all cards in the players hand and disable any cards outside of those with valid ranks
+                    foreach (CardBox.CardBox playedCard in pnlActiveCards.Controls)
+                    {
+                        txtPlayHistory.Text += Environment.NewLine + " new card going into defended stack of 2 " + playedCard.ToString();
+                        //Make it a cardbox for the player
+                        CardBox.CardBox defendedCardBox = new CardBox.CardBox(playedCard.Card);
+
+                        defendedCardBox.Size = normalCardSize;
+
+                        //Add cardbox to panel
+                        pnlDefended.Controls.Add(defendedCardBox);
+
+                        //RealignDefendedCards();
+                        pnlDefended.Controls[0].Top = 38;
+                        pnlDefended.Controls[0].Left = 5;
+                    }
+
+                    while (pnlActiveCards.Controls.Count > 0)
+                    {
+                        pnlActiveCards.Controls.RemoveAt(0);
+                    }
+                }
+                else
+                {
+                    disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
+
+                    bool playerHasChoices = false;
+
+                    foreach (Control playerCard in pnlPlayerCards.Controls)
+                    {
+                        if (playerCard.Enabled = true)
+                        {
+                            playerHasChoices = true;
+                        }
+                    }
+
+                    // If all the players cards are disabled as invalid choices, inform them of their loss
+                    if (playerHasChoices == false)
+                    {
+                        MessageBox.Show("Computers wins. There's nothing you can do.");
+                        MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Go ahead and defend!");
+                    }
+                }
                 disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
 
                 this.rankOfLastDefense = defendingCard.Rank;
@@ -848,8 +906,27 @@ namespace Durak
             }
             else
             {
+                // Move auto-played computer card from pnlActiveCards back into computer hand before it renders in the form
+                // ***TODO: put this logic before comparison - shouldn't be required to move, then move back invalid defense for comparison ***
+                if (playerAttacking)
+                {
+                    CardBox.CardBox invalidCard = new CardBox.CardBox(defendingCard.Card);
+                    pnlComputerCards.Controls.Add(invalidCard);
+                }
                 MessageBox.Show("Attacker wins. ");
             }
+        }
+
+        private void RealignDefendedCards()
+        {
+            for (int i = 0; i < pnlDefended.Controls.Count; i++) { 
+                if (i == pnlDefended.Controls.Count - 1)
+                {
+                    pnlDefended.Controls[i].Left = 500;
+                    pnlDefended.Controls[i].Top = 500;
+                }                
+            }
+                
         }
 
         /// <summary>

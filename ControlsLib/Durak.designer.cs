@@ -118,9 +118,9 @@ namespace Durak
             // 
             this.pnlActiveCards.AllowDrop = true;
             this.pnlActiveCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
-            this.pnlActiveCards.Location = new System.Drawing.Point(503, 175);
+            this.pnlActiveCards.Location = new System.Drawing.Point(575, 175);
             this.pnlActiveCards.Name = "pnlActiveCards";
-            this.pnlActiveCards.Size = new System.Drawing.Size(321, 224);
+            this.pnlActiveCards.Size = new System.Drawing.Size(249, 224);
             this.pnlActiveCards.TabIndex = 13;
             this.pnlActiveCards.DragDrop += new System.Windows.Forms.DragEventHandler(this.Panel_DragDrop);
             this.pnlActiveCards.DragEnter += new System.Windows.Forms.DragEventHandler(this.Panel_DragEnter);
@@ -320,7 +320,7 @@ namespace Durak
             this.pnlDefended.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
             this.pnlDefended.Location = new System.Drawing.Point(341, 173);
             this.pnlDefended.Name = "pnlDefended";
-            this.pnlDefended.Size = new System.Drawing.Size(156, 224);
+            this.pnlDefended.Size = new System.Drawing.Size(228, 224);
             this.pnlDefended.TabIndex = 26;
             // 
             // frmGame
