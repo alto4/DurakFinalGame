@@ -161,6 +161,7 @@ namespace Durak
             this.txtPlayHistory.Location = new System.Drawing.Point(13, 305);
             this.txtPlayHistory.Multiline = true;
             this.txtPlayHistory.Name = "txtPlayHistory";
+            this.txtPlayHistory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtPlayHistory.Size = new System.Drawing.Size(323, 248);
             this.txtPlayHistory.TabIndex = 16;
             // 
