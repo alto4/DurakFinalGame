@@ -296,12 +296,23 @@ namespace Durak
 
                         RealignCards(thisPanel);
                         RealignCards(fromPanel);
-
+                        //make sure WE ARENT ABLE TO DRAGDROP ANYWHERE BUT ACTIVE PANEL
                         //Test
-                        // WHERE GAME LOGIN KICKS OFF 
+                        // WHERE GAME KICKS OFF 
                         // This could also be a separate event handler triggering AI function to consider best choice - currently just choosing the first card
                         // NOTE: index 0 is on right side of computer panel of cards
 
+                        //Check if the player is attacking or defending, then trigger the appropriate events
+                        //if (playerAttacking)
+                        //{
+                            // player (?) logic for attacking
+                        //}
+                        //else if (!playerAttacking)
+                        //{
+                            // player (?) logic for defense
+                        //}
+
+                        //AI DEFENSE Logic
                         // AI Function to determine best card
                         int computerChoiceIndex = determineBestPlay(pnlComputerCards);
 
@@ -546,7 +557,7 @@ namespace Durak
             // ***TODO: Flip discarded pile to facedown without flipping every card *** 
             RoundDeal(); //Deal cards until both players have at least 6 cards
 
-            reenableAllCards(); //Allows the player to use their cards again
+            ReenableAllCards(); //Allows the player to use their cards again
 
             //USE THESE: for switching the attack roles, at least visibly
             txtComputerAttacker.Visible = true; //Flash the image that shows the computer is attacking
@@ -865,30 +876,7 @@ namespace Durak
 
                     MoveCards(pnlActiveCards, pnlDefended); //Move cards from active panel to successfully defended panel
                     
-                    //DELETE FOR SUBMISSION IF THE ABOVE FUNCTION MoveCards WORKS WITHOUT ANY ISSUES, OTHERWISE THE CODE BELOW ACHIEVES THE SAME MOVEMENT
-                    // Put successfully defendeded card into stacks of two in associated panel
-                    // Loop through all cards in the players hand and disable any cards outside of those with valid ranks
-                    //THIS MOVES THE CARDS - ONLY LEFT IN CASE MY MoveCards Function doesn't work properly
-                    /*foreach (CardBox.CardBox playedCard in pnlActiveCards.Controls)
-                    {
-                        txtPlayHistory.Text += Environment.NewLine + " new card going into defended stack of 2 " + playedCard.ToString();
-                        //Make it a cardbox for the player
-                        CardBox.CardBox defendedCardBox = new CardBox.CardBox(playedCard.Card);
-
-                        defendedCardBox.Size = normalCardSize;
-
-                        //Add cardbox to panel
-                        pnlDefended.Controls.Add(defendedCardBox);
-
-                        //RealignDefendedCards();
-                        pnlDefended.Controls[0].Top = 38;
-                        pnlDefended.Controls[0].Left = 5;
-                    }
-                    //remove the cards from the active panel
-                    while (pnlActiveCards.Controls.Count > 0)
-                    {
-                        pnlActiveCards.Controls.RemoveAt(0);
-                    }*/
+                    
                 }
                 else
                 {
@@ -987,7 +975,7 @@ namespace Durak
         /// <summary>
         /// Re-enables potentially disabled controls where an attack is over and all cards are to be re-assigned their event handlers
         /// </summary>
-        private void reenableAllCards()
+        private void ReenableAllCards()
         {
             foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
             {
@@ -1081,20 +1069,42 @@ namespace Durak
                 if (computerHand.Controls[i].GetType().ToString().Contains("CardBox"))
                 {
                     CardBox.CardBox currentCard = computerHand.Controls[i] as CardBox.CardBox;
+                    if (currentCard.Card.Suit == cbxTrumpCard.Card.Suit && (cardToBeat.Card.Suit != cbxTrumpCard.Card.Suit))
+                        { //current card wins
 
-                    // Compare by rank foremost, unless case where computer possesses a trump suited card and they are up against a non-trump card
-                    if ((currentCard.Card.Rank > cardToBeat.Card.Rank) || (currentCard.Card.Suit == cbxTrumpCard.Card.Suit && (cardToBeat.Card.Suit != cbxTrumpCard.Card.Suit)))
-                    {
                         noGoodChoice = false;
                         txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
 
-                        // Check to see if option to beat player card is a more efficient (AKA lower value card that current selection) way to beat the opponent and reserve high ranking cards for later
-                        if (((int)currentCard.Card.Rank) < (int)idealChoice.Card.Rank)
-                        {
-                            idealChoiceIndex = i;
-                        }
                     }
+                    else if (cardToBeat.Card.Suit == cbxTrumpCard.Card.Suit && (currentCard.Card.Suit != cbxTrumpCard.Card.Suit))
+                    { //cardto beat wins
+                                              
+                        txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " CANNOT win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
+
+                    }
+                    else //if neither cards are trump, or both cards are
+                    {
+                        if (currentCard.Card.Rank > cardToBeat.Card.Rank)  //win
+                        {
+                            noGoodChoice = false;
+                            txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
+                            //end players turn
+                        }
+                        
+                    }
+
+                    //***TODO: Account for trump cards in picking best decision*** 
+                    // Check to see if option to beat player card is a more efficient (AKA lower value card that current selection) way to beat the opponent and reserve high ranking cards for later
+                    if (((int)currentCard.Card.Rank) < (int)idealChoice.Card.Rank && noGoodChoice == false)
+                    {
+                        idealChoiceIndex = i;
+                    }
+                   
                 }
+               
+            }
+            if (noGoodChoice && playerAttacking)
+            {
             }
 
             // If the computer has no cards prospective to attack or defend, admit defeat and pass the attack or return value that will cause computer to 
@@ -1106,6 +1116,15 @@ namespace Durak
             else 
             { 
                 txtPlayHistory.Text += "AI has no good choices. Human player is wins this one!";
+
+
+                MessageBox.Show("Computer surrends defense. Draws attacjer;s card"); //del
+                txtComputerAttacker.Visible = false;
+                btnStopAttacking.Visible = true;
+                MessageBox.Show("PLAYER! You are now the attacker. Fire when ready");
+                RoundDeal();
+                ReenableAllCards();
+
                 return -1;
             }              
 
