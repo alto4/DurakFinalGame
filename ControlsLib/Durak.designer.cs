@@ -51,11 +51,11 @@ namespace Durak
             this.lblTrumpCard = new System.Windows.Forms.Label();
             this.lblOutOfCards = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.cbxDeck = new CardBox.CardBox();
-            this.cbxTrumpCard = new CardBox.CardBox();
             this.btnStopAttacking = new System.Windows.Forms.Button();
             this.pnlDiscard = new System.Windows.Forms.Panel();
             this.pnlDefended = new System.Windows.Forms.Panel();
+            this.cbxDeck = new CardBox.CardBox();
+            this.cbxTrumpCard = new CardBox.CardBox();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -158,6 +158,7 @@ namespace Durak
             // txtPlayHistory
             // 
             this.txtPlayHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(89)))), ((int)(((byte)(208)))));
+            this.txtPlayHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
             this.txtPlayHistory.Location = new System.Drawing.Point(13, 305);
             this.txtPlayHistory.Multiline = true;
             this.txtPlayHistory.Name = "txtPlayHistory";
@@ -258,6 +259,36 @@ namespace Durak
             this.textBox1.Size = new System.Drawing.Size(100, 20);
             this.textBox1.TabIndex = 22;
             // 
+            // btnStopAttacking
+            // 
+            this.btnStopAttacking.BackColor = System.Drawing.Color.Black;
+            this.btnStopAttacking.ForeColor = System.Drawing.Color.White;
+            this.btnStopAttacking.Location = new System.Drawing.Point(888, 457);
+            this.btnStopAttacking.Name = "btnStopAttacking";
+            this.btnStopAttacking.Size = new System.Drawing.Size(75, 42);
+            this.btnStopAttacking.TabIndex = 24;
+            this.btnStopAttacking.Text = "Stop Attacking";
+            this.btnStopAttacking.UseVisualStyleBackColor = false;
+            this.btnStopAttacking.Click += new System.EventHandler(this.btnStopAttacking_Click);
+            // 
+            // pnlDiscard
+            // 
+            this.pnlDiscard.AllowDrop = true;
+            this.pnlDiscard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
+            this.pnlDiscard.Location = new System.Drawing.Point(831, 175);
+            this.pnlDiscard.Name = "pnlDiscard";
+            this.pnlDiscard.Size = new System.Drawing.Size(139, 224);
+            this.pnlDiscard.TabIndex = 25;
+            // 
+            // pnlDefended
+            // 
+            this.pnlDefended.AllowDrop = true;
+            this.pnlDefended.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
+            this.pnlDefended.Location = new System.Drawing.Point(341, 173);
+            this.pnlDefended.Name = "pnlDefended";
+            this.pnlDefended.Size = new System.Drawing.Size(228, 224);
+            this.pnlDefended.TabIndex = 26;
+            // 
             // cbxDeck
             // 
             playingCard1.CardValue = 0;
@@ -293,36 +324,6 @@ namespace Durak
             this.cbxTrumpCard.Suit = CardLib.CardSuit.Diamonds;
             this.cbxTrumpCard.TabIndex = 19;
             this.cbxTrumpCard.TabStop = false;
-            // 
-            // btnStopAttacking
-            // 
-            this.btnStopAttacking.BackColor = System.Drawing.Color.Black;
-            this.btnStopAttacking.ForeColor = System.Drawing.Color.White;
-            this.btnStopAttacking.Location = new System.Drawing.Point(888, 457);
-            this.btnStopAttacking.Name = "btnStopAttacking";
-            this.btnStopAttacking.Size = new System.Drawing.Size(75, 42);
-            this.btnStopAttacking.TabIndex = 24;
-            this.btnStopAttacking.Text = "Stop Attacking";
-            this.btnStopAttacking.UseVisualStyleBackColor = false;
-            this.btnStopAttacking.Click += new System.EventHandler(this.btnStopAttacking_Click);
-            // 
-            // pnlDiscard
-            // 
-            this.pnlDiscard.AllowDrop = true;
-            this.pnlDiscard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
-            this.pnlDiscard.Location = new System.Drawing.Point(831, 175);
-            this.pnlDiscard.Name = "pnlDiscard";
-            this.pnlDiscard.Size = new System.Drawing.Size(139, 224);
-            this.pnlDiscard.TabIndex = 25;
-            // 
-            // pnlDefended
-            // 
-            this.pnlDefended.AllowDrop = true;
-            this.pnlDefended.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
-            this.pnlDefended.Location = new System.Drawing.Point(341, 173);
-            this.pnlDefended.Name = "pnlDefended";
-            this.pnlDefended.Size = new System.Drawing.Size(228, 224);
-            this.pnlDefended.TabIndex = 26;
             // 
             // frmGame
             // 

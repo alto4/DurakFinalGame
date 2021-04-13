@@ -306,6 +306,7 @@ namespace Durak
                         //if (playerAttacking)
                         //{
                             // player (?) logic for attacking
+
                         //}
                         //else if (!playerAttacking)
                         //{
@@ -319,14 +320,25 @@ namespace Durak
                         if (computerChoiceIndex >= 0)
                         {
                             CardBox.CardBox computerCardBox = pnlComputerCards.Controls[computerChoiceIndex] as CardBox.CardBox;
-                            aCardBox.Controls.Remove(computerCardBox);
+                            aCardBox.Controls.Remove(computerCardBox); 
+                            pnlComputerCards.Controls.RemoveAt(computerChoiceIndex);
+
                             pnlActiveCards.Controls.Add(computerCardBox);
                             txtPlayHistory.Text += Environment.NewLine + "Computer responds with " + computerCardBox.ToString(); //Computers choice (RELEVANT FOR GAMEPLAY LOG FILE)
 
 
                             // ***TODO: Fix cards for comparison based on round circumstances
-                            CompareCards((CardBox.CardBox)pnlActiveCards.Controls[0], computerCardBox, this.initialAttackDefended);
-                                                
+                            //Compares cards in players hands, determines if they can attack again by comparing their hand to pair in active panel
+
+                            CardBox.CardBox tempCard = (CardBox.CardBox)pnlActiveCards.Controls[0];
+                            txtPlayHistory.Text += Environment.NewLine + "temp card is " + tempCard.ToString();
+
+                            CompareCards(tempCard, computerCardBox, this.initialAttackDefended);
+                            ReenableAllCards();
+                            disableInvalidChoices(tempCard.Rank, computerCardBox.Card.Rank);
+
+                            MoveCards(pnlActiveCards, pnlDefended);
+                            //MoveCards(pnlDefended, pnlComputerCards);
                         }
                         else
                         {
@@ -528,6 +540,7 @@ namespace Durak
 
             MoveCards(pnlActiveCards, pnlDiscard); //Move cards from the active panel to discard
             MoveCards(pnlDefended, pnlDiscard); //Move cards from the defended panel to discard
+            
 
             //TODO: If MoveCards method functioning properly, delete the below for submission
             // Put previous cards in discard pile
@@ -586,7 +599,8 @@ namespace Durak
 
                 txtPlayHistory.Text += Environment.NewLine + "Computer responds with " + computerCard.ToString(); //Computers choice (RELEVANT FOR GAMEPLAY LOG FILE)
 
-                CompareCards((CardBox.CardBox)pnlActiveCards.Controls[0], computerCard, this.initialAttackDefended);  //Determines if the player has any cards that can be played as a defense against the computers attack
+               // CompareCards((CardBox.CardBox)pnlActiveCards.Controls[0], computerCard, this.initialAttackDefended); 
+               //Determine if the player can attack here
 
             }
             else
@@ -835,6 +849,7 @@ namespace Durak
             aCardBox.DragDrop += CardBox_DragDrop;
         }
 
+      //  private void CanPlayerContinueAttack(Panel playerPanel, CardBox.CardBox)
 
         /// <summary>
         /// Compares the attacking and defending cards and establishes which cards should have their functionality disabled if they are not possible options for moving 
@@ -854,7 +869,7 @@ namespace Durak
                 // ***TODO: Unclear on specifics of rules -> just previous defense and attack ranks, or ALL previously played defense/attack ranks***
                 if (!attackingCard.Card.Rank.Equals(defendingCard.Card.Rank))
                 {
-                    MessageBox.Show("Sorry attacker. You can only follow an attack with a card of the same rank as the last defense.");
+                    MessageBox.Show("Sorry attacker. You cannot play any of your cards as an attack.");
                     CardBox.CardBox invalidCard = (CardBox.CardBox)pnlActiveCards.Controls[0];
                     pnlActiveCards.Controls.RemoveAt(0);
                     pnlPlayerCards.Controls.Add(invalidCard);
@@ -867,15 +882,18 @@ namespace Durak
             //(otherwise, if both trump suits, initial rank comparison is already valid)
             //***TODO: Incorporate class library comparison operators with trump card -> currently something miss with deck/card collection constructor where comparison operators aren't
             //         accounting for trumps ***
-            if (defendingCard.Card.Rank > attackingCard.Card.Rank || (defendingCard.Card.Suit == cbxTrumpCard.Card.Suit && attackingCard.Card.Suit != cbxTrumpCard.Card.Suit))
+            //if (defendingCard.Card.Rank > attackingCard.Card.Rank || (deafendingCard.Card.Suit == cbxTrumpCard.Card.Suit && attackingCard.Card.Suit != cbxTrumpCard.Card.Suit))
+            if (defendingCard.Card.Rank > attackingCard.Card.Rank)
             {
                 if (playerAttacking)
                 {
                     MessageBox.Show("Successfully defended. You may THROW IN, but only with a card with a rank of " + defendingCard.Card.Rank.ToString() + " or " + attackingCard.Card.Rank.ToString());
                     MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
 
+                    this.initialAttackDefended = true;
+
                     MoveCards(pnlActiveCards, pnlDefended); //Move cards from active panel to successfully defended panel
-                    
+                    RealignDefendedCards();
                     
                 }
                 else
@@ -1074,7 +1092,7 @@ namespace Durak
 
                         noGoodChoice = false;
                         txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
-
+                        idealChoiceIndex = i;
                     }
                     else if (cardToBeat.Card.Suit == cbxTrumpCard.Card.Suit && (currentCard.Card.Suit != cbxTrumpCard.Card.Suit))
                     { //cardto beat wins
@@ -1088,6 +1106,7 @@ namespace Durak
                         {
                             noGoodChoice = false;
                             txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
+                            idealChoiceIndex = i;
                             //end players turn
                         }
                         
