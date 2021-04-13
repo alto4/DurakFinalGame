@@ -1014,7 +1014,6 @@ namespace Durak
                     CardBox.CardBox invalidCard = new CardBox.CardBox(defendingCard.Card);
                     pnlComputerCards.Controls.Add(invalidCard);
                 }
-                MessageBox.Show("Attacker wins. ");
             
         }
 
