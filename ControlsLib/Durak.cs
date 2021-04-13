@@ -572,6 +572,7 @@ namespace Durak
 
             ReenableAllCards(); //Allows the player to use their cards again
 
+           
             //USE THESE: for switching the attack roles, at least visibly
             txtComputerAttacker.Visible = true; //Flash the image that shows the computer is attacking
             btnStopAttacking.Visible = false; //remove the button that lets the user end their attacking turn
@@ -599,9 +600,13 @@ namespace Durak
 
                 txtPlayHistory.Text += Environment.NewLine + "Computer responds with " + computerCard.ToString(); //Computers choice (RELEVANT FOR GAMEPLAY LOG FILE)
 
-               // CompareCards((CardBox.CardBox)pnlActiveCards.Controls[0], computerCard, this.initialAttackDefended); 
-               //Determine if the player can attack here
+                // CompareCards((CardBox.CardBox)pnlActiveCards.Controls[0], computerCard, this.initialAttackDefended); 
+                //Determine if the player can attack here
 
+                MessageBox.Show("Computer played " + computerCard.Card.ToString() + ". Defend now player.");
+                
+
+                disableInvalidDefenseChoices(computerCard);
             }
             else
             {
@@ -990,6 +995,16 @@ namespace Durak
             }
         }
 
+        private void disableInvalidDefenseChoices(CardBox.CardBox attackingCard)
+        {
+            foreach(CardBox.CardBox card in pnlPlayerCards.Controls)
+            {
+                if(card.Rank < attackingCard.Rank)
+                {
+                    card.Enabled = false;
+                }
+            }
+        }
         /// <summary>
         /// Re-enables potentially disabled controls where an attack is over and all cards are to be re-assigned their event handlers
         /// </summary>
