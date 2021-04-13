@@ -297,7 +297,7 @@ namespace Durak
                         RealignCards(thisPanel);
                         RealignCards(fromPanel);
 
-
+                        //Test
                         // WHERE GAME LOGIN KICKS OFF 
                         // This could also be a separate event handler triggering AI function to consider best choice - currently just choosing the first card
                         // NOTE: index 0 is on right side of computer panel of cards
