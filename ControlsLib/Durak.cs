@@ -892,6 +892,12 @@ namespace Durak
         /// trump card -> perhaps within this function, or as a separate function***
         private void InitialDeal()
         {
+            PlayingCard playersCard = new PlayingCard();
+            PlayingCard AIsCard = new PlayingCard();
+            PlayingCard lowestCard = new PlayingCard(PlayingCard.trumpSuit, CardRank.Ace); // start as the highest possible card
+
+            string firstTurn = "";
+
             for (int i = 0; i < 6; i++)
             {
                 PlayingCard card = cbxDeck.Card;
@@ -902,6 +908,7 @@ namespace Durak
 
                     //Make it a cardbox for the player
                     CardBox.CardBox playerCardBox = new CardBox.CardBox(card);
+                    playersCard = card;
 
                     playerCardBox.Size = normalCardSize;
 
@@ -917,6 +924,7 @@ namespace Durak
 
                     card = cbxDeck.Card;
                     CardBox.CardBox computerCardBox = new CardBox.CardBox(card);
+                    AIsCard = card;
 
                     computerCardBox.Size = normalCardSize;
                     //Make a cardbox for the computer
@@ -925,8 +933,32 @@ namespace Durak
 
                     pnlComputerCards.Controls.Add(computerCardBox);
                     cbxDeck.Card = mainDeck.DrawCard();
+
+                    // determine who has the lowest trump card
+                    if (AIsCard < lowestCard && AIsCard.Suit == PlayingCard.trumpSuit)
+                    {
+                        lowestCard = AIsCard;
+                        firstTurn = "the AI";
+                    }
+                    if (playersCard < lowestCard && playersCard.Suit == PlayingCard.trumpSuit)
+                    {
+                        lowestCard = playersCard;
+                        firstTurn = "the player";
+                    }
+                    if (AIsCard.Suit == playersCard.Suit)
+                    {
+                        if (playersCard.Rank < AIsCard.Rank)
+                        {
+
+                        }
+                    }
                 }
             }
+            PlayingCard test1 = new PlayingCard(PlayingCard.trumpSuit, CardRank.Ace);
+            PlayingCard test2 = new PlayingCard(PlayingCard.trumpSuit, CardRank.King);
+            MessageBox.Show("is ace higher than kings" + (test1.Rank > test2.Rank) + ".");
+            MessageBox.Show("First turn goes to: " + firstTurn + ".");
+
             RealignAllCards();
         }
 

@@ -237,7 +237,7 @@ namespace CardLib
         /// <param name="card1">the first card for comparison</param>
         /// <param name="card2">the second card for comparison</param>
         /// <returns>boolean representing status of first card as greater than or equal to second card</returns>
-        public static bool operator >=(PlayingCard card1, PlayingCard card2) => (!(card1 < card2) || card1 == card2);
+        public static bool operator >=(PlayingCard card1, PlayingCard card2) => (card1 > card2 || card1 == card2);
 
 
         // <summary>
