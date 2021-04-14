@@ -110,16 +110,6 @@ namespace Durak
         }
 
         /// <summary>
-        /// Event for when the index changes on a combobox
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
         /// When the user clicks on the deck
         /// </summary>
         /// <param name="sender"></param>
@@ -387,7 +377,7 @@ namespace Durak
                     }
                 }
                 RealignAllCards();
-                AlignDiscardedCards();
+                UpdateDefendedAndDiscardPanelControls();
             }
         }
 
@@ -572,7 +562,7 @@ namespace Durak
             MoveCards(pnlDefended, pnlDiscard); //Move cards from the defended panel to discard
 
             // Flip discarded pile to facedown without flipping every card
-            AlignDiscardedCards();
+            UpdateDefendedAndDiscardPanelControls();
 
             //TODO: If MoveCards method functioning properly, delete the below for submission
             // Put previous cards in discard pile
@@ -651,7 +641,7 @@ namespace Durak
             }
 
             RealignAllCards();
-            AlignDiscardedCards();
+            UpdateDefendedAndDiscardPanelControls();
         }
 
 
@@ -698,7 +688,7 @@ namespace Durak
 
             txtPlayHistory.Text += Environment.NewLine + "Computer responds with " + computerCard.ToString(); //Computers choice (RELEVANT FOR GAMEPLAY LOG FILE)
 
-            AlignDiscardedCards();
+            UpdateDefendedAndDiscardPanelControls();
         }
 
         #endregion
@@ -706,10 +696,20 @@ namespace Durak
         #region HELPER METHODS
 
         /// <summary>
-        /// Aligns the discarded cards to be in the center of the panel
+        /// Aligns the discarded cards to be in the center of the panel and 
+        /// make defended cards elargeable
         /// </summary>
-        private void AlignDiscardedCards()
+        private void UpdateDefendedAndDiscardPanelControls()
         {
+            // make defended cards be able to get enlarged
+            foreach (CardBox.CardBox cardBox in pnlDefended.Controls)
+            {
+                cardBox.Enabled = true;
+                cardBox.MouseEnter += CardBox_MouseEnter;
+                cardBox.MouseLeave += CardBox_MouseLeave;
+            }
+
+            // makes discarded cards go in the middle of the panel and flip over
             foreach (CardBox.CardBox cardBox in pnlDiscard.Controls)
             {
                 cardBox.FaceUp = !cbxDeck.FaceUp;
@@ -979,7 +979,7 @@ namespace Durak
             }
 
             RealignAllCards();
-            AlignDiscardedCards();
+            UpdateDefendedAndDiscardPanelControls();
         }
 
         /// <summary>
@@ -1219,6 +1219,11 @@ namespace Durak
         #endregion
 
         #region EMPTY EVENT HANDLERS
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
 
         private void btnReset_Click(object sender, EventArgs e)
         {
