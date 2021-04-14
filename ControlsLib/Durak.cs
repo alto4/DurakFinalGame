@@ -945,18 +945,12 @@ namespace Durak
                         lowestCard = playersCard;
                         firstTurn = "the player";
                     }
-                    if (AIsCard.Suit == playersCard.Suit)
-                    {
-                        if (playersCard.Rank < AIsCard.Rank)
-                        {
-
-                        }
-                    }
                 }
             }
-            PlayingCard test1 = new PlayingCard(PlayingCard.trumpSuit, CardRank.Ace);
-            PlayingCard test2 = new PlayingCard(PlayingCard.trumpSuit, CardRank.King);
-            MessageBox.Show("is ace higher than kings" + (test1.Rank > test2.Rank) + ".");
+
+            //PlayingCard test1 = new PlayingCard(PlayingCard.trumpSuit, CardRank.Ace);
+            //PlayingCard test2 = new PlayingCard(PlayingCard.trumpSuit, CardRank.King);
+            //MessageBox.Show("TEST: Aces higher than kings: " + (test1 > test2) + ".");
             MessageBox.Show("First turn goes to: " + firstTurn + ".");
 
             RealignAllCards();
@@ -1194,7 +1188,8 @@ namespace Durak
 
             foreach (CardBox.CardBox card in pnlDisabling.Controls)
             {
-                if (card.Rank < attackingCard.Rank)
+                // NOTE: card.Rank does not work for comparing aces, just compare the PlayingCard objects
+                if (card.Card < attackingCard.Card)
                 {
                     card.Enabled = false;
                 }
@@ -1322,7 +1317,7 @@ namespace Durak
                     }
                     else //if neither cards are trump, or both cards are
                     {
-                        if (currentCard.Card.Rank > cardToBeat.Card.Rank)  //win
+                        if (currentCard.Card > cardToBeat.Card)  //win
                         {
                             noGoodChoice = false;
                             txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
@@ -1334,7 +1329,7 @@ namespace Durak
 
                     //***TODO: Account for trump cards in picking best decision*** 
                     // Check to see if option to beat player card is a more efficient (AKA lower value card that current selection) way to beat the opponent and reserve high ranking cards for later
-                    if (((int)currentCard.Card.Rank) < (int)idealChoice.Card.Rank && noGoodChoice == false)
+                    if ((currentCard.Card < idealChoice.Card) && noGoodChoice == false)
                     {
                         idealChoiceIndex = i;
                     }

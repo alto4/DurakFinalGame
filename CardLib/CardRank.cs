@@ -23,7 +23,7 @@ namespace CardLib
     /// </summary>
     public enum CardRank : byte
     {
-        Ace = 14, // This is the easiest way to make the comparison work properly and we dont need it to be 1.
+        Ace = 1,
         King = 13,
         Queen = 12,
         Jack = 11,
