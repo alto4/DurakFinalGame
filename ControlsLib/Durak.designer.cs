@@ -53,6 +53,9 @@ namespace Durak
             this.btnStopAttacking = new System.Windows.Forms.Button();
             this.pnlDiscard = new System.Windows.Forms.Panel();
             this.pnlDefended = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.cbxDeck = new CardBox.CardBox();
             this.cbxTrumpCard = new CardBox.CardBox();
             this.panel1.SuspendLayout();
@@ -61,7 +64,7 @@ namespace Durak
             // btnFlipCard
             // 
             this.btnFlipCard.Location = new System.Drawing.Point(212, 158);
-            this.btnFlipCard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnFlipCard.Margin = new System.Windows.Forms.Padding(4);
             this.btnFlipCard.Name = "btnFlipCard";
             this.btnFlipCard.Size = new System.Drawing.Size(100, 28);
             this.btnFlipCard.TabIndex = 0;
@@ -109,7 +112,7 @@ namespace Durak
             // btnExit
             // 
             this.btnExit.Location = new System.Drawing.Point(212, 206);
-            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(100, 28);
             this.btnExit.TabIndex = 11;
@@ -122,9 +125,9 @@ namespace Durak
             this.pnlActiveCards.AllowDrop = true;
             this.pnlActiveCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
             this.pnlActiveCards.Location = new System.Drawing.Point(767, 215);
-            this.pnlActiveCards.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlActiveCards.Margin = new System.Windows.Forms.Padding(4);
             this.pnlActiveCards.Name = "pnlActiveCards";
-            this.pnlActiveCards.Size = new System.Drawing.Size(332, 276);
+            this.pnlActiveCards.Size = new System.Drawing.Size(332, 252);
             this.pnlActiveCards.TabIndex = 13;
             this.pnlActiveCards.DragDrop += new System.Windows.Forms.DragEventHandler(this.Panel_DragDrop);
             this.pnlActiveCards.DragEnter += new System.Windows.Forms.DragEventHandler(this.Panel_DragEnter);
@@ -133,7 +136,7 @@ namespace Durak
             // 
             this.pnlPlayerCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(206)))), ((int)(((byte)(164)))), ((int)(((byte)(15)))));
             this.pnlPlayerCards.Location = new System.Drawing.Point(455, 498);
-            this.pnlPlayerCards.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlPlayerCards.Margin = new System.Windows.Forms.Padding(4);
             this.pnlPlayerCards.Name = "pnlPlayerCards";
             this.pnlPlayerCards.Size = new System.Drawing.Size(709, 180);
             this.pnlPlayerCards.TabIndex = 14;
@@ -144,7 +147,7 @@ namespace Durak
             // 
             this.pnlComputerCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(206)))), ((int)(((byte)(164)))), ((int)(((byte)(15)))));
             this.pnlComputerCards.Location = new System.Drawing.Point(455, 18);
-            this.pnlComputerCards.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlComputerCards.Margin = new System.Windows.Forms.Padding(4);
             this.pnlComputerCards.Name = "pnlComputerCards";
             this.pnlComputerCards.Size = new System.Drawing.Size(709, 190);
             this.pnlComputerCards.TabIndex = 15;
@@ -154,7 +157,7 @@ namespace Durak
             this.txtComputerAttacker.BackColor = System.Drawing.Color.Red;
             this.txtComputerAttacker.ForeColor = System.Drawing.Color.White;
             this.txtComputerAttacker.Location = new System.Drawing.Point(360, 161);
-            this.txtComputerAttacker.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtComputerAttacker.Margin = new System.Windows.Forms.Padding(4);
             this.txtComputerAttacker.Name = "txtComputerAttacker";
             this.txtComputerAttacker.Size = new System.Drawing.Size(87, 22);
             this.txtComputerAttacker.TabIndex = 0;
@@ -167,7 +170,7 @@ namespace Durak
             this.txtPlayHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(89)))), ((int)(((byte)(208)))));
             this.txtPlayHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
             this.txtPlayHistory.Location = new System.Drawing.Point(17, 375);
-            this.txtPlayHistory.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtPlayHistory.Margin = new System.Windows.Forms.Padding(4);
             this.txtPlayHistory.Multiline = true;
             this.txtPlayHistory.Name = "txtPlayHistory";
             this.txtPlayHistory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
@@ -183,7 +186,7 @@ namespace Durak
             "Spades",
             "Clubs"});
             this.cbxSuit.Location = new System.Drawing.Point(212, 106);
-            this.cbxSuit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxSuit.Margin = new System.Windows.Forms.Padding(4);
             this.cbxSuit.Name = "cbxSuit";
             this.cbxSuit.Size = new System.Drawing.Size(160, 24);
             this.cbxSuit.TabIndex = 9;
@@ -208,7 +211,7 @@ namespace Durak
             "Queen",
             "King"});
             this.cbxRank.Location = new System.Drawing.Point(212, 53);
-            this.cbxRank.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxRank.Margin = new System.Windows.Forms.Padding(4);
             this.cbxRank.Name = "cbxRank";
             this.cbxRank.Size = new System.Drawing.Size(160, 24);
             this.cbxRank.TabIndex = 8;
@@ -229,7 +232,7 @@ namespace Durak
             // btnRules
             // 
             this.btnRules.Location = new System.Drawing.Point(1184, 14);
-            this.btnRules.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnRules.Margin = new System.Windows.Forms.Padding(4);
             this.btnRules.Name = "btnRules";
             this.btnRules.Size = new System.Drawing.Size(100, 28);
             this.btnRules.TabIndex = 18;
@@ -266,7 +269,7 @@ namespace Durak
             this.btnStopAttacking.BackColor = System.Drawing.Color.Black;
             this.btnStopAttacking.ForeColor = System.Drawing.Color.White;
             this.btnStopAttacking.Location = new System.Drawing.Point(1184, 562);
-            this.btnStopAttacking.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnStopAttacking.Margin = new System.Windows.Forms.Padding(4);
             this.btnStopAttacking.Name = "btnStopAttacking";
             this.btnStopAttacking.Size = new System.Drawing.Size(100, 52);
             this.btnStopAttacking.TabIndex = 24;
@@ -279,9 +282,9 @@ namespace Durak
             this.pnlDiscard.AllowDrop = true;
             this.pnlDiscard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
             this.pnlDiscard.Location = new System.Drawing.Point(1108, 215);
-            this.pnlDiscard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlDiscard.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDiscard.Name = "pnlDiscard";
-            this.pnlDiscard.Size = new System.Drawing.Size(185, 276);
+            this.pnlDiscard.Size = new System.Drawing.Size(185, 252);
             this.pnlDiscard.TabIndex = 25;
             // 
             // pnlDefended
@@ -289,10 +292,43 @@ namespace Durak
             this.pnlDefended.AllowDrop = true;
             this.pnlDefended.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
             this.pnlDefended.Location = new System.Drawing.Point(455, 215);
-            this.pnlDefended.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlDefended.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDefended.Name = "pnlDefended";
-            this.pnlDefended.Size = new System.Drawing.Size(304, 276);
+            this.pnlDefended.Size = new System.Drawing.Size(304, 252);
             this.pnlDefended.TabIndex = 26;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(542, 471);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(131, 20);
+            this.label1.TabIndex = 27;
+            this.label1.Text = "Defended Cards";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(869, 471);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(128, 20);
+            this.label2.TabIndex = 28;
+            this.label2.Text = "Attacking Cards";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.White;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label3.Location = new System.Drawing.Point(1132, 471);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(136, 20);
+            this.label3.TabIndex = 29;
+            this.label3.Text = "Discarded Cards";
             // 
             // cbxDeck
             // 
@@ -337,6 +373,9 @@ namespace Durak
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(28)))), ((int)(((byte)(85)))));
             this.ClientSize = new System.Drawing.Size(1301, 698);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.pnlDefended);
             this.Controls.Add(this.pnlDiscard);
             this.Controls.Add(this.btnStopAttacking);
@@ -357,7 +396,7 @@ namespace Durak
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "frmGame";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
@@ -398,6 +437,9 @@ namespace Durak
         private System.Windows.Forms.Button btnStopAttacking;
         private System.Windows.Forms.Panel pnlDiscard;
         private System.Windows.Forms.Panel pnlDefended;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label3;
     }
 }
 
