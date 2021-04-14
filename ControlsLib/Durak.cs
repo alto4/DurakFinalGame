@@ -754,13 +754,17 @@ namespace Durak
             System.Diagnostics.Debug.WriteLine(mainDeck.ToString());
             try
             {
+                // The 14th card will be the trump
+                PlayingCard.trumpSuit = mainDeck.GetCard(13).Suit;
+                System.Diagnostics.Debug.WriteLine(PlayingCard.trumpSuit);
+
                 InitialDeal();
 
                 PlayingCard firstCard = mainDeck.DrawCard();
                 PlayingCard firstPlayableCard = mainDeck.DrawCard();
 
-                this.cbxTrumpCard.Card = firstCard; //Determines the trump card
-                this.cbxDeck.Card = firstPlayableCard;
+                cbxTrumpCard.Card = firstCard; //Determines the trump card
+                cbxDeck.Card = firstPlayableCard;
 
                 // add the trump card back but at the last place in the deck
                 mainDeck.AddCardAtBottom(firstCard);
@@ -939,6 +943,7 @@ namespace Durak
                     cbxDeck.Card = mainDeck.DrawCard();
 
                     // determine who has the lowest trump card
+                    // If no entity has a trump card then the player goes first
                     if (AIsCard < lowestCard && AIsCard.Suit == PlayingCard.trumpSuit)
                     {
                         lowestCard = AIsCard;
@@ -952,10 +957,15 @@ namespace Durak
                 }
             }
 
-            //PlayingCard test1 = new PlayingCard(PlayingCard.trumpSuit, CardRank.Ace);
-            //PlayingCard test2 = new PlayingCard(PlayingCard.trumpSuit, CardRank.King);
-            //MessageBox.Show("TEST: Aces higher than kings: " + (test1 > test2) + ".");
-            MessageBox.Show("First turn goes to: " + firstTurn + ". Note this is just a msg for now its not set up.");
+            if (firstTurn == "")
+            {
+                MessageBox.Show("Nobody had trump card so first move goes to player (for DEV).");
+            }
+            else
+            {
+                MessageBox.Show("First turn goes to: " + firstTurn + ". Note this is just a msg for " +
+                    "now its not set up. The lowest trump card was(for DEV) :" + lowestCard.ToString());
+            }
 
             RealignAllCards();
         }
