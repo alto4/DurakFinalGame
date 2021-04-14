@@ -892,11 +892,15 @@ namespace Durak
         /// trump card -> perhaps within this function, or as a separate function***
         private void InitialDeal()
         {
-            PlayingCard playersCard = new PlayingCard();
-            PlayingCard AIsCard = new PlayingCard();
+            PlayingCard playersCard;
+            PlayingCard AIsCard;
             PlayingCard lowestCard = new PlayingCard(PlayingCard.trumpSuit, CardRank.Ace); // start as the highest possible card
 
             string firstTurn = "";
+
+            // setting the first card
+            cbxDeck.Card = mainDeck.GetCard(0);
+            mainDeck.DrawCard();
 
             for (int i = 0; i < 6; i++)
             {
@@ -951,7 +955,7 @@ namespace Durak
             //PlayingCard test1 = new PlayingCard(PlayingCard.trumpSuit, CardRank.Ace);
             //PlayingCard test2 = new PlayingCard(PlayingCard.trumpSuit, CardRank.King);
             //MessageBox.Show("TEST: Aces higher than kings: " + (test1 > test2) + ".");
-            MessageBox.Show("First turn goes to: " + firstTurn + ".");
+            MessageBox.Show("First turn goes to: " + firstTurn + ". Note this is just a msg for now its not set up.");
 
             RealignAllCards();
         }
