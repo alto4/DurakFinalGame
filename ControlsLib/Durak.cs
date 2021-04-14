@@ -963,8 +963,15 @@ namespace Durak
             }
             else
             {
-                MessageBox.Show("First turn goes to: " + firstTurn + ". Note this is just a msg for " +
-                    "now its not set up. The lowest trump card was(for DEV) :" + lowestCard.ToString());
+                MessageBox.Show("First turn goes to: " + firstTurn + "." +
+                    " The lowest trump card was(for DEV) :" + lowestCard.ToString());
+                
+                if (firstTurn == "the AI")
+                {
+                    // make the AI go first by triggering end turn event
+                    //btnStopAttacking.PerformClick();
+                    btnStopAttacking_Click(btnStopAttacking, EventArgs.Empty);
+                }
             }
 
             RealignAllCards();
