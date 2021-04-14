@@ -317,8 +317,14 @@ namespace Durak
                             if (computerChoiceIndex >= 0)
                             {
                                 CardBox.CardBox computerCardBox = pnlComputerCards.Controls[computerChoiceIndex] as CardBox.CardBox;
-                                aCardBox.Controls.Remove(computerCardBox);
-                                pnlComputerCards.Controls.RemoveAt(computerChoiceIndex);
+
+
+                                //aCardBox.Controls.Remove(computerCardBox);
+
+                                //pnlComputerCards.Controls.RemoveAt(computerChoiceIndex);
+                                pnlComputerCards.Controls.Remove(computerCardBox);
+                                
+
 
                                 pnlActiveCards.Controls.Add(computerCardBox);
                                 txtPlayHistory.Text += Environment.NewLine + "Computer responds with " + computerCardBox.ToString(); //Computers choice (RELEVANT FOR GAMEPLAY LOG FILE)
@@ -333,6 +339,7 @@ namespace Durak
                                 CompareCards(tempCard, computerCardBox, this.initialAttackDefended); //deciding which cards can be played on a successive attack
                                 ReenableAllCards();
                                 disableInvalidChoices(tempCard.Rank, computerCardBox.Card.Rank);
+
 
                                 //MoveCards(pnlActiveCards, pnlDefended);
                                 //MoveCards(pnlDefended, pnlComputerCards);
@@ -628,6 +635,7 @@ namespace Durak
                 MessageBox.Show("Computer played " + computerCard.Card.ToString() + ". Defend now player.");
 
                 disableInvalidDefenseChoices(computerCard);
+                
             }
             else
             {
@@ -636,6 +644,7 @@ namespace Durak
                 txtComputerAttacker.Visible = false; //Flash the image that shows the computer is attacking
                 btnStopAttacking.Visible = true; //remove the button that lets the user end their attacking turn
 
+                ReenableAllCards();
                 //TODO: Determine if the computer cannot move on, or decided to end turn? is that necessary??
                 //TODO: Make sure the turns actually switch properly, increment any counters and move on
             }
@@ -1097,8 +1106,8 @@ namespace Durak
                 }
                 else
                 {
-                    disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
-
+                    //disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
+                    disableInvalidDefenseChoices(attackingCard);
                     bool playerHasChoices = false;
 
                     foreach (Control playerCard in pnlPlayerCards.Controls)
@@ -1133,11 +1142,11 @@ namespace Durak
 
             // Move auto-played computer card from pnlActiveCards back into computer hand before it renders in the form
             // ***TODO: put this logic before comparison - shouldn't be required to move, then move back invalid defense for comparison ***
-            if (this.playerAttacking == true)
+            /*if (this.playerAttacking == true)
             {
                 CardBox.CardBox invalidCard = new CardBox.CardBox(defendingCard.Card);
                 pnlComputerCards.Controls.Add(invalidCard);
-            }
+            }*/
 
         }
 
@@ -1199,11 +1208,14 @@ namespace Durak
             Panel pnlDisabling;
             if (playerAttacking)
             {
-                pnlDisabling = pnlPlayerCards;
+                MessageBox.Show("Plater attacking. Disabling invalid computer defense choices.");
+                pnlDisabling = pnlComputerCards;
             }
             else
             {
-                pnlDisabling = pnlComputerCards;
+
+                MessageBox.Show("Computer attacking. Disabling invalid computer defense choices.");
+                pnlDisabling = pnlPlayerCards;
             }
 
 
