@@ -182,3 +182,21 @@ C:\Users\Scott Alton\Desktop\OOP\DurakGame\ControlsLib\obj\Debug\ControlsLib.csp
 C:\Users\Scott Alton\Desktop\OOP\DurakGame\ControlsLib\obj\Debug\ControlsLib.csproj.CopyComplete
 C:\Users\Scott Alton\Desktop\OOP\DurakGame\ControlsLib\obj\Debug\ControlsLib.dll
 C:\Users\Scott Alton\Desktop\OOP\DurakGame\ControlsLib\obj\Debug\ControlsLib.pdb
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\bin\Debug\ControlsLib.dll
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\bin\Debug\ControlsLib.pdb
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\bin\Debug\CardLib.dll
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\bin\Debug\CardLib.pdb
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.csprojAssemblyReference.cache
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\CardBox.CardBox.resources
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\Durak.frmGame.resources
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.frmLogs.resources
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\Durak.frmMainMenu.resources
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.Properties.Resources.resources
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.frmRules.resources
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.StatsPrompt.resources
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.UsernameInput.resources
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.csproj.GenerateResource.cache
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.csproj.CoreCompileInputs.cache
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.csproj.CopyComplete
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.dll
+D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.pdb
