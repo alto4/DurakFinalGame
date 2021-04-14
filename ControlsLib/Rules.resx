@@ -137,7 +137,7 @@ Attacking Rules:
 	
 	3. If an attack is defended, another attack can be played but must be the same rank of one of the already played cards.
 	
-	4. If a player defends all attacks, he becomes the new attacker.
+	4. If a player defends all attacks, he becomes the new leed attacker.
 	
 	5. An attack is up to a maximum of 6 cards or if the defender has less than six cards, the maximum is their hand size.
 	
@@ -147,7 +147,7 @@ Attacking Rules:
 	
 Defending Rules:
 	
-	1. The defender is the person next of the current attacker.
+	1. The defender is the person next of the current lead attacker.
 
 	2. If a player can not defend an attack, he must draw all of the cards to his/her hand and loses their turn to attack.
 	

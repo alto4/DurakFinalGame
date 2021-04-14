@@ -695,327 +695,329 @@ namespace Durak
     #region HELPER METHODS
 
     /// <summary>
-    /// Initiates the gameplay by establishing the first drawn card as the designated trump suit, dealing 6 cards to each player, and declaring the first player to attack
+    /// Initiates the gameplay by establishing the first drawn card as the designated trump suit, 
+    /// dealing 6 cards to each player, and declaring the first player to attack
     /// based on which player possesses the lowest ranking trump card
     /// </summary>
-    /// ***TODO: Determine first attacker based on lowest trump card in initial hand (rather than assume the player is always the attacked off the bat)*** 
+    /// ***TODO: Determine first attacker based on lowest trump card in initial hand 
+    /// (rather than assume the player is always the attacked off the bat)*** 
     private void StartGame()
+    {
+        // shuffle
+        mainDeck.Shuffle();
+
+        // seeing the order of the deck in debug console for debugging
+        mainDeck.ShowDeck(); // This shows all cards, turn this off when done development
+        System.Diagnostics.Debug.WriteLine(mainDeck.ToString()); 
+        try
         {
-            // shuffle
-            mainDeck.Shuffle();
+            InitialDeal();
 
-            // seeing the order of the deck in debug console for debugging
-            mainDeck.ShowDeck(); // This shows all cards, turn this off when done development
-            System.Diagnostics.Debug.WriteLine(mainDeck.ToString()); 
-            try
+            PlayingCard firstCard = mainDeck.DrawCard();
+            PlayingCard firstPlayableCard = mainDeck.DrawCard();
+
+            this.cbxTrumpCard.Card = firstCard; //Determines the trump card
+            this.cbxDeck.Card = firstPlayableCard; 
+
+            // add the trump card back but at the last place in the deck
+            mainDeck.AddCardAtBottom(firstCard);
+
+            txtPlayHistory.Text += firstCard.Suit + " is the current trump suit."; //displays the trump suit to the log
+        }
+        catch (IndexOutOfRangeException)
+        {
+            System.Diagnostics.Debug.WriteLine("Exception caught when trying to draw card out of index.");
+        }
+    }
+
+    /// <summary>
+    /// This called RealignCards() to realign all the cards in the form.
+    /// </summary>
+    private void RealignAllCards() 
+    {
+        foreach (var control in cardPanels)
+        {
+            RealignCards(control);
+        }
+    }
+
+    /// <summary>
+    /// Switching settings of several objects to show the deck is not out of cards
+    /// </summary>
+    private void SettingsWithCards()
+    {
+        lblOutOfCards.Visible = false;
+        cbxDeck.Enabled = true;
+        cbxTrumpCard.Visible = true;
+        lblTrumpCard.Visible = true;
+    }
+
+    /// <summary>
+    /// Switching settings of cbxDeck to show the deck is out of cards
+    /// </summary>
+    private void SettingsOutOfCards()
+    {
+        lblOutOfCards.Visible = true;
+        cbxDeck.Enabled = false;
+        cbxTrumpCard.Visible = false;
+        lblTrumpCard.Visible = false;
+    }
+
+
+    /// <summary>
+    /// Repositions the cards in a panel so that they are evenly distributed in the area available.
+    /// </summary>
+    /// <param name="panelHand"></param>
+    private void RealignCards(Panel panelHand)
+    {
+        // Determine the number of cards/controls in the panel.
+        int myCount = panelHand.Controls.Count;
+
+        // If there are any cards in the panel
+        if (myCount > 0)
+        {
+            // Determine how wide one card/control is.
+            int cardWidth = panelHand.Controls[0].Width;
+
+            // Determine where the left-hand edge of a card/control placed 
+            // in the middle of the panel should be  
+            int startPoint = (panelHand.Width - cardWidth) / 2;
+
+            // An offset for the remaining cards
+            int offset = 0;
+
+            // If there are more than one cards/controls in the panel
+            if (myCount > 1)
             {
-                InitialDeal();
+                // Determine what the offset should be for each card based on the 
+                // space available and the number of card/controls
+                offset = (panelHand.Width - cardWidth - 2 * ENLARGE) / (myCount - 1);
 
-                PlayingCard firstCard = mainDeck.DrawCard();
-                PlayingCard firstPlayableCard = mainDeck.DrawCard();
+                // If the offset is bigger than the card/control width, i.e. there is lots of room, 
+                // set the offset to the card width. The cards/controls will not overlap at all.
+                if (offset > cardWidth)
+                    offset = cardWidth;
 
-                this.cbxTrumpCard.Card = firstCard; //Determines the trump card
-                this.cbxDeck.Card = firstPlayableCard; 
-
-                // add the trump card back but at the last place in the deck
-                mainDeck.AddCardAtBottom(firstCard);
-
-                txtPlayHistory.Text += firstCard.Suit + " is the current trump suit."; //displays the trump suit to the log
+                // Determine width of all the cards/controls 
+                int allCardsWidth = (myCount - 1) * offset + cardWidth;
+                // Set the start point to where the left-hand edge of the "first" card should be.
+                startPoint = (panelHand.Width - allCardsWidth) / 2;
             }
-            catch (IndexOutOfRangeException)
+
+            // Aligning the cards: Note that I align them in reserve order from how they
+            // are stored in the controls collection. This is so that cards on the left 
+            // appear underneath cards to the right. This allows the user to see the rank
+            // and suit more easily.
+
+            // Align the "first" card (which is the last control in the collection)
+            panelHand.Controls[myCount - 1].Top = ENLARGE;
+            System.Diagnostics.Debug.Write(panelHand.Controls[myCount - 1].Top.ToString() + "\n");
+            panelHand.Controls[myCount - 1].Left = startPoint;
+
+            // for each of the remaining controls, in reverse order.
+            for (int index = myCount - 2; index >= 0; index--)
             {
-                System.Diagnostics.Debug.WriteLine("Exception caught when trying to draw card out of index.");
+                // Align the current card
+                panelHand.Controls[index].Top = ENLARGE;
+                panelHand.Controls[index].Left = panelHand.Controls[index + 1].Left + offset;
+
             }
-        }
 
-        /// <summary>
-        /// This called RealignCards() to realign all the cards in the form.
-        /// </summary>
-        private void RealignAllCards() 
-        {
-            foreach (var control in cardPanels)
+            for (int i = 0; i < panelHand.Controls.Count; i++)
             {
-                RealignCards(control);
-                
-            }
-        }
+                panelHand.Controls[i].Size = normalCardSize;
 
-        /// <summary>
-        /// Switching settings of several objects to show the deck is not out of cards
-        /// </summary>
-        private void SettingsWithCards()
-        {
-            lblOutOfCards.Visible = false;
-            cbxDeck.Enabled = true;
-            cbxTrumpCard.Visible = true;
-            lblTrumpCard.Visible = true;
-        }
-
-        /// <summary>
-        /// Switching settings of cbxDeck to show the deck is out of cards
-        /// </summary>
-        private void SettingsOutOfCards()
-        {
-            lblOutOfCards.Visible = true;
-            cbxDeck.Enabled = false;
-            cbxTrumpCard.Visible = false;
-            lblTrumpCard.Visible = false;
-        }
-
-
-        /// <summary>
-        /// Repositions the cards in a panel so that they are evenly distributed in the area available.
-        /// </summary>
-        /// <param name="panelHand"></param>
-        private void RealignCards(Panel panelHand)
-        {
-            // Determine the number of cards/controls in the panel.
-            int myCount = panelHand.Controls.Count;
-
-            // If there are any cards in the panel
-            if (myCount > 0)
-            {
-                // Determine how wide one card/control is.
-                int cardWidth = panelHand.Controls[0].Width;
-
-                // Determine where the left-hand edge of a card/control placed 
-                // in the middle of the panel should be  
-                int startPoint = (panelHand.Width - cardWidth) / 2;
-
-                // An offset for the remaining cards
-                int offset = 0;
-
-                // If there are more than one cards/controls in the panel
-                if (myCount > 1)
-                {
-                    // Determine what the offset should be for each card based on the 
-                    // space available and the number of card/controls
-                    offset = (panelHand.Width - cardWidth - 2 * ENLARGE) / (myCount - 1);
-
-                    // If the offset is bigger than the card/control width, i.e. there is lots of room, 
-                    // set the offset to the card width. The cards/controls will not overlap at all.
-                    if (offset > cardWidth)
-                        offset = cardWidth;
-
-                    // Determine width of all the cards/controls 
-                    int allCardsWidth = (myCount - 1) * offset + cardWidth;
-                    // Set the start point to where the left-hand edge of the "first" card should be.
-                    startPoint = (panelHand.Width - allCardsWidth) / 2;
-                }
-
-                // Aligning the cards: Note that I align them in reserve order from how they
-                // are stored in the controls collection. This is so that cards on the left 
-                // appear underneath cards to the right. This allows the user to see the rank
-                // and suit more easily.
-
-                // Align the "first" card (which is the last control in the collection)
-                panelHand.Controls[myCount - 1].Top = ENLARGE;
-                System.Diagnostics.Debug.Write(panelHand.Controls[myCount - 1].Top.ToString() + "\n");
-                panelHand.Controls[myCount - 1].Left = startPoint;
-
-                // for each of the remaining controls, in reverse order.
-                for (int index = myCount - 2; index >= 0; index--)
-                {
-                    // Align the current card
-                    panelHand.Controls[index].Top = ENLARGE;
-                    panelHand.Controls[index].Left = panelHand.Controls[index + 1].Left + offset;
-
-                }
-
-                for (int i = 0; i < panelHand.Controls.Count; i++)
-                {
-                    panelHand.Controls[i].Size = normalCardSize;
-
-                }
             }
         }
+    }
 
-        /// <summary>
-        /// initialDeal - deals players 6 cards to start
-        /// </summary>
-        /// ***TODO: followup with a function to establish the first attacker based on lowest trump card -> perhaps within this function, or as a separate function***
-        private void InitialDeal()
+    /// <summary>
+    /// initialDeal - deals players 6 cards to start
+    /// </summary>
+    /// ***TODO: followup with a function to establish the first attacker based on lowest 
+    /// trump card -> perhaps within this function, or as a separate function***
+    private void InitialDeal()
+    {
+        for (int i = 0; i < 6; i++)
         {
-            for (int i = 0; i < 6; i++)
+            PlayingCard card = cbxDeck.Card;
+
+            if (card != null) //if card isn't null
             {
-                PlayingCard card = cbxDeck.Card;
-
-                if (card != null) //if card isn't null
-                {
-                    card.FaceUp = true;
-
-                    //Make it a cardbox for the player
-                    CardBox.CardBox playerCardBox = new CardBox.CardBox(card);
-
-                    playerCardBox.Size = normalCardSize;
-
-                    //Wire events
-                    WireCardBoxEventHandlers(playerCardBox);
-                    //playerCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
-                    //click or drag logic here at a later date
-
-
-                    //Add cardbox to panel
-                    pnlPlayerCards.Controls.Add(playerCardBox);
-                    cbxDeck.Card = mainDeck.DrawCard();
-
-                    card = cbxDeck.Card;
-                    CardBox.CardBox computerCardBox = new CardBox.CardBox(card);
-
-                    computerCardBox.Size = normalCardSize;
-                    //Make a cardbox for the computer
-                    //card = cbxDeck.Card;
-                    //card.FaceUp = true;
-
-                    pnlComputerCards.Controls.Add(computerCardBox);
-                    cbxDeck.Card = mainDeck.DrawCard();
-                }
-            }
-            RealignAllCards();
-        }
-
-        /// <summary>
-        /// RoundDeal - deals both the computer and players card until they have 6 cards in their hand to proceed to the round
-        /// </summary>
-        private void RoundDeal()
-        {
-            for (int i = pnlPlayerCards.Controls.Count; i < 6; i++)
-            {
-                PlayingCard card = cbxDeck.Card;
                 card.FaceUp = true;
 
-                pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
+                //Make it a cardbox for the player
+                CardBox.CardBox playerCardBox = new CardBox.CardBox(card);
+
+                playerCardBox.Size = normalCardSize;
+
+                //Wire events
+                WireCardBoxEventHandlers(playerCardBox);
+                //playerCardBox.Click += CardBox_Click; //When the player clicks a card in their hand
+                //click or drag logic here at a later date
+
+
+                //Add cardbox to panel
+                pnlPlayerCards.Controls.Add(playerCardBox);
+                cbxDeck.Card = mainDeck.DrawCard();
+
+                card = cbxDeck.Card;
+                CardBox.CardBox computerCardBox = new CardBox.CardBox(card);
+
+                computerCardBox.Size = normalCardSize;
+                //Make a cardbox for the computer
+                //card = cbxDeck.Card;
+                //card.FaceUp = true;
+
+                pnlComputerCards.Controls.Add(computerCardBox);
                 cbxDeck.Card = mainDeck.DrawCard();
             }
-            RealignCards(pnlPlayerCards);
+        }
+        RealignAllCards();
+    }
 
-            for (int i = pnlComputerCards.Controls.Count; i < 6; i++)
-            {
-                PlayingCard card = cbxDeck.Card;
-                card.FaceUp = true;
-                pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
-                cbxDeck.Card = mainDeck.DrawCard();
-            }
+    /// <summary>
+    /// RoundDeal - deals both the computer and players card until they have 6 cards in their hand to proceed to the round
+    /// </summary>
+    private void RoundDeal()
+    {
+        for (int i = pnlPlayerCards.Controls.Count; i < 6; i++)
+        {
+            PlayingCard card = cbxDeck.Card;
+            card.FaceUp = true;
 
-            while (pnlDefended.Controls.Count > 0)
-            {
-                pnlDefended.Controls.RemoveAt(0);
-            }
+            pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
+            cbxDeck.Card = mainDeck.DrawCard();
+        }
+        RealignCards(pnlPlayerCards);
 
-            RealignCards(pnlComputerCards);
+        for (int i = pnlComputerCards.Controls.Count; i < 6; i++)
+        {
+            PlayingCard card = cbxDeck.Card;
+            card.FaceUp = true;
+            pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
+            cbxDeck.Card = mainDeck.DrawCard();
         }
 
-        /// <summary>
-        /// Adds mouse and drag-and-drop events to each cardbox instance
-        /// </summary>
-        /// <param name="aCardBox">The cardbox that drag-and-drop, as well as click events are to be wired to</param>
-        /// TODO: If there are any other events to be wired, add them here (GOOD FOR NOW)
-        private void WireCardBoxEventHandlers(CardBox.CardBox aCardBox)
+        while (pnlDefended.Controls.Count > 0)
         {
-            //wire cardbox mouse enter
-            aCardBox.MouseEnter += CardBox_MouseEnter;
-            //wire cardbox mouse leave
-            aCardBox.MouseLeave += CardBox_MouseLeave;
-
-            aCardBox.MouseDown += CardBox_MouseDown;
-            aCardBox.DragEnter += CardBox_DragEnter;
-            aCardBox.DragDrop += CardBox_DragDrop;
+            pnlDefended.Controls.RemoveAt(0);
         }
 
-      //  private void CanPlayerContinueAttack(Panel playerPanel, CardBox.CardBox)
+        RealignCards(pnlComputerCards);
+    }
 
-        /// <summary>
-        /// Compares the attacking and defending cards and establishes which cards should have their functionality disabled if they are not possible options for moving 
-        /// the game forward. Modelled on SuperDurak tutorial referenced in final project outline document.
-        /// </summary>
-        /// <param name="attackingCard">The CardBox object presented by the attacking player</param>
-        /// <param name="defendingCard">The CardBox object presented by the defending player</param>
-        /// <param name="initialAttackDefended">A boolean representing the status of the initial attack having been successful defended - significant for disabling of 
-        /// invalid card selections within player hand</param>
-        private void CompareCards(CardBox.CardBox attackingCard, CardBox.CardBox defendingCard, Boolean initialAttackDefended)
+    /// <summary>
+    /// Adds mouse and drag-and-drop events to each cardbox instance
+    /// </summary>
+    /// <param name="aCardBox">The cardbox that drag-and-drop, as well as click events are to be wired to</param>
+    /// TODO: If there are any other events to be wired, add them here (GOOD FOR NOW)
+    private void WireCardBoxEventHandlers(CardBox.CardBox aCardBox)
+    {
+        //wire cardbox mouse enter
+        aCardBox.MouseEnter += CardBox_MouseEnter;
+        //wire cardbox mouse leave
+        aCardBox.MouseLeave += CardBox_MouseLeave;
+
+        aCardBox.MouseDown += CardBox_MouseDown;
+        aCardBox.DragEnter += CardBox_DragEnter;
+        aCardBox.DragDrop += CardBox_DragDrop;
+    }
+
+    //  private void CanPlayerContinueAttack(Panel playerPanel, CardBox.CardBox)
+
+    /// <summary>
+    /// Compares the attacking and defending cards and establishes which cards should have their functionality disabled if they are not possible options for moving 
+    /// the game forward. Modelled on SuperDurak tutorial referenced in final project outline document.
+    /// </summary>
+    /// <param name="attackingCard">The CardBox object presented by the attacking player</param>
+    /// <param name="defendingCard">The CardBox object presented by the defending player</param>
+    /// <param name="initialAttackDefended">A boolean representing the status of the initial attack having been successful defended - significant for disabling of 
+    /// invalid card selections within player hand</param>
+    private void CompareCards(CardBox.CardBox attackingCard, CardBox.CardBox defendingCard, Boolean initialAttackDefended)
+    {
+        // Check if the initial attack was successfully defended
+        if (initialAttackDefended)
         {
-            // Check if the initial attack was successfully defended
-            if (initialAttackDefended)
+            // Checks if rank of attacking card is eligible based on initial defense status
+            // ***TODO: Not sure if we need this, as I believe it is used elsewhere in a more suitable way*** 
+            // ***TODO: Unclear on specifics of rules -> just previous defense and attack ranks, or ALL previously played defense/attack ranks***
+            if (!attackingCard.Card.Rank.Equals(defendingCard.Card.Rank))
             {
-                // Checks if rank of attacking card is eligible based on initial defense status
-                // ***TODO: Not sure if we need this, as I believe it is used elsewhere in a more suitable way*** 
-                // ***TODO: Unclear on specifics of rules -> just previous defense and attack ranks, or ALL previously played defense/attack ranks***
-                if (!attackingCard.Card.Rank.Equals(defendingCard.Card.Rank))
-                {
-                    MessageBox.Show("Sorry attacker. You cannot play any of your cards as an attack.");
-                    CardBox.CardBox invalidCard = (CardBox.CardBox)pnlActiveCards.Controls[0];
-                    pnlActiveCards.Controls.RemoveAt(0);
-                    pnlPlayerCards.Controls.Add(invalidCard);
+                MessageBox.Show("Sorry attacker. You cannot play any of your cards as an attack.");
+                CardBox.CardBox invalidCard = (CardBox.CardBox)pnlActiveCards.Controls[0];
+                pnlActiveCards.Controls.RemoveAt(0);
+                pnlPlayerCards.Controls.Add(invalidCard);
 
-                    return; //We probably don't need a return on a void function 
-                }
+                return; //We probably don't need a return on a void function 
             }
+        }
 
-            // Establish if successful defense occurs based on greater rank, or event where defense card is a trump and attack is not 
-            //(otherwise, if both trump suits, initial rank comparison is already valid)
-            //***TODO: Incorporate class library comparison operators with trump card -> currently something miss with deck/card collection constructor where comparison operators aren't
-            //         accounting for trumps ***
-            //if (defendingCard.Card.Rank > attackingCard.Card.Rank || (deafendingCard.Card.Suit == cbxTrumpCard.Card.Suit && attackingCard.Card.Suit != cbxTrumpCard.Card.Suit))
+        // Establish if successful defense occurs based on greater rank, or event where defense card is a trump and attack is not 
+        //(otherwise, if both trump suits, initial rank comparison is already valid)
+        //***TODO: Incorporate class library comparison operators with trump card -> currently something miss with deck/card collection constructor where comparison operators aren't
+        //         accounting for trumps ***
+        //if (defendingCard.Card.Rank > attackingCard.Card.Rank || (deafendingCard.Card.Suit == cbxTrumpCard.Card.Suit && attackingCard.Card.Suit != cbxTrumpCard.Card.Suit))
             
-            //if (defendingCard.Card.Rank > attackingCard.Card.Rank)
-            if(true)
+        //if (defendingCard.Card.Rank > attackingCard.Card.Rank)
+        if(true)
+        {
+            if (playerAttacking)
             {
-                if (playerAttacking)
-                {
-                    //MessageBox.Show("Successfully defended. You may THROW IN, but only with a card with a rank of " + defendingCard.Card.Rank.ToString() + " or " + attackingCard.Card.Rank.ToString());
-                    //MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
+                //MessageBox.Show("Successfully defended. You may THROW IN, but only with a card with a rank of " + defendingCard.Card.Rank.ToString() + " or " + attackingCard.Card.Rank.ToString());
+                //MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
 
-                    this.initialAttackDefended = true;
+                this.initialAttackDefended = true;
 
-                    MoveCards(pnlActiveCards, pnlDefended); //Move cards from active panel to successfully defended panel
-                    RealignDefendedCards();
+                MoveCards(pnlActiveCards, pnlDefended); //Move cards from active panel to successfully defended panel
+                RealignDefendedCards();
                     
+            }
+            else
+            {
+                disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
+
+                bool playerHasChoices = false;
+
+                foreach (Control playerCard in pnlPlayerCards.Controls)
+                {
+                    if (playerCard.Enabled == true)
+                    {
+                        playerHasChoices = true;
+                    }
+                }
+
+                // If all the players cards are disabled as invalid choices, inform them of their loss
+                if (playerHasChoices == false)
+                {
+                    MessageBox.Show("Computers wins. There's nothing you can do.");
+                    MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
                 }
                 else
                 {
-                    disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
-
-                    bool playerHasChoices = false;
-
-                    foreach (Control playerCard in pnlPlayerCards.Controls)
-                    {
-                        if (playerCard.Enabled = true)
-                        {
-                            playerHasChoices = true;
-                        }
-                    }
-
-                    // If all the players cards are disabled as invalid choices, inform them of their loss
-                    if (playerHasChoices == false)
-                    {
-                        MessageBox.Show("Computers wins. There's nothing you can do.");
-                        MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Go ahead and defend!");
-                    }
+                    MessageBox.Show("Go ahead and defend!");
                 }
-                disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
-
-                this.rankOfLastDefense = defendingCard.Rank;
-                initialAttackDefended = true;
-
-                // 
-
-
             }
+            disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
+
+            this.rankOfLastDefense = defendingCard.Rank;
+            initialAttackDefended = true;
+
+            // 
+
+
+        }
             
            
-                // Move auto-played computer card from pnlActiveCards back into computer hand before it renders in the form
-                // ***TODO: put this logic before comparison - shouldn't be required to move, then move back invalid defense for comparison ***
-                if (this.playerAttacking == true)
-                {
-                    CardBox.CardBox invalidCard = new CardBox.CardBox(defendingCard.Card);
-                    pnlComputerCards.Controls.Add(invalidCard);
-                }
+            // Move auto-played computer card from pnlActiveCards back into computer hand before it renders in the form
+            // ***TODO: put this logic before comparison - shouldn't be required to move, then move back invalid defense for comparison ***
+            if (this.playerAttacking == true)
+            {
+                CardBox.CardBox invalidCard = new CardBox.CardBox(defendingCard.Card);
+                pnlComputerCards.Controls.Add(invalidCard);
+            }
             
-        }
+    }
 
         /// <summary>
         /// 

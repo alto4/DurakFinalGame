@@ -162,3 +162,5 @@ C:\Users\Scott Alton\Source\Repos\DurakGame9\ControlsLib\obj\Debug\ControlsLib.c
 C:\Users\Scott Alton\Source\Repos\DurakGame9\ControlsLib\obj\Debug\ControlsLib.csproj.CopyComplete
 C:\Users\Scott Alton\Source\Repos\DurakGame9\ControlsLib\obj\Debug\ControlsLib.dll
 C:\Users\Scott Alton\Source\Repos\DurakGame9\ControlsLib\obj\Debug\ControlsLib.pdb
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\ControlsLib.StatsPrompt.resources
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\ControlsLib.UsernameInput.resources
