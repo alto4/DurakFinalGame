@@ -86,6 +86,7 @@ namespace Durak
             cardPanels.Add(pnlActiveCards);
             cardPanels.Add(pnlComputerCards);
             cardPanels.Add(pnlPlayerCards);
+            cardPanels.Add(pnlDefended);
 
             StartGame();
 
@@ -380,28 +381,20 @@ namespace Durak
 
                             MessageBox.Show("HERE!");
                         }
-
+                        
                         // BREAK UP AI LOGIC HERE FOR ATTACK VS DEFENSE - 
 
                     }
                 }
                 RealignAllCards();
+                AlignDiscardedCards();
             }
         }
 
 
 
 
-        /// <summary>
-        /// Clicking the restart button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            //TODO: Set up the reset button
-
-        }
+        
 
         #endregion
 
@@ -447,12 +440,12 @@ namespace Durak
                         txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
                         txtPlayHistory.Text += Environment.NewLine + "Player wins this round, computer is attacking now.";
                         // MessageBox.Show("Computer has no choices."); //used for debugging, delete for submission
-                        //TODO: Add a win counter for the player, increment here
-                        //TODO: Add a loss counter for the computer, increment here
+                        //: Add a win counter for the player, increment here
+                        //: Add a loss counter for the computer, increment here
 
-                        //TODO: Intercept the computer playing the next card, end the players attack without asking and proceed to next round
+                        //: Intercept the computer playing the next card, end the players attack without asking and proceed to next round
 
-                        //TODO: Move the cards from the active panel to the computers panel
+                        //: Move the cards from the active panel to the computers panel
                         MoveCards(pnlActiveCards, pnlComputerCards); //TODO: Not triggering when the player wins, is there somewhere else we determine a winner?
                     }
 
@@ -574,9 +567,12 @@ namespace Durak
 
             MessageBox.Show("Computer's turn to attack!"); //delete for submission???
 
+            
             MoveCards(pnlActiveCards, pnlDiscard); //Move cards from the active panel to discard
             MoveCards(pnlDefended, pnlDiscard); //Move cards from the defended panel to discard
 
+            // Flip discarded pile to facedown without flipping every card
+            AlignDiscardedCards();
 
             //TODO: If MoveCards method functioning properly, delete the below for submission
             // Put previous cards in discard pile
@@ -603,7 +599,7 @@ namespace Durak
                 pnlActiveCards.Controls.RemoveAt(0);
             } */
 
-            // ***TODO: Flip discarded pile to facedown without flipping every card *** 
+
             RoundDeal(); //Deal cards until both players have at least 6 cards
 
             ReenableAllCards(); //Allows the player to use their cards again
@@ -655,6 +651,7 @@ namespace Durak
             }
 
             RealignAllCards();
+            AlignDiscardedCards();
         }
 
 
@@ -701,11 +698,25 @@ namespace Durak
 
             txtPlayHistory.Text += Environment.NewLine + "Computer responds with " + computerCard.ToString(); //Computers choice (RELEVANT FOR GAMEPLAY LOG FILE)
 
+            AlignDiscardedCards();
         }
 
         #endregion
 
         #region HELPER METHODS
+
+        /// <summary>
+        /// Aligns the discarded cards to be in the center of the panel
+        /// </summary>
+        private void AlignDiscardedCards()
+        {
+            foreach (CardBox.CardBox cardBox in pnlDiscard.Controls)
+            {
+                cardBox.FaceUp = !cbxDeck.FaceUp;
+                cardBox.Left = (pnlDiscard.Width - normalCardSize.Width) / 2;
+                cardBox.Top = (pnlDiscard.Height - normalCardSize.Height) / 2;
+            }
+        }
 
         /// <summary>
         /// Refreshes the logic decks each time there is an action.
@@ -968,6 +979,7 @@ namespace Durak
             }
 
             RealignAllCards();
+            AlignDiscardedCards();
         }
 
         /// <summary>
@@ -1033,7 +1045,7 @@ namespace Durak
                     this.initialAttackDefended = true;
 
                     MoveCards(pnlActiveCards, pnlDefended); //Move cards from active panel to successfully defended panel
-                    RealignDefendedCards();
+                    //RealignDefendedCards();
 
                 }
                 else
@@ -1207,6 +1219,11 @@ namespace Durak
         #endregion
 
         #region EMPTY EVENT HANDLERS
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+
+        }
 
         private void lblOutOfCards_Click(object sender, EventArgs e)
         {
