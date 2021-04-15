@@ -605,11 +605,12 @@ namespace Durak
         /// (rather than assume the player is always the attacked off the bat)*** 
         private void StartGame()
         {
+            cbxDeck.FaceUp = false;
             // shuffle
             mainDeck.Shuffle();
 
             // seeing the order of the deck in debug console for debugging
-            mainDeck.ShowDeck(); // This shows all cards, turn this off when done development
+            //mainDeck.ShowDeck(); // This shows all cards, turn this off when done development
             System.Diagnostics.Debug.WriteLine(mainDeck.ToString());
             try
             {
@@ -663,6 +664,7 @@ namespace Durak
         /// </summary>
         private void SettingsWithCards()
         {
+            cbxDeck.FaceUp = false;
             lblOutOfCards.Visible = false;
             cbxDeck.Enabled = true;
             cbxTrumpCard.Visible = true;
@@ -753,6 +755,8 @@ namespace Durak
         /// </summary>
         private void InitialDeal()
         {
+            cbxDeck.FaceUp = false;
+
             PlayingCard playersCard;
             PlayingCard AIsCard;
             PlayingCard lowestCard = new PlayingCard(PlayingCard.trumpSuit, CardRank.Ace); // start as the highest possible card
@@ -895,6 +899,7 @@ namespace Durak
                 pnlDefended.Controls.RemoveAt(0);
             
             RealignAllCards();
+            ReenableAllCards();
             UpdateDefendedAndDiscardPanelControls();
         }
 
@@ -1027,6 +1032,8 @@ namespace Durak
         /// </summary>
         private void ReenableAllCards()
         {
+            cbxTrumpCard.FaceUp = true;
+
             CheckIfWon();
 
             foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)

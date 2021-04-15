@@ -1,21 +1,55 @@
-The current time is: 2021-04-15 3:57:25 PM
+The current time is: 2021-04-15 4:27:51 PM
 
-Player chose a deck of 36 cards.
+Player chose a deck of 20 cards.
 Initial Deal Starting: 
 
-Player draws Suit: Spades of King
-Computer draws Suit: Diamonds of Seven
-Player draws Suit: Spades of Ace
-Computer draws Suit: Clubs of Eight
-Player draws Suit: Diamonds of Nine
-Computer draws Suit: Clubs of Ten
-Player draws Suit: Diamonds of Eight
-Computer draws Suit: Diamonds of Ace
-Player draws Suit: Spades of Nine
-Computer draws Suit: Spades of Ten
+Player draws Suit: Hearts of Queen
+Computer draws Face Down
+Player draws Suit: Diamonds of King
+Computer draws Face Down
+Player draws Suit: Diamonds of Ten
+Computer draws Face Down
+Player draws Suit: Hearts of Ten
+Computer draws Face Down
 Player draws Suit: Clubs of Jack
-Computer draws Suit: Diamonds of Queen
+Computer draws Face Down
+Player draws Suit: Spades of Ace
+Computer draws Face Down
 Player has started the game
-Players plays Suit: Diamonds of Eight
+Players plays Suit: Diamonds of Ten
 Computer responds with Face Down
-Player closed the game
+Players plays Suit: Hearts of Ten
+Computer responds with Face Down
+Players plays Suit: Spades of Ace
+Computer responds with Face Down
+Players plays Suit: Clubs of Jack
+Computer responds with Face Down
+Players plays Suit: Diamonds of King
+Computer cannot defend, player wins the attack
+Player Draws a Suit: Hearts of King
+Computer Draws a Suit: Clubs of Queen
+Player Draws a Suit: Clubs of Ten
+Computer Draws a Suit: Hearts of Jack
+Player Draws a Suit: Spades of Ten
+Computer Draws a Suit: Spades of King
+Player Draws a Suit: Spades of Jack
+Player Draws a Trump Card of Suit: Diamonds of Ace
+Computer Plays Face Down as an attack
+Players plays Suit: Diamonds of Ace
+Computer attacks with Face Down
+Players plays Suit: Diamonds of Ace
+Computer cannot defend, player wins the attack
+Computer Plays Face Down as an attack
+Players plays Suit: Diamonds of King
+Computer attacks with Face Down
+Players plays Suit: Spades of Ten
+Computer responds with Face Down
+Players plays Suit: Spades of Jack
+Computer responds with Face Down
+Players plays Suit: Hearts of Queen
+Computer cannot defend, player wins the attack
+Computer Plays Face Down as an attack
+Player has accepted defeat, switching turns.
+Player has chosen to hault the attack.
+Computer Plays Face Down as an attack
+Player Lost the Game! Sorry!

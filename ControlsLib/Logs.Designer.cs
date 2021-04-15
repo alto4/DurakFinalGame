@@ -30,28 +30,27 @@ namespace ControlsLib
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmLogs));
-            this.lblTestLabel = new System.Windows.Forms.Label();
+            this.txtLogs = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
-            // lblTestLabel
+            // txtLogs
             // 
-            this.lblTestLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.lblTestLabel.ForeColor = System.Drawing.SystemColors.Control;
-            this.lblTestLabel.Location = new System.Drawing.Point(12, 9);
-            this.lblTestLabel.Name = "lblTestLabel";
-            this.lblTestLabel.Size = new System.Drawing.Size(576, 245);
-            this.lblTestLabel.TabIndex = 0;
-            this.lblTestLabel.Text = "label1";
+            this.txtLogs.Location = new System.Drawing.Point(12, 12);
+            this.txtLogs.Name = "txtLogs";
+            this.txtLogs.ReadOnly = true;
+            this.txtLogs.Size = new System.Drawing.Size(776, 530);
+            this.txtLogs.TabIndex = 1;
+            this.txtLogs.Text = "";
             // 
             // frmLogs
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(89)))), ((int)(((byte)(208)))));
-            this.ClientSize = new System.Drawing.Size(600, 450);
-            this.Controls.Add(this.lblTestLabel);
+            this.ClientSize = new System.Drawing.Size(800, 554);
+            this.Controls.Add(this.txtLogs);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2);
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "frmLogs";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Logs";
@@ -62,6 +61,6 @@ namespace ControlsLib
 
         #endregion
 
-        private System.Windows.Forms.Label lblTestLabel;
+        private System.Windows.Forms.RichTextBox txtLogs;
     }
 }

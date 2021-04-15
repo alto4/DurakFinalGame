@@ -142,7 +142,7 @@ namespace CardLib
         {
             if (cardIndex >= 0 && cardIndex < cards.Count)
             {
-                cards[cardIndex].FaceUp = true;
+                //cards[cardIndex].FaceUp = true;
                 PlayingCard tempCard = cards[cardIndex];
                 cards.RemoveAt(cardIndex);
                 return tempCard; // card number 0 to SIZE_OF_STANDARD_DECK

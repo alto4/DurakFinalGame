@@ -46,11 +46,11 @@ namespace Durak
             // hidding frmMainMenu 
             this.Hide();
 
-            // new frmGame instance
-            // frmGame game = new frmGame();
+            //new frmGame instance
+            frmGame game = new frmGame();
             //TESTING STATS PROMPT
-            StatsPrompt prompt = new StatsPrompt();
-            prompt.ShowDialog();
+            //StatsPrompt prompt = new StatsPrompt();
+            game.ShowDialog();
 
             // show the frmGame form
            // game.ShowDialog();
