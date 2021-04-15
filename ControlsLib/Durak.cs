@@ -24,7 +24,7 @@ namespace Durak
         string playerName;
 
         // generate PlayingCard objects from a Deck
-        Deck mainDeck = new Deck(SizeOfDecks.Normal);
+        Deck mainDeck = new Deck(SizeOfDecks.Small);
 
         // enlarge a card by this value
         private const int ENLARGE = 35;
@@ -41,6 +41,9 @@ namespace Durak
         CardRank rankOfLastDefense;
         bool playerAttacking = true;
         bool initialAttackDefended = false;
+
+        // string to display who has the first turn
+        string firstTurn = "";
 
         // to reference the current attacking card
         PlayingCard attackingCard = new PlayingCard();
@@ -583,6 +586,8 @@ namespace Durak
             Random rand = new Random(); //initialize a random object
             int computerChoiceIndex = rand.Next(pnlComputerCards.Controls.Count); //generates a random number between 0 and the number of cards the computer has
 
+            System.Diagnostics.Debug.WriteLine("***rand int Index: " + computerChoiceIndex);
+
             txtPlayHistory.Text += Environment.NewLine + "Computers chosen attack index: " + computerChoiceIndex; //Shows the computers randomly chosen card
 
             ReenableAllCards();
@@ -704,53 +709,58 @@ namespace Durak
         /// </summary>
         private void DisableInvalidCardsInHands()
         {
-            System.Diagnostics.Debug.WriteLine("Percieved TC: " + cbxTrumpCard.ToString());
-            System.Diagnostics.Debug.WriteLine("Actual TC: " + PlayingCard.trumpSuit);
-            // start with all disabled cards
-            foreach (CardBox.CardBox cardBox in pnlPlayerCards.Controls)
+            if (!playerAttacking)
             {
-                cardBox.Enabled = false;
-            }
-            // start with empty collection
-            cardsPlayedThisTurn.Clear();
-
-            // enable player cards higher than the current attacking card
-            if (pnlActiveCards.Controls.Count > 0)
-            {
-                attackingCard = ((CardBox.CardBox) pnlActiveCards.Controls[0]).Card;
-
+                // start with all disabled cards
                 foreach (CardBox.CardBox cardBox in pnlPlayerCards.Controls)
                 {
-                    defendingCard = cardBox.Card;
-                    
-                    // trump card or higher ranked card in same suit
-                    if (defendingCard > attackingCard)
-                    {
-                        //MessageBox.Show(cardBox.Card + " is greater than " + attackingCard);
-                        cardBox.Enabled = true;
-                    }
-                    //if (defendingCard.Rank > attackingCard.Rank && defendingCard.Suit == attackingCard.Suit)
-                    //{
-                    //    cardBox.Enabled = true;
-                    //}
-
-                    
+                    cardBox.Enabled = false;
                 }
+                // start with empty collection
+                cardsPlayedThisTurn.Clear();
 
-                // add the defended cards to collection
-                foreach (CardBox.CardBox cardBox in pnlDefended.Controls)
+
+                if (pnlActiveCards.Controls.Count > 0)
                 {
-                    // add the defended cards
-                    cardsPlayedThisTurn.Add(cardBox.Card);
-                }
 
-                // disable players cards not in the cardsPlayedThisTurn collection
-                //foreach (CardBox.CardBox cardBox in pnlPlayerCards.Controls)
-                //{
-                //    // if the collection does not have this card then disable it in the players hand
-                //    if (!(cardsPlayedThisTurn.Exists(x => x.GetHashCode() == cardBox.Card.GetHashCode())))
-                //        cardBox.Enabled = false;
-                //}
+                    attackingCard = ((CardBox.CardBox)pnlActiveCards.Controls[0]).Card;
+
+                    // add the defended cards to collection
+                    foreach (CardBox.CardBox cardBox in pnlDefended.Controls)
+                    {
+                        // add the defended cards
+                        cardsPlayedThisTurn.Add(cardBox.Card);
+                    }
+
+                    // enable players cards in the cardsPlayedThisTurn collection
+                    foreach (CardBox.CardBox cardBox in pnlPlayerCards.Controls)
+                    {
+                        // if the collection has this card then enable it in the players hand
+                        if (cardsPlayedThisTurn.Contains(cardBox.Card) && cardBox.Card > attackingCard)
+                            cardBox.Enabled = true;
+                    }
+
+                    // enable player cards higher than the current attacking card
+                    foreach (CardBox.CardBox cardBox in pnlPlayerCards.Controls)
+                    {
+                        defendingCard = cardBox.Card;
+
+                        // trump card or higher ranked card in same suit
+                        if (defendingCard > attackingCard)
+                        {
+                            //MessageBox.Show(cardBox.Card + " is greater than " + attackingCard);
+                            cardBox.Enabled = true;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                btnStopAttacking.Text = "Stop Attacking";
+                foreach (CardBox.CardBox cardBox in pnlPlayerCards.Controls)
+                {
+                    cardBox.Enabled = true;
+                }
             }
         }
 
@@ -876,6 +886,7 @@ namespace Durak
         /// </summary>
         private void SettingsOutOfCards()
         {
+            cbxDeck.FaceUp = false;
             lblOutOfCards.Visible = true;
             cbxDeck.Enabled = false;
             cbxTrumpCard.Visible = false;
@@ -961,8 +972,6 @@ namespace Durak
             PlayingCard AIsCard;
             PlayingCard lowestCard = new PlayingCard(PlayingCard.trumpSuit, CardRank.Ace); // start as the highest possible card
 
-            string firstTurn = "";
-
             // setting the first card
             cbxDeck.Card = mainDeck.GetCard(0);
             mainDeck.DrawCard();
@@ -1018,21 +1027,22 @@ namespace Durak
                 }
             }
 
-            if (firstTurn == "")
-            {
-                MessageBox.Show("First turn goes to the player.");
-            }
-            else
-            {
-                MessageBox.Show("First turn goes to: " + firstTurn + ".");
+            // NOTE: theres a bug that causes the frm to not load when the AI goes first sometimes. Make player go first everytime.
+            //if (firstTurn == "")
+            //{
+            //    MessageBox.Show("First turn goes to the player.");
+            //}
+            //else
+            //{
+            //    MessageBox.Show("First turn goes to: " + firstTurn + ".");
                 
-                if (firstTurn == "the AI" || true)
-                {
-                    // make the AI go first by triggering end turn event
-                    //btnStopAttacking.PerformClick();
-                    btnStopAttacking_Click(btnStopAttacking, EventArgs.Empty);
-                }
-            }
+            //    if (firstTurn == "the AI")
+            //    {
+            //        // make the AI go first by triggering end turn event
+            //        //btnStopAttacking.PerformClick();
+            //        btnStopAttacking_Click(btnStopAttacking, EventArgs.Empty);
+            //    }
+            //}
 
             RealignAllCards();
         }
@@ -1046,45 +1056,64 @@ namespace Durak
 
             PlayingCard card = cbxDeck.Card;
 
-            // alternate handing cards until deck is empty or both players have 6 cards.
-            while (mainDeck.Size > 0)
+            try
             {
-                // break unless player has less than 5 cards
-                if (playerHand.Count <= 5)
+                // alternate handing cards until deck is empty or both players have 6 cards.
+                while (mainDeck.Size > 1)
                 {
-                    card = cbxDeck.Card;
+                    // break unless player has less than 5 cards
+                    if (playerHand.Count <= 5)
+                    {
+                        card = cbxDeck.Card;
+                        card.FaceUp = true;
+                        // add players card
+                        pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
+                        playerHand.Add(card);
+                        cbxDeck.Card = mainDeck.DrawCard();
+                    }
+                    if (playerHand.Count == 6 && AIHand.Count == 6)
+                    {
+                        break;
+                    }
+
+                    // break unless ai has less than 5 cards
+                    if (AIHand.Count <= 5 && mainDeck.Size > 0)
+                    {
+                        card = cbxDeck.Card;
+                        card.FaceUp = true; // NOTE: change this for only player when done dev
+                                            // add AIs card
+                        pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
+                        AIHand.Add(card);
+                        cbxDeck.Card = mainDeck.DrawCard();
+                    }
+                    if (playerHand.Count == 6 && AIHand.Count == 6)
+                    {
+                        break;
+                    }
+                }
+
+                //System.Diagnostics.Debug.WriteLine("Deck size: " + mainDeck.Size);
+
+                if (mainDeck.Size == 0)
+                {
+                    card = cbxTrumpCard.Card;
                     card.FaceUp = true;
-                    // add players card
+                    // add trump card to players hand
                     pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
                     playerHand.Add(card);
                     cbxDeck.Card = mainDeck.DrawCard();
+                    
                 }
-                if (playerHand.Count == 6 && AIHand.Count == 6)
-                {
-                    break;
-                }
-
-                // break unless ai has less than 5 cards
-                if (AIHand.Count <= 5 && mainDeck.Size > 0)
-                {
-                    card = cbxDeck.Card;
-                    card.FaceUp = true; // NOTE: change this for only player when done dev
-                                        // add AIs card
-                    pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
-                    AIHand.Add(card);
-                    cbxDeck.Card = mainDeck.DrawCard();
-                }
-                if (playerHand.Count == 6 && AIHand.Count == 6)
-                {
-                    break;
-                }
+            }
+            catch (IndexOutOfRangeException)
+            {
+                System.Diagnostics.Debug.WriteLine("Out of cards when drawing");
+                SettingsOutOfCards();
             }
 
             while (pnlDefended.Controls.Count > 0)
-            {
                 pnlDefended.Controls.RemoveAt(0);
-            }
-
+            
             RealignAllCards();
             UpdateDefendedAndDiscardPanelControls();
         }
@@ -1497,7 +1526,7 @@ namespace Durak
             }
             else //computer loses
             {
-                txtPlayHistory.Text += "AI has no good choices. Human player is wins this one!";
+                txtPlayHistory.Text += "AI has no good choices. Human player wins this one!";
 
                 //GET RID OF THIS BECAUSE IT SHOULD JUST BE DETERMINING IF THE COMPUTER ATTACK 
                 //INSTEAD COMPUTERDEFENDS DETERMINES THE OUTCOME SO I MOVED IT THERE, RATHER THAN HAVING 
