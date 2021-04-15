@@ -1,19 +1,67 @@
-The current time is: 2021-04-15 5:17:59 PM
+The current time is: 2021-04-15 6:23:02 PM
 
 Player chose a deck of 20 cards.
 Initial Deal Starting: 
 
-Player draws Suit: Spades of King
-Computer draws Face Down
+Player draws Suit: Hearts of Jack
+Computer draws Suit: Clubs of Jack
 Player draws Suit: Clubs of Ten
-Computer draws Face Down
-Player draws Suit: Diamonds of Ten
-Computer draws Face Down
-Player draws Suit: Spades of Ten
-Computer draws Face Down
-Player draws Suit: Spades of Queen
-Computer draws Face Down
+Computer draws Suit: Spades of Jack
 Player draws Suit: Clubs of Ace
-Computer draws Face Down
+Computer draws Suit: Diamonds of Jack
+Player draws Suit: Clubs of Queen
+Computer draws Suit: Hearts of Queen
+Player draws Suit: Diamonds of Queen
+Computer draws Suit: Spades of Ace
+Player draws Suit: Spades of King
+Computer draws Suit: Diamonds of Ace
 Player has started the game
-Player closed the game
+Player has chosen to hault the attack.
+Computer Plays Suit: Clubs of Jack as an attack
+Player has accepted defeat, switching turns.
+Computer Draws a Suit: Spades of Queen
+Player has chosen to hault the attack.
+Computer Plays Suit: Spades of Queen as an attack
+Player has accepted defeat, switching turns.
+Computer Draws a Suit: Clubs of King
+Player has chosen to hault the attack.
+Computer Plays Suit: Hearts of Queen as an attack
+Player has accepted defeat, switching turns.
+Computer Draws a Suit: Diamonds of Ten
+Player has chosen to hault the attack.
+Computer Plays Suit: Diamonds of Ten as an attack
+Player has accepted defeat, switching turns.
+Computer Draws a Suit: Hearts of King
+Player has chosen to hault the attack.
+Computer Plays Suit: Diamonds of Jack as an attack
+Player has accepted defeat, switching turns.
+Computer Draws a Suit: Hearts of Ace
+Player has chosen to hault the attack.
+Computer Plays Suit: Spades of Jack as an attack
+Player has accepted defeat, switching turns.
+Computer Draws a Suit: Hearts of Ten
+Player has chosen to hault the attack.
+Computer Plays Suit: Spades of Ace as an attack
+Player has accepted defeat, switching turns.
+Computer Draws a Suit: Spades of Ten
+Player has chosen to hault the attack.
+Computer Plays Suit: Diamonds of Ace as an attack
+Computer Draws a Trump Card of Suit: Diamonds of King
+Player has chosen to hault the attack.
+Computer Plays Suit: Spades of Ten as an attack
+Player has accepted defeat, switching turns.
+Player has chosen to hault the attack.
+Computer Plays Suit: Hearts of Ace as an attack
+Player has accepted defeat, switching turns.
+Player has chosen to hault the attack.
+Computer Plays Suit: Clubs of King as an attack
+Player has accepted defeat, switching turns.
+Player has chosen to hault the attack.
+Computer Plays Suit: Hearts of King as an attack
+Player has accepted defeat, switching turns.
+Player has chosen to hault the attack.
+Computer Plays Suit: Diamonds of King as an attack
+Player has accepted defeat, switching turns.
+Player has chosen to hault the attack.
+Computer Plays Suit: Hearts of Ten as an attack
+Player Lost the Game! Sorry!

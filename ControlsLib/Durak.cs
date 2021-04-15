@@ -355,6 +355,7 @@ namespace Durak
            //DisableInvalidCardsInHands(); //Determine what the player can defend with
 
             RealignAllCards();
+            //DisableInvalidPlayerDefenseChoices(computerCard);
             //ReenableAllCards();
         }
 
@@ -371,6 +372,9 @@ namespace Durak
             if (computerChoiceIndex >= 0)
             {
                 CardBox.CardBox computerCard = pnlComputerCards.Controls[computerChoiceIndex] as CardBox.CardBox; //create a copy of the card object
+                computerCard.FaceUp = true;
+
+                
                 logs.WriteLine("Computer Plays " + computerCard.ToString() + " as an attack");
                 pnlComputerCards.Controls.Remove(computerCard); //remove the card from the computers hand
                 pnlActiveCards.Controls.Add(computerCard);      //place the card into the active play panel
@@ -566,7 +570,7 @@ namespace Durak
                 cardBox.Top = (pnlDiscard.Height - normalCardSize.Height) / 2;
             }
 
-            ReenableAllCards();
+            //ReenableAllCards();
         }
 
         /// <summary>
@@ -650,7 +654,7 @@ namespace Durak
                 RealignCards(control);
             }
 
-            ReenableAllCards();
+            //ReenableAllCards();
         }
 
         /// <summary>
@@ -790,7 +794,11 @@ namespace Durak
                     computerCardBox.Size = normalCardSize;
                     //Make a cardbox for the computer
                     pnlComputerCards.Controls.Add(computerCardBox);
-                    logs.WriteLine("Computer draws " + computerCardBox.ToString());
+
+                    PlayingCard cardToLog = computerCardBox.Card;
+                    cardToLog.FaceUp = true;
+
+                    logs.WriteLine("Computer draws " + cardToLog.ToString());
                     cbxDeck.Card = mainDeck.DrawCard();
 
                     // determine who has the lowest trump card
@@ -875,9 +883,11 @@ namespace Durak
                     else if (AIHand.Count < 6)
                     {
                         card = cbxTrumpCard.Card;
-                        card.FaceUp = false;
+                        card.FaceUp = true;
                         // add trump card to players hand
                         logs.WriteLine("Computer Draws a Trump Card of " + card.ToString());
+
+                        card.FaceUp = false;
                         pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
                         AIHand.Add(card);
                         cbxDeck.Card = mainDeck.DrawCard();
@@ -1225,8 +1235,11 @@ namespace Durak
                 CardBox.CardBox computerCardBox = pnlComputerCards.Controls[computerChoiceIndex] as CardBox.CardBox;
                 pnlComputerCards.Controls.Remove(computerCardBox); //remove from computers hand
                 pnlActiveCards.Controls.Add(computerCardBox);      //add to the active play panel
-                
-                logs.WriteLine("Computer responds with " + computerCardBox.ToString());
+
+                PlayingCard card = computerCardBox.Card;
+                card.FaceUp = true;
+
+                logs.WriteLine("Computer responds with " + card.ToString());
 
                 //Compares cards in players hands, determines if they can attack again by comparing their hand to pair in active panel
                 CardBox.CardBox tempCard = (CardBox.CardBox)pnlActiveCards.Controls[0];
@@ -1235,6 +1248,7 @@ namespace Durak
                 ReenableAllCards();
                 disableInvalidChoices(tempCard.Rank, computerCardBox.Card.Rank);
 
+                
             }
             else //Computer Cannot Defend
             {
