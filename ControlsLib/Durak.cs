@@ -532,57 +532,45 @@ namespace Durak
             {
                 MoveCards(pnlActiveCards, pnlPlayerCards);
                 MoveCards(pnlDefended, pnlPlayerCards);
+
+                // Flip discarded pile to facedown without flipping every card
+                UpdateDefendedAndDiscardPanelControls();
+                RoundDeal(); //Deal cards until both players have at least 6 cards
+                ReenableAllCards(); //Allows the player to use their cards again
+                                    //USE THESE: for switching the attack roles, at least visibly/
+                txtComputerAttacker.Visible = false; //Flash the image that shows the computer is attacking
+                btnStopAttacking.Visible = true; //remove the button that lets the user end their attacking turn
+                playerAttacking = true; //mark that the computers attack is starting
             }
-            else
+            else //if the player chooses to stop attacking
             {
                 MoveCards(pnlActiveCards, pnlDiscard); //Move cards from the active panel to discard
                 MoveCards(pnlDefended, pnlDiscard); //Move cards from the defended panel to discard
+
+                // Flip discarded pile to facedown without flipping every card
+                UpdateDefendedAndDiscardPanelControls();
+                RoundDeal(); //Deal cards until both players have at least 6 cards
+                ReenableAllCards(); //Allows the player to use their cards again
+                                    //USE THESE: for switching the attack roles, at least visibly/
+                txtComputerAttacker.Visible = true; //Flash the image that shows the computer is attacking
+                btnStopAttacking.Visible = false; //remove the button that lets the user end their attacking turn
+                playerAttacking = false; //mark that the computers attack is starting
+                ComputerAttacks(); //proceed with the computer attack
+
             }
             
-
+            //IF THERES NO ISSUES WITH ENDING A TURN ON ATTACK OR DEFENSE, DELETE BELOW
             // Flip discarded pile to facedown without flipping every card
-            UpdateDefendedAndDiscardPanelControls();
+            //UpdateDefendedAndDiscardPanelControls();
+            //RoundDeal(); //Deal cards until both players have at least 6 cards
+            //ReenableAllCards(); //Allows the player to use their cards again
+            ////USE THESE: for switching the attack roles, at least visibly/
+            //txtComputerAttacker.Visible = true; //Flash the image that shows the computer is attacking
+            //btnStopAttacking.Visible = false; //remove the button that lets the user end their attacking turn
+            //playerAttacking = false; //mark that the computers attack is starting
+            //ComputerAttacks(); //proceed with the computer attack
 
-            //TODO: If MoveCards method functioning properly, delete the below for submission
-            // Put previous cards in discard pile
-            // Loop through all cards in the players hand and disable any cards outside of those with valid ranks <--- IS THIS COMMENT RIGHT?
-            //I thought this loop was to move the cards from the active panel and to the discard panel
-            //USEFUL CODE for moving cards to the losing player's hand
-            /*foreach (CardBox.CardBox playedCard in pnlActiveCards.Controls)
-            {
-                
-                //Make it a cardbox for the player
-                CardBox.CardBox playedCardBox = new CardBox.CardBox(playedCard.Card);
-
-                playedCardBox.Size = normalCardSize;
-                               
-                //Add cardbox to panel
-                pnlDiscard.Controls.Add(playedCardBox);
-                //playedCardBox.Card.FaceUp = false;
-                txtPlayHistory.Text += Environment.NewLine + playedCardBox.ToString();
-               
-            }  
-            //REMOVE the cards from the active panel            
-            while(pnlActiveCards.Controls.Count > 0)
-            {
-                pnlActiveCards.Controls.RemoveAt(0);
-            } */
-
-
-            RoundDeal(); //Deal cards until both players have at least 6 cards
-
-            ReenableAllCards(); //Allows the player to use their cards again
-
-
-            //USE THESE: for switching the attack roles, at least visibly/
-            txtComputerAttacker.Visible = true; //Flash the image that shows the computer is attacking
-            btnStopAttacking.Visible = false; //remove the button that lets the user end their attacking turn
-
-            playerAttacking = false; //mark that the computers attack is starting
-            ComputerAttacks(); //proceed with the computer attack
-
-            DisableInvalidCardsInHands();
-
+            DisableInvalidCardsInHands(); //Determine what the player can defend with
             RealignAllCards();
         }
 
@@ -711,7 +699,7 @@ namespace Durak
             // TODO: add logs implementation here
             if (pnlPlayerCards.Controls.Count == 0 && mainDeck.Size == 0)
             {
-                MessageBox.Show("Congratilations! You won.");
+                MessageBox.Show("Congratulations! You won.");
                 // hidding frmGame
                 this.Hide();
 

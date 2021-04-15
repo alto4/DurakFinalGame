@@ -182,3 +182,17 @@ D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\Durak\obj\Debug\Durak.cs
 D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\Durak\obj\Debug\Durak.csproj.CopyComplete
 D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\Durak\obj\Debug\Durak.exe
 D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\Durak\obj\Debug\Durak.pdb
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\bin\Debug\Durak.exe.config
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\bin\Debug\Durak.exe
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\bin\Debug\Durak.pdb
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\bin\Debug\CardLib.dll
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\bin\Debug\ControlsLib.dll
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\bin\Debug\ControlsLib.pdb
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\bin\Debug\CardLib.pdb
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\obj\Debug\Durak.csprojAssemblyReference.cache
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\obj\Debug\Durak.Properties.Resources.resources
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\obj\Debug\Durak.csproj.GenerateResource.cache
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\obj\Debug\Durak.csproj.CoreCompileInputs.cache
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\obj\Debug\Durak.csproj.CopyComplete
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\obj\Debug\Durak.exe
+D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\obj\Debug\Durak.pdb
