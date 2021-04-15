@@ -168,7 +168,7 @@ namespace CardLib
         /// <returns>integer hash code generated based on the card's suit and rank</returns>
         public override int GetHashCode()
         {
-            return this.myValue * 100 + (int)this.mySuit * 10 + ((this.FaceUp) ? 1 : 0);
+            return this.myValue * 100 + (int)this.mySuit * 10;
         }
 
         /// <summary>
@@ -227,7 +227,22 @@ namespace CardLib
             }
             else
             {
-                return (useTrumps && (card2.Suit == PlayingCard.trumpSuit)) ? false : true;
+                if (card2.Suit == PlayingCard.trumpSuit)
+                    return false;
+
+                if (card1.Suit == PlayingCard.trumpSuit)
+                    return true;
+                               
+                if (card1.Rank == CardRank.Ace)
+                {
+                    return (card2.Rank == CardRank.Ace) ? false : true;
+                }
+                else
+                {
+                    return (card2.Rank == CardRank.Ace) ? false : (card1.Rank > card2.Rank);
+                }
+                
+                //return (useTrumps && (card2.Suit == PlayingCard.trumpSuit)) ? false : true;
             }
         }
 

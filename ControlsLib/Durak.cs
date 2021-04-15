@@ -54,6 +54,9 @@ namespace Durak
         // to reference AIs current hand
         CardCollection AIHand = new CardCollection();
 
+        // Cards than have been played this turn
+        CardCollection cardsPlayedThisTurn = new CardCollection();
+
         #endregion
 
         #region FORM AND STATIC CONTROL EVENT HANDLERS 
@@ -389,7 +392,7 @@ namespace Durak
                           //  DisableInvalidPlayerDefenseChoices(attackCard);
 
 
-                            MessageBox.Show("HERE!");
+                            //MessageBox.Show("HERE!");
                         }
                         
                         // BREAK UP AI LOGIC HERE FOR ATTACK VS DEFENSE - 
@@ -403,72 +406,9 @@ namespace Durak
 
 
 
-
-        
-
         #endregion
 
         #region CARDBOX EVENT HANDLERS
-        /// <summary>
-        /// When a CardBox is clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-     /*   void CardBox_Click(object sender, EventArgs e)
-        {
-            //Convert sender to a cardbox
-            CardBox.CardBox aCardBox = sender as CardBox.CardBox;
-
-            //if the conversion worked
-            if (aCardBox != null)
-            {
-                //if the card is in the home panel
-                if (aCardBox.Parent == pnlPlayerCards)
-                {
-                    //Remove the card from player hand
-                    aCardBox.Controls.Remove(aCardBox);
-                    //Add card to the active play area
-                    pnlActiveCards.Controls.Add(aCardBox);
-                   // txtPlayHistory.Text += "Card Clicked"; //Fills the log with unnecessary filler, delete for submission (still useful for debugging)
-
-                    //TODO: WHERE GAME LOGIN KICKS OFF 
-                    // This could also be a separate event handler triggering AI function to consider best choice - currently just choosing the first card
-                    // NOTE index 0 is on right side of computer panel of cards
-
-                    // AI Function to determine best card
-                    int computerChoiceIndex = determineBestPlay(pnlComputerCards);
-
-                    if (computerChoiceIndex >= 0)
-                    {
-                        CardBox.CardBox computerCardBox = pnlComputerCards.Controls[computerChoiceIndex] as CardBox.CardBox;
-                        aCardBox.Controls.Remove(computerCardBox);
-                        pnlActiveCards.Controls.Add(computerCardBox);
-                        txtPlayHistory.Text += Environment.NewLine + "Computer responds with " + computerCardBox.ToString(); //Computers choice (RELEVANT FOR GAMEPLAY LOG FILE)
-                    }
-                    else
-                    {
-                        txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
-                        txtPlayHistory.Text += Environment.NewLine + "Player wins this round, computer is attacking now.";
-                        // MessageBox.Show("Computer has no choices."); //used for debugging, delete for submission
-                        //: Add a win counter for the player, increment here
-                        //: Add a loss counter for the computer, increment here
-
-                        //: Intercept the computer playing the next card, end the players attack without asking and proceed to next round
-
-                        //: Move the cards from the active panel to the computers panel
-                        MoveCards(pnlActiveCards, pnlComputerCards); //TODO: Not triggering when the player wins, is there somewhere else we determine a winner?
-                    }
-
-                    // Determine winner
-                }
-                else //otherwise
-                {
-                    txtPlayHistory.Text += Environment.NewLine + "Something is wrong";
-                }
-                RealignAllCards();
-            }
-            
-        } */
 
         /// <summary>
         /// When a drag enters a card, enter the parent panel instead.
@@ -575,7 +515,13 @@ namespace Durak
         {
             /// ***TODO: Add in draw counter for player stats***
 
-            MessageBox.Show("Computer's turn to attack!"); //delete for submission???
+            if (pnlDiscard.Controls.Count != 0)
+            {
+                MessageBox.Show("Computer's turn to attack!"); //delete for submission???
+            }
+
+            // Add the cards the player did not defend
+            AddCardsForDefeat();
 
             
             MoveCards(pnlActiveCards, pnlDiscard); //Move cards from the active panel to discard
@@ -622,6 +568,7 @@ namespace Durak
             playerAttacking = false; //mark that the computers attack is starting
             ComputerAttacks(); //proceed with the computer attack
 
+            DisableInvalidCardsInHands();
         }
 
         /// <summary>
@@ -629,6 +576,10 @@ namespace Durak
         /// </summary>
         private void ComputerAttacks()
         {
+            // allow player to end turn if there are no options to play
+            btnStopAttacking.Visible = true;
+            btnStopAttacking.Text = "End Defend";
+
             Random rand = new Random(); //initialize a random object
             int computerChoiceIndex = rand.Next(pnlComputerCards.Controls.Count); //generates a random number between 0 and the number of cards the computer has
 
@@ -647,7 +598,7 @@ namespace Durak
                 // CompareCards((CardBox.CardBox)pnlActiveCards.Controls[0], computerCard, this.initialAttackDefended); 
                 //Determine if the player can attack here
 
-                MessageBox.Show("Computer played " + computerCard.Card.ToString() + ". Defend now player.");
+                //MessageBox.Show("Computer played " + computerCard.Card.ToString() + ". Defend now player.");
                 txtPlayHistory.Text += "PlayerAttacking bool = " + playerAttacking.ToString();
 
                 if(playerAttacking == false)
@@ -670,6 +621,7 @@ namespace Durak
 
             RealignAllCards();
             UpdateDefendedAndDiscardPanelControls();
+            DisableInvalidCardsInHands();
         }
 
 
@@ -686,7 +638,7 @@ namespace Durak
 
                 if (tempCard.Rank == card1.Rank || tempCard.Rank == card2.Rank)
                 {
-                    MessageBox.Show("VALID CARD FOUND" + tempCard.ToString());
+                    //MessageBox.Show("VALID CARD FOUND" + tempCard.ToString());
                     validCards.Add(i, tempCard);
                     globalInt = i;
                 }
@@ -695,9 +647,10 @@ namespace Durak
 
             if (validCards.Count == 0)
             {
-                MessageBox.Show("Computer has no attacks!");
+               
+                //MessageBox.Show("Computer has no attacks!");
                 MoveCards(pnlDefended, pnlDiscard);
-                MessageBox.Show("Player is now attacker again!");
+                //MessageBox.Show("Player is now attacker again!");
                 RoundDeal();
 
                 txtComputerAttacker.Visible = false;
@@ -726,11 +679,80 @@ namespace Durak
             }
 
             UpdateDefendedAndDiscardPanelControls();
+            DisableInvalidCardsInHands();
         }
 
         #endregion
 
         #region HELPER METHODS
+
+        /// <summary>
+        /// This adds the cards not defended by the player from the defended and the active piles
+        /// </summary>
+        private void AddCardsForDefeat()
+        {
+            //MoveCards(pnlActiveCards, pnlPlayerCards);
+            //MoveCards(pnlDefended, pnlPlayerCards);
+
+            //RealignAllCards();
+        }
+
+        /// <summary>
+        /// This method disables all cards in the players cards that are lower
+        /// than the current AIs attacking card. Also it disables cards that have
+        /// not been played yet
+        /// </summary>
+        private void DisableInvalidCardsInHands()
+        {
+            System.Diagnostics.Debug.WriteLine("Percieved TC: " + cbxTrumpCard.ToString());
+            System.Diagnostics.Debug.WriteLine("Actual TC: " + PlayingCard.trumpSuit);
+            // start with all disabled cards
+            foreach (CardBox.CardBox cardBox in pnlPlayerCards.Controls)
+            {
+                cardBox.Enabled = false;
+            }
+            // start with empty collection
+            cardsPlayedThisTurn.Clear();
+
+            // enable player cards higher than the current attacking card
+            if (pnlActiveCards.Controls.Count > 0)
+            {
+                attackingCard = ((CardBox.CardBox) pnlActiveCards.Controls[0]).Card;
+
+                foreach (CardBox.CardBox cardBox in pnlPlayerCards.Controls)
+                {
+                    defendingCard = cardBox.Card;
+                    
+                    // trump card or higher ranked card in same suit
+                    if (defendingCard > attackingCard)
+                    {
+                        //MessageBox.Show(cardBox.Card + " is greater than " + attackingCard);
+                        cardBox.Enabled = true;
+                    }
+                    //if (defendingCard.Rank > attackingCard.Rank && defendingCard.Suit == attackingCard.Suit)
+                    //{
+                    //    cardBox.Enabled = true;
+                    //}
+
+                    
+                }
+
+                // add the defended cards to collection
+                foreach (CardBox.CardBox cardBox in pnlDefended.Controls)
+                {
+                    // add the defended cards
+                    cardsPlayedThisTurn.Add(cardBox.Card);
+                }
+
+                // disable players cards not in the cardsPlayedThisTurn collection
+                //foreach (CardBox.CardBox cardBox in pnlPlayerCards.Controls)
+                //{
+                //    // if the collection does not have this card then disable it in the players hand
+                //    if (!(cardsPlayedThisTurn.Exists(x => x.GetHashCode() == cardBox.Card.GetHashCode())))
+                //        cardBox.Enabled = false;
+                //}
+            }
+        }
 
         /// <summary>
         /// Aligns the discarded cards to be in the center of the panel and 
@@ -792,15 +814,16 @@ namespace Durak
             try
             {
                 // The 14th card will be the trump
-                PlayingCard.trumpSuit = mainDeck.GetCard(13).Suit;
-                System.Diagnostics.Debug.WriteLine(PlayingCard.trumpSuit);
+                cbxTrumpCard.Card = mainDeck.GetCard(13);
+                System.Diagnostics.Debug.WriteLine(cbxTrumpCard.Card.ToString());
+                PlayingCard.trumpSuit = cbxTrumpCard.Card.Suit;
 
                 InitialDeal();
 
                 PlayingCard firstCard = mainDeck.DrawCard();
                 PlayingCard firstPlayableCard = mainDeck.DrawCard();
 
-                cbxTrumpCard.Card = firstCard; //Determines the trump card
+                cbxTrumpCard.Card = firstCard; // Moving the trump card to bottom
                 cbxDeck.Card = firstPlayableCard;
 
                 // add the trump card back but at the last place in the deck
@@ -819,6 +842,7 @@ namespace Durak
         /// </summary>
         private void RealignAllCards()
         {
+            //DisableInvalidCardsInHands();
             // refresh the logic cards
             RefreshLogicDeckFromPanels();
             foreach (var card in playerHand)
@@ -996,14 +1020,13 @@ namespace Durak
 
             if (firstTurn == "")
             {
-                MessageBox.Show("Nobody had trump card so first move goes to player (for DEV).");
+                MessageBox.Show("First turn goes to the player.");
             }
             else
             {
-                MessageBox.Show("First turn goes to: " + firstTurn + "." +
-                    " The lowest trump card was(for DEV) :" + lowestCard.ToString());
+                MessageBox.Show("First turn goes to: " + firstTurn + ".");
                 
-                if (firstTurn == "the AI")
+                if (firstTurn == "the AI" || true)
                 {
                     // make the AI go first by triggering end turn event
                     //btnStopAttacking.PerformClick();
@@ -1154,8 +1177,8 @@ namespace Durak
                     // If all the players cards are disabled as invalid choices, inform them of their loss
                     if (playerHasChoices == false)
                     {
-                        MessageBox.Show("Computers wins. There's nothing you can do.");
-                        MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
+                        //MessageBox.Show("Computers wins. There's nothing you can do.");
+                        //MessageBox.Show("You can also click on the attacker button to PASS THE ATTACK to the computer.");
                         MoveCards(pnlDefended, pnlPlayerCards);
                         MoveCards(pnlActiveCards, pnlPlayerCards);
                         RoundDeal(); //deal back to 6 cards
@@ -1167,7 +1190,7 @@ namespace Durak
                     }
                     else
                     {
-                        MessageBox.Show("Go ahead and defend!");
+                        //MessageBox.Show("Go ahead and defend!");
                     }
                 }
                 disableInvalidChoices(attackingCard.Card.Rank, defendingCard.Card.Rank);
@@ -1209,16 +1232,16 @@ namespace Durak
 
         private void DisableInvalidPlayerDefenseChoices(CardBox.CardBox attack)
         {
-
+            
             ReenableAllCards();
             int counter = 0;
             int numberOfPlayerCards = pnlPlayerCards.Controls.Count;
             foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
             {
-                MessageBox.Show(playerCard.Card.ToString());
+                //MessageBox.Show(playerCard.Card.ToString());
                 if (playerCard.Card < attack.Card)
                 {
-                    MessageBox.Show((playerCard.Card < attack.Card).ToString());
+                    //MessageBox.Show((playerCard.Card < attack.Card).ToString());
                     playerCard.Enabled = false;
                     counter++;
                 }
@@ -1226,7 +1249,7 @@ namespace Durak
 
             if (counter == numberOfPlayerCards) //player cannot defend against the attacking card
             {
-                MessageBox.Show("Player cannot defend. Picking up cards");
+                //MessageBox.Show("Player cannot defend. Picking up cards");
                 if (pnlDefended.Controls.Count > 0)
                 {
                     MoveCards(pnlDefended, pnlPlayerCards);
@@ -1241,6 +1264,7 @@ namespace Durak
                 RoundDeal();
                 ReenableAllCards();
             }
+            
         }
 
 
@@ -1253,6 +1277,7 @@ namespace Durak
         /// ***TODO: If pursuing multiplayer -> pass in various panels of controls, rather than assume single player panel needs be disabled
         private void disableInvalidChoices(CardRank attackingRank, CardRank defendingRank)
         {
+            
             bool playableCard = false;
             // Loop through all cards in the players hand and disable any cards outside of those with valid ranks
             foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
@@ -1270,9 +1295,10 @@ namespace Durak
 
             if (playableCard == false)
             {
-                MessageBox.Show("You are out of options for attacking. Click button to end your turn as attacker.");
+                //MessageBox.Show("You are out of options for attacking. Click button to end your turn as attacker.");
                 btnStopAttacking.Text = "END TURN";
             }
+            
         }
 
         private void disableInvalidDefenseChoices(CardBox.CardBox attackingCard)
@@ -1290,7 +1316,7 @@ namespace Durak
            // }
            // else //computer attacking
            // {
-                MessageBox.Show("Computer attacking. Disabling invalid player defense choices.");
+                //MessageBox.Show("Computer attacking. Disabling invalid player defense choices.");
                 pnlDisabling = pnlPlayerCards;
 
                 foreach (CardBox.CardBox playerDefenseCard in pnlPlayerCards.Controls)
@@ -1315,7 +1341,7 @@ namespace Durak
 
             if(playerHasOptions == false)
             {
-                MessageBox.Show("PLAYER WILL PICK UP CARDS TURN WILL GO BACK TO PLAYER NOW");
+                //MessageBox.Show("PLAYER WILL PICK UP CARDS TURN WILL GO BACK TO PLAYER NOW");
                 MoveCards(pnlActiveCards, pnlPlayerCards);
                 MoveCards(pnlDefended, pnlPlayerCards);
             
@@ -1477,11 +1503,11 @@ namespace Durak
                 //INSTEAD COMPUTERDEFENDS DETERMINES THE OUTCOME SO I MOVED IT THERE, RATHER THAN HAVING 
                 //IT TWICE
 
-                MessageBox.Show("Computer surrends defense. Draws attacjer;s card"); //del
+                //MessageBox.Show("Computer surrenders defense. Draws attackers card"); //del
                 txtComputerAttacker.Visible = true;
                 btnStopAttacking.Visible = false;
                 playerAttacking = false;
-                MessageBox.Show("PLAYER! You are now the attacker. Fire when ready");
+                //MessageBox.Show("PLAYER! You are now the attacker. Fire when ready");
                 RoundDeal();
                 ReenableAllCards();
                 return -1;
@@ -1542,7 +1568,7 @@ namespace Durak
                 //call computerattacks functions, if it cannot attack, change player attacks to true, end turn
 
             }
-        
+            DisableInvalidCardsInHands();
         }
 
         #endregion
