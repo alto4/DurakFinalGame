@@ -19,23 +19,10 @@ namespace Durak
     {
 
         #region FIELDS AND PROPERTIES
-
-        /*
-         * Declare a global streamreader and stream writer, then update the 
-         * txtPlayHistory gameplay recordings to write to our log file instead of the
-         * txtPlayHistory textbox
-         */
-        
-        
-
-        
-        
-        
-
+        StreamWriter logs = new StreamWriter("logs.txt");
 
         //String used to reference the player in the logs and stats
         string playerName;
-
         //Card and Deck Specifics Declarations
         int sizeChoice;
         // generate PlayingCard objects from a Deck
@@ -54,7 +41,6 @@ namespace Durak
 
         // string to display who has the first turn
         string firstTurn = "";
-
         // to reference the current attacking card
         PlayingCard attackingCard = new PlayingCard();
         // to reference the current defending card
@@ -87,7 +73,7 @@ namespace Durak
 
             StatsPlayer currentPlayer = StatsPlayer.SearchForExistingUser(name);
 
-            txtPlayHistory.Text += currentPlayer.ToString();
+            //txtPlayHistory.Text += currentPlayer.ToString();
             //Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>();
             //List<StatsPlayer> tempAllPlayers = StatsPlayer.CreatePlayerList();
 
@@ -117,7 +103,7 @@ namespace Durak
         private void frmGame_Load(object sender, EventArgs e)
         {
             string logPath = ControlsLib.Properties.Resources.logs;
-            StreamWriter logs = new StreamWriter("logs.txt");
+            
             //ResourceWriter logs = new ResourceWriter("logs.txt");
             
 
@@ -127,10 +113,12 @@ namespace Durak
             sizeChoice = choiceSelect.GetSizeChoice();
 
             //THIS IS THE CODE THAT WRITES TO THE FILE WHICH CAN BE FOUND IN THE Durak/bin/Debug folder in the project itself
-            using (logs)
-            {
-                logs.WriteLine("Player chose a deck of " + choiceSelect.GetSizeChoice() + " cards.");
-            }
+            // using (logs)
+            // {
+            string timestamp = DateTime.Now.ToString();
+            logs.WriteLine("The current time is: " + timestamp + Environment.NewLine);
+            logs.WriteLine("Player chose a deck of " + choiceSelect.GetSizeChoice() + " cards.");
+           // }
 
             choiceSelect.Close();
             mainDeck = new Deck((SizeOfDecks) sizeChoice);
@@ -144,8 +132,9 @@ namespace Durak
             StartGame();
 
             //Testing StatsPlayer Methods
-            txtPlayHistory.Text += Environment.NewLine + "! Welcome to the game, " + playerName + "!";
-
+            txtPlayHistory.Text += Environment.NewLine + "! Welcome to the game, " + playerName + "!"; //Delete for submission
+            logs.WriteLine("Player has started the game");
+            
 
         }
 
@@ -302,6 +291,8 @@ namespace Durak
                         fromPanel.Controls.Remove(dragCard);
                         thisPanel.Controls.Add(dragCard);
 
+                        logs.WriteLine("Players plays " + dragCard.ToString());
+
                         RealignCards(thisPanel);
                         RealignCards(fromPanel);
                         /************************ATTACKING PLAYER LOGIC**************************************/
@@ -430,6 +421,7 @@ namespace Durak
             // if the player chooses to stop defending
             if (!playerAttacking)
             {
+                logs.WriteLine("Player has accepted defeat, switching turns.");
                 MoveCards(pnlActiveCards, pnlPlayerCards);
                 MoveCards(pnlDefended, pnlPlayerCards);
 
@@ -447,6 +439,7 @@ namespace Durak
             }
             else //if the player chooses to stop attacking
             {
+                logs.WriteLine("Player has chosen to hault the attack.");
                 MoveCards(pnlActiveCards, pnlDiscard); //Move cards from the active panel to discard
                 MoveCards(pnlDefended, pnlDiscard); //Move cards from the defended panel to discard
 
@@ -486,6 +479,7 @@ namespace Durak
             if (computerChoiceIndex >= 0)
             {
                 CardBox.CardBox computerCard = pnlComputerCards.Controls[computerChoiceIndex] as CardBox.CardBox; //create a copy of the card object
+                logs.WriteLine("Computer Plays " + computerCard.ToString() + " as an attack");
                 pnlComputerCards.Controls.Remove(computerCard); //remove the card from the computers hand
                 pnlActiveCards.Controls.Add(computerCard);      //place the card into the active play panel
 
@@ -521,6 +515,7 @@ namespace Durak
 
             if (validCards.Count == 0)
             {
+                logs.WriteLine("Computer can no longer attacks. Switching turns.");
                 MoveCards(pnlDefended, pnlDiscard);
                 RoundDeal();
 
@@ -534,7 +529,7 @@ namespace Durak
             if (playerAttacking == false)
             {
                 CardBox.CardBox computerCard = validCards[cardIndex];
-
+                logs.WriteLine("Computer attacks with " + computerCard.ToString());
                 pnlComputerCards.Controls.Remove(computerCard); //remove the card from the computers hand
                 pnlActiveCards.Controls.Add(computerCard);      //place the card into the active play panel
 
@@ -559,6 +554,11 @@ namespace Durak
             if (pnlPlayerCards.Controls.Count == 0 && mainDeck.Size == 0)
             {
                 MessageBox.Show("Congratulations! You won.");
+                if (logs.BaseStream != null)
+                {
+                    logs.WriteLine("Player Won the Game!");
+                    logs.Close();
+                }
                 // hidding frmGame
                 this.Hide();
 
@@ -567,13 +567,19 @@ namespace Durak
 
                 // show the frmMainMenu form
                 mainMenu.ShowDialog();
+                Application.Exit(); // close frmGame
+                
 
-                // close frmGame
-                this.Close();
+                
             }
             if (pnlComputerCards.Controls.Count == 0 && mainDeck.Size == 0)
             {
                 MessageBox.Show("Sorry! You lost.");
+                if (logs.BaseStream != null)
+                {
+                    logs.WriteLine("Player Lost the Game! Sorry!");
+                    logs.Close();
+                }
                 // hidding frmGame
                 this.Hide();
 
@@ -581,11 +587,14 @@ namespace Durak
                 frmMainMenu mainMenu = new frmMainMenu();
 
                 // show the frmMainMenu form
+                //this.close() // close frmGame
                 mainMenu.ShowDialog();
+                Application.Exit();
+                
 
-                // close frmGame
-                this.Close();
+                
             }
+
         }
 
         /// <summary>
@@ -868,7 +877,7 @@ namespace Durak
             // setting the first card
             cbxDeck.Card = mainDeck.GetCard(0);
             mainDeck.DrawCard();
-
+            logs.WriteLine("Initial Deal Starting: \n");
             for (int i = 0; i < 6; i++)
             {
                 PlayingCard card = cbxDeck.Card;
@@ -889,6 +898,7 @@ namespace Durak
 
                     //Add cardbox to panel
                     pnlPlayerCards.Controls.Add(playerCardBox);
+                    logs.WriteLine("Player draws " + playerCardBox.ToString());
                     cbxDeck.Card = mainDeck.DrawCard();
 
                     card = cbxDeck.Card;
@@ -898,6 +908,7 @@ namespace Durak
                     computerCardBox.Size = normalCardSize;
                     //Make a cardbox for the computer
                     pnlComputerCards.Controls.Add(computerCardBox);
+                    logs.WriteLine("Computer draws " + computerCardBox.ToString());
                     cbxDeck.Card = mainDeck.DrawCard();
 
                     // determine who has the lowest trump card
@@ -937,7 +948,8 @@ namespace Durak
                     {
                         card = cbxDeck.Card;
                         card.FaceUp = true;
-                        // add players card
+                        // add players card\
+                        logs.WriteLine("Player Draws a " + card.ToString());
                         pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
                         playerHand.Add(card);
                         cbxDeck.Card = mainDeck.DrawCard();
@@ -953,6 +965,7 @@ namespace Durak
                         card = cbxDeck.Card;
                         card.FaceUp = true; // NOTE: change this for only player when done dev
                                             // add AIs card
+                        logs.WriteLine("Computer Draws a " + card.ToString());
                         pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
                         AIHand.Add(card);
                         cbxDeck.Card = mainDeck.DrawCard();
@@ -971,6 +984,7 @@ namespace Durak
                         card = cbxTrumpCard.Card;
                         card.FaceUp = true;
                         // add trump card to players hand
+                        logs.WriteLine("Player Draws a Trump Card of " + card.ToString());
                         pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
                         playerHand.Add(card);
                         cbxDeck.Card = mainDeck.DrawCard();
@@ -980,6 +994,7 @@ namespace Durak
                         card = cbxTrumpCard.Card;
                         card.FaceUp = true;
                         // add trump card to players hand
+                        logs.WriteLine("Computer Draws a Trump Card of " + card.ToString());
                         pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
                         AIHand.Add(card);
                         cbxDeck.Card = mainDeck.DrawCard();
@@ -1185,6 +1200,11 @@ namespace Durak
 
         private void frmGame_FormClosing(object sender, FormClosingEventArgs e)
         {
+            if (logs.BaseStream != null)
+            {
+                logs.WriteLine("Player closed the game");
+                logs.Close();
+            }
             
         }
 
@@ -1241,22 +1261,23 @@ namespace Durak
                     if (currentCard.Card.Suit == cbxTrumpCard.Card.Suit && (cardToBeat.Card.Suit != cbxTrumpCard.Card.Suit))
                     { //current card wins
                         noGoodChoice = false;
-                        txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit
-                                            + "   " + i + "  " + pnlComputerCards.Controls.IndexOf(currentCard).ToString();
+                        //txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit
+                        //                    + "   " + i + "  " + pnlComputerCards.Controls.IndexOf(currentCard).ToString(); //DELETE FOR SUBMISSION
                         idealChoiceIndex = i;
                     }
                     else if (cardToBeat.Card.Suit == cbxTrumpCard.Card.Suit && (currentCard.Card.Suit != cbxTrumpCard.Card.Suit))
                     { //cardto beat wins
 
-                        txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " CANNOT win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
+                       // txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " CANNOT win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
+                        //DELETE FOR SUBMISSION
                     }
                     else //if neither cards are trump, or both cards are
                     {
                         if (currentCard.Card > cardToBeat.Card)  //win
                         {
                             noGoodChoice = false;
-                            txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit
-                                                + "   " + i + "  " + pnlComputerCards.Controls.IndexOf(currentCard).ToString();
+                           // txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit
+                           //                    + "   " + i + "  " + pnlComputerCards.Controls.IndexOf(currentCard).ToString(); //DELETE FOR SUBMISSION
                             idealChoiceIndex = i;
                             //end players turn
 
@@ -1272,7 +1293,8 @@ namespace Durak
 
             if (noGoodChoice && playerAttacking) //computer cannot defend
             {
-                txtPlayHistory.Text += "Computer Cannot Defend";
+                //txtPlayHistory.Text += "Computer Cannot Defend"; //DELETE FOR SUBMISSION
+                //logs.WriteLine("Computer Cannot Defend");
             }
 
             // If the computer has no cards prospective to attack or defend, admit defeat and pass the attack or return value that will cause computer to 
@@ -1280,15 +1302,16 @@ namespace Durak
             if (noGoodChoice == false) //computer wins
             {
                 txtPlayHistory.Text += idealChoiceIndex + " is the index a wise AI would choose here.";
+                //DELETE FOR SUBMISSION
             }
             else //computer loses
             {
                 txtPlayHistory.Text += "AI has no good choices. Human player wins this one!";
+                logs.WriteLine("Computer cannot defend, player wins the attack");
 
                 txtComputerAttacker.Visible = true;
                 btnStopAttacking.Visible = false;
                 playerAttacking = false;
-                //MessageBox.Show("PLAYER! You are now the attacker. Fire when ready");
                 RoundDeal();
                 ReenableAllCards();
                 return -1;
@@ -1309,10 +1332,11 @@ namespace Durak
                 pnlComputerCards.Controls.Remove(computerCardBox); //remove from computers hand
                 pnlActiveCards.Controls.Add(computerCardBox);      //add to the active play panel
                 txtPlayHistory.Text += Environment.NewLine + "Computer responds with " + computerCardBox.ToString(); //Computers choice (RELEVANT FOR GAMEPLAY LOG FILE)
+                logs.WriteLine("Computer responds with " + computerCardBox.ToString());
 
                 //Compares cards in players hands, determines if they can attack again by comparing their hand to pair in active panel
                 CardBox.CardBox tempCard = (CardBox.CardBox)pnlActiveCards.Controls[0];
-                txtPlayHistory.Text += Environment.NewLine + "temp card is " + tempCard.ToString();
+                //txtPlayHistory.Text += Environment.NewLine + "temp card is " + tempCard.ToString();
 
                 CompareCards(tempCard, computerCardBox, this.initialAttackDefended); //deciding which cards can be played on a successive attack
                 ReenableAllCards();
@@ -1321,8 +1345,8 @@ namespace Durak
             }
             else //Computer Cannot Defend
             {
-                txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
-                txtPlayHistory.Text += Environment.NewLine + "Number of cards in defended " + pnlDefended.Controls.Count;
+               // txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
+                txtPlayHistory.Text += Environment.NewLine + "Number of cards in defended " + pnlDefended.Controls.Count; //DELETE FOR SUBMISSION
                 MoveCards(pnlDefended, pnlComputerCards);
                 MoveCards(pnlActiveCards, pnlComputerCards);
                 

@@ -1,1 +1,19 @@
-Player chose a deck of 20 cards.
+The current time is: 2021-04-15 1:58:59 PM
+
+Player chose a deck of 52 cards.
+Initial Deal Starting: 
+
+Player draws Suit: Clubs of Eight
+Computer draws Suit: Diamonds of Nine
+Player draws Suit: Spades of Six
+Computer draws Suit: Clubs of Six
+Player draws Suit: Diamonds of Six
+Computer draws Suit: Spades of Seven
+Player draws Suit: Spades of King
+Computer draws Suit: Hearts of Queen
+Player draws Suit: Spades of Jack
+Computer draws Suit: Spades of Queen
+Player draws Suit: Hearts of Six
+Computer draws Suit: Clubs of Jack
+Player has started the game
+Player closed the game
