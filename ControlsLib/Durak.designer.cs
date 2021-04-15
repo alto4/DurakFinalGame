@@ -82,7 +82,7 @@ namespace Durak
             "Clubs"});
             this.comboBox1.Location = new System.Drawing.Point(195, 176);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 24);
+            this.comboBox1.Size = new System.Drawing.Size(121, 25);
             this.comboBox1.TabIndex = 1;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
@@ -124,10 +124,10 @@ namespace Durak
             // 
             this.pnlActiveCards.AllowDrop = true;
             this.pnlActiveCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
-            this.pnlActiveCards.Location = new System.Drawing.Point(767, 215);
+            this.pnlActiveCards.Location = new System.Drawing.Point(813, 215);
             this.pnlActiveCards.Margin = new System.Windows.Forms.Padding(4);
             this.pnlActiveCards.Name = "pnlActiveCards";
-            this.pnlActiveCards.Size = new System.Drawing.Size(332, 252);
+            this.pnlActiveCards.Size = new System.Drawing.Size(286, 252);
             this.pnlActiveCards.TabIndex = 13;
             this.pnlActiveCards.DragDrop += new System.Windows.Forms.DragEventHandler(this.Panel_DragDrop);
             this.pnlActiveCards.DragEnter += new System.Windows.Forms.DragEventHandler(this.Panel_DragEnter);
@@ -294,7 +294,7 @@ namespace Durak
             this.pnlDefended.Location = new System.Drawing.Point(455, 215);
             this.pnlDefended.Margin = new System.Windows.Forms.Padding(4);
             this.pnlDefended.Name = "pnlDefended";
-            this.pnlDefended.Size = new System.Drawing.Size(304, 252);
+            this.pnlDefended.Size = new System.Drawing.Size(350, 252);
             this.pnlDefended.TabIndex = 26;
             // 
             // label1
@@ -302,7 +302,7 @@ namespace Durak
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.White;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(542, 471);
+            this.label1.Location = new System.Drawing.Point(565, 471);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(131, 20);
             this.label1.TabIndex = 27;
@@ -313,7 +313,7 @@ namespace Durak
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.White;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(869, 471);
+            this.label2.Location = new System.Drawing.Point(892, 471);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(128, 20);
             this.label2.TabIndex = 28;

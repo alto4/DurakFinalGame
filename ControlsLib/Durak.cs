@@ -23,8 +23,10 @@ namespace Durak
         //String used to reference the player in the logs and stats
         string playerName;
 
+        int sizeChoice;
+        
         // generate PlayingCard objects from a Deck
-        Deck mainDeck = new Deck(SizeOfDecks.Small);
+        Deck mainDeck;
 
         // enlarge a card by this value
         private const int ENLARGE = 35;
@@ -88,6 +90,13 @@ namespace Durak
         /// <param name="e"></param>
         private void frmGame_Load(object sender, EventArgs e)
         {
+            // Get the players choice of deck size
+            frmSelectDeckSize choiceSelect = new frmSelectDeckSize();
+            choiceSelect.ShowDialog();
+            sizeChoice = choiceSelect.GetSizeChoice();
+            choiceSelect.Close();
+            mainDeck = new Deck((SizeOfDecks) sizeChoice);
+
             // adding all of the card panels to a list
             cardPanels.Add(pnlActiveCards);
             cardPanels.Add(pnlComputerCards);
@@ -703,10 +712,32 @@ namespace Durak
             if (pnlPlayerCards.Controls.Count == 0)
             {
                 MessageBox.Show("Congratilations! You won.");
+                // hidding frmGame
+                this.Hide();
+
+                // new frmMainMenu instance
+                frmMainMenu mainMenu = new frmMainMenu();
+
+                // show the frmMainMenu form
+                mainMenu.ShowDialog();
+
+                // close frmGame
+                this.Close();
             }
             if (pnlComputerCards.Controls.Count == 0)
             {
                 MessageBox.Show("Sorry! You lost.");
+                // hidding frmGame
+                this.Hide();
+
+                // new frmMainMenu instance
+                frmMainMenu mainMenu = new frmMainMenu();
+
+                // show the frmMainMenu form
+                mainMenu.ShowDialog();
+
+                // close frmGame
+                this.Close();
             }
         }
 

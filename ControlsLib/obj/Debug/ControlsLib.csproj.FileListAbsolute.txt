@@ -200,3 +200,4 @@ D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\Co
 D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.csproj.CopyComplete
 D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.dll
 D:\Computer Programmer DC\Semester 4\OOP\DurakWednesday\ControlsLib\obj\Debug\ControlsLib.pdb
+C:\Users\Eduardo's PC\Documents\CSharp-Workspace\DurakGame\ControlsLib\obj\Debug\ControlsLib.frmSelectDeckSize.resources

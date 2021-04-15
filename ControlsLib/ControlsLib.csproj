@@ -60,6 +60,12 @@
     <Compile Include="Logs.Designer.cs">
       <DependentUpon>Logs.cs</DependentUpon>
     </Compile>
+    <Compile Include="SelectDeckSize.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SelectDeckSize.Designer.cs">
+      <DependentUpon>SelectDeckSize.cs</DependentUpon>
+    </Compile>
     <Compile Include="StatsPlayer.cs" />
     <Compile Include="Rules.cs">
       <SubType>Form</SubType>
@@ -112,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Rules.resx">
       <DependentUpon>Rules.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SelectDeckSize.resx">
+      <DependentUpon>SelectDeckSize.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="StatsPrompt.resx">
       <DependentUpon>StatsPrompt.cs</DependentUpon>
