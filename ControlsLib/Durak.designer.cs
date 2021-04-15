@@ -34,19 +34,12 @@ namespace Durak
             CardLib.PlayingCard playingCard1 = new CardLib.PlayingCard();
             CardLib.PlayingCard playingCard2 = new CardLib.PlayingCard();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmGame));
-            this.btnFlipCard = new System.Windows.Forms.Button();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.lblClickedState = new System.Windows.Forms.Label();
-            this.lblFlippedState = new System.Windows.Forms.Label();
             this.btnExit = new System.Windows.Forms.Button();
             this.pnlActiveCards = new System.Windows.Forms.Panel();
             this.pnlPlayerCards = new System.Windows.Forms.Panel();
             this.pnlComputerCards = new System.Windows.Forms.Panel();
             this.txtComputerAttacker = new System.Windows.Forms.TextBox();
-            this.txtPlayHistory = new System.Windows.Forms.TextBox();
-            this.cbxSuit = new System.Windows.Forms.ComboBox();
-            this.cbxRank = new System.Windows.Forms.ComboBox();
-            this.panel1 = new System.Windows.Forms.Panel();
             this.btnRules = new System.Windows.Forms.Button();
             this.lblTrumpCard = new System.Windows.Forms.Label();
             this.lblOutOfCards = new System.Windows.Forms.Label();
@@ -58,18 +51,7 @@ namespace Durak
             this.label3 = new System.Windows.Forms.Label();
             this.cbxDeck = new CardBox.CardBox();
             this.cbxTrumpCard = new CardBox.CardBox();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // btnFlipCard
-            // 
-            this.btnFlipCard.Location = new System.Drawing.Point(159, 128);
-            this.btnFlipCard.Name = "btnFlipCard";
-            this.btnFlipCard.Size = new System.Drawing.Size(75, 23);
-            this.btnFlipCard.TabIndex = 0;
-            this.btnFlipCard.Text = "&Flip Card";
-            this.btnFlipCard.UseVisualStyleBackColor = true;
-            this.btnFlipCard.Click += new System.EventHandler(this.btnFlipCard_Click);
             // 
             // comboBox1
             // 
@@ -85,30 +67,9 @@ namespace Durak
             this.comboBox1.TabIndex = 1;
             this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
-            // lblClickedState
-            // 
-            this.lblClickedState.AutoSize = true;
-            this.lblClickedState.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblClickedState.Location = new System.Drawing.Point(3, 14);
-            this.lblClickedState.Name = "lblClickedState";
-            this.lblClickedState.Size = new System.Drawing.Size(226, 17);
-            this.lblClickedState.TabIndex = 6;
-            this.lblClickedState.Text = "The card has not yet been clicked.";
-            this.lblClickedState.Click += new System.EventHandler(this.lblClickedState_Click);
-            // 
-            // lblFlippedState
-            // 
-            this.lblFlippedState.AutoSize = true;
-            this.lblFlippedState.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFlippedState.Location = new System.Drawing.Point(2, 45);
-            this.lblFlippedState.Name = "lblFlippedState";
-            this.lblFlippedState.Size = new System.Drawing.Size(225, 17);
-            this.lblFlippedState.TabIndex = 7;
-            this.lblFlippedState.Text = "The card has not yet been flipped.";
-            // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(159, 167);
+            this.btnExit.Location = new System.Drawing.Point(889, 50);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 11;
@@ -120,7 +81,7 @@ namespace Durak
             // 
             this.pnlActiveCards.AllowDrop = true;
             this.pnlActiveCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
-            this.pnlActiveCards.Location = new System.Drawing.Point(610, 175);
+            this.pnlActiveCards.Location = new System.Drawing.Point(512, 175);
             this.pnlActiveCards.Name = "pnlActiveCards";
             this.pnlActiveCards.Size = new System.Drawing.Size(214, 205);
             this.pnlActiveCards.TabIndex = 13;
@@ -130,9 +91,9 @@ namespace Durak
             // pnlPlayerCards
             // 
             this.pnlPlayerCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(206)))), ((int)(((byte)(164)))), ((int)(((byte)(15)))));
-            this.pnlPlayerCards.Location = new System.Drawing.Point(341, 405);
+            this.pnlPlayerCards.Location = new System.Drawing.Point(243, 405);
             this.pnlPlayerCards.Name = "pnlPlayerCards";
-            this.pnlPlayerCards.Size = new System.Drawing.Size(532, 146);
+            this.pnlPlayerCards.Size = new System.Drawing.Size(630, 146);
             this.pnlPlayerCards.TabIndex = 14;
             this.pnlPlayerCards.DragDrop += new System.Windows.Forms.DragEventHandler(this.Panel_DragDrop);
             this.pnlPlayerCards.DragEnter += new System.Windows.Forms.DragEventHandler(this.Panel_DragEnter);
@@ -140,83 +101,22 @@ namespace Durak
             // pnlComputerCards
             // 
             this.pnlComputerCards.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(206)))), ((int)(((byte)(164)))), ((int)(((byte)(15)))));
-            this.pnlComputerCards.Location = new System.Drawing.Point(341, 15);
+            this.pnlComputerCards.Location = new System.Drawing.Point(243, 15);
             this.pnlComputerCards.Name = "pnlComputerCards";
-            this.pnlComputerCards.Size = new System.Drawing.Size(532, 154);
+            this.pnlComputerCards.Size = new System.Drawing.Size(630, 154);
             this.pnlComputerCards.TabIndex = 15;
             // 
             // txtComputerAttacker
             // 
             this.txtComputerAttacker.BackColor = System.Drawing.Color.Red;
             this.txtComputerAttacker.ForeColor = System.Drawing.Color.White;
-            this.txtComputerAttacker.Location = new System.Drawing.Point(270, 131);
+            this.txtComputerAttacker.Location = new System.Drawing.Point(158, 79);
             this.txtComputerAttacker.Name = "txtComputerAttacker";
             this.txtComputerAttacker.Size = new System.Drawing.Size(66, 20);
             this.txtComputerAttacker.TabIndex = 0;
             this.txtComputerAttacker.Text = "Attacker";
             this.txtComputerAttacker.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.txtComputerAttacker.Visible = false;
-            // 
-            // txtPlayHistory
-            // 
-            this.txtPlayHistory.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(89)))), ((int)(((byte)(208)))));
-            this.txtPlayHistory.Font = new System.Drawing.Font("Microsoft Sans Serif", 13F);
-            this.txtPlayHistory.Location = new System.Drawing.Point(13, 305);
-            this.txtPlayHistory.Multiline = true;
-            this.txtPlayHistory.Name = "txtPlayHistory";
-            this.txtPlayHistory.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtPlayHistory.Size = new System.Drawing.Size(323, 248);
-            this.txtPlayHistory.TabIndex = 16;
-            // 
-            // cbxSuit
-            // 
-            this.cbxSuit.FormattingEnabled = true;
-            this.cbxSuit.Items.AddRange(new object[] {
-            "Diamonds",
-            "Hearts",
-            "Spades",
-            "Clubs"});
-            this.cbxSuit.Location = new System.Drawing.Point(159, 86);
-            this.cbxSuit.Name = "cbxSuit";
-            this.cbxSuit.Size = new System.Drawing.Size(121, 21);
-            this.cbxSuit.TabIndex = 9;
-            this.cbxSuit.Text = "Hearts";
-            this.cbxSuit.SelectedIndexChanged += new System.EventHandler(this.cbxSuit_SelectedIndexChanged);
-            // 
-            // cbxRank
-            // 
-            this.cbxRank.FormattingEnabled = true;
-            this.cbxRank.Items.AddRange(new object[] {
-            "Ace",
-            "Two",
-            "Three",
-            "Four",
-            "Five",
-            "Six",
-            "Seven",
-            "Eight",
-            "Nine",
-            "Ten",
-            "Jack",
-            "Queen",
-            "King"});
-            this.cbxRank.Location = new System.Drawing.Point(159, 43);
-            this.cbxRank.Name = "cbxRank";
-            this.cbxRank.Size = new System.Drawing.Size(121, 21);
-            this.cbxRank.TabIndex = 8;
-            this.cbxRank.Text = "Ace";
-            this.cbxRank.SelectedIndexChanged += new System.EventHandler(this.cbxRank_SelectedIndexChanged);
-            // 
-            // panel1
-            // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(146)))), ((int)(((byte)(89)))), ((int)(((byte)(208)))));
-            this.panel1.Controls.Add(this.lblClickedState);
-            this.panel1.Controls.Add(this.lblFlippedState);
-            this.panel1.Location = new System.Drawing.Point(70, 240);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(201, 81);
-            this.panel1.TabIndex = 17;
             // 
             // btnRules
             // 
@@ -233,7 +133,7 @@ namespace Durak
             this.lblTrumpCard.AutoSize = true;
             this.lblTrumpCard.BackColor = System.Drawing.Color.White;
             this.lblTrumpCard.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTrumpCard.Location = new System.Drawing.Point(39, 9);
+            this.lblTrumpCard.Location = new System.Drawing.Point(44, 131);
             this.lblTrumpCard.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTrumpCard.Name = "lblTrumpCard";
             this.lblTrumpCard.Size = new System.Drawing.Size(97, 18);
@@ -245,7 +145,7 @@ namespace Durak
             this.lblOutOfCards.AutoSize = true;
             this.lblOutOfCards.BackColor = System.Drawing.Color.Crimson;
             this.lblOutOfCards.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblOutOfCards.Location = new System.Drawing.Point(42, 135);
+            this.lblOutOfCards.Location = new System.Drawing.Point(47, 257);
             this.lblOutOfCards.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblOutOfCards.Name = "lblOutOfCards";
             this.lblOutOfCards.Size = new System.Drawing.Size(94, 17);
@@ -270,7 +170,7 @@ namespace Durak
             // 
             this.pnlDiscard.AllowDrop = true;
             this.pnlDiscard.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
-            this.pnlDiscard.Location = new System.Drawing.Point(831, 175);
+            this.pnlDiscard.Location = new System.Drawing.Point(733, 175);
             this.pnlDiscard.Name = "pnlDiscard";
             this.pnlDiscard.Size = new System.Drawing.Size(139, 205);
             this.pnlDiscard.TabIndex = 25;
@@ -279,7 +179,7 @@ namespace Durak
             // 
             this.pnlDefended.AllowDrop = true;
             this.pnlDefended.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(245)))), ((int)(((byte)(217)))), ((int)(((byte)(120)))));
-            this.pnlDefended.Location = new System.Drawing.Point(341, 175);
+            this.pnlDefended.Location = new System.Drawing.Point(243, 175);
             this.pnlDefended.Name = "pnlDefended";
             this.pnlDefended.Size = new System.Drawing.Size(262, 205);
             this.pnlDefended.TabIndex = 26;
@@ -289,7 +189,7 @@ namespace Durak
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.White;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(424, 383);
+            this.label1.Location = new System.Drawing.Point(326, 383);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(111, 17);
@@ -301,7 +201,7 @@ namespace Durak
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.White;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(669, 383);
+            this.label2.Location = new System.Drawing.Point(571, 383);
             this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(107, 17);
@@ -313,7 +213,7 @@ namespace Durak
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.White;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(849, 383);
+            this.label3.Location = new System.Drawing.Point(751, 383);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(113, 17);
@@ -329,7 +229,7 @@ namespace Durak
             this.cbxDeck.Card = playingCard1;
             this.cbxDeck.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cbxDeck.FaceUp = false;
-            this.cbxDeck.Location = new System.Drawing.Point(28, 70);
+            this.cbxDeck.Location = new System.Drawing.Point(33, 192);
             this.cbxDeck.Margin = new System.Windows.Forms.Padding(4);
             this.cbxDeck.Name = "cbxDeck";
             this.cbxDeck.Rank = CardLib.CardRank.Six;
@@ -337,7 +237,6 @@ namespace Durak
             this.cbxDeck.Suit = CardLib.CardSuit.Diamonds;
             this.cbxDeck.TabIndex = 5;
             this.cbxDeck.TabStop = false;
-            this.cbxDeck.Click += new System.EventHandler(this.cbxDeck_Click);
             // 
             // cbxTrumpCard
             // 
@@ -348,7 +247,7 @@ namespace Durak
             this.cbxTrumpCard.Card = playingCard2;
             this.cbxTrumpCard.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cbxTrumpCard.FaceUp = true;
-            this.cbxTrumpCard.Location = new System.Drawing.Point(40, 32);
+            this.cbxTrumpCard.Location = new System.Drawing.Point(45, 154);
             this.cbxTrumpCard.Margin = new System.Windows.Forms.Padding(4);
             this.cbxTrumpCard.Name = "cbxTrumpCard";
             this.cbxTrumpCard.Rank = CardLib.CardRank.Ace;
@@ -375,15 +274,10 @@ namespace Durak
             this.Controls.Add(this.lblTrumpCard);
             this.Controls.Add(this.cbxTrumpCard);
             this.Controls.Add(this.btnRules);
-            this.Controls.Add(this.txtPlayHistory);
             this.Controls.Add(this.pnlComputerCards);
             this.Controls.Add(this.pnlPlayerCards);
             this.Controls.Add(this.pnlActiveCards);
             this.Controls.Add(this.btnExit);
-            this.Controls.Add(this.cbxSuit);
-            this.Controls.Add(this.cbxRank);
-            this.Controls.Add(this.btnFlipCard);
-            this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
@@ -392,8 +286,6 @@ namespace Durak
             this.Text = "Durak!";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmGame_FormClosing);
             this.Load += new System.EventHandler(this.frmGame_Load);
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -405,20 +297,12 @@ namespace Durak
         }
 
         #endregion
-
-        private System.Windows.Forms.Button btnFlipCard;
         private System.Windows.Forms.ComboBox comboBox1;
         private CardBox.CardBox cbxDeck;
-        private System.Windows.Forms.Label lblClickedState;
-        private System.Windows.Forms.Label lblFlippedState;
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Panel pnlActiveCards;
         private System.Windows.Forms.Panel pnlPlayerCards;
         private System.Windows.Forms.Panel pnlComputerCards;
-        private System.Windows.Forms.TextBox txtPlayHistory;
-        private System.Windows.Forms.ComboBox cbxSuit;
-        private System.Windows.Forms.ComboBox cbxRank;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button btnRules;
         private CardBox.CardBox cbxTrumpCard;
         private System.Windows.Forms.Label lblTrumpCard;

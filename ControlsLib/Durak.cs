@@ -73,26 +73,6 @@ namespace Durak
 
             StatsPlayer currentPlayer = StatsPlayer.SearchForExistingUser(name);
 
-            //txtPlayHistory.Text += currentPlayer.ToString();
-            //Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>();
-            //List<StatsPlayer> tempAllPlayers = StatsPlayer.CreatePlayerList();
-
-            //for (int i = 0; i < tempAllPlayers.Count; i++)
-            //{
-            //    allPlayers.Add(tempAllPlayers[i].getPlayerName(), tempAllPlayers[i]);
-            //}
-
-
-            //if (allPlayers.ContainsKey(name)) //this username already exists
-            //{
-            //    StatsPlayer currentPlayer = allPlayers[name];
-            //    txtPlayHistory.Text += currentPlayer.ToString();
-            //}
-            //else //first time player
-            //{
-            //    StatsPlayer currentPlayer = new StatsPlayer(name);
-            //    txtPlayHistory.Text += currentPlayer.ToString();
-            //}
         }
 
         /// <summary>
@@ -102,24 +82,16 @@ namespace Durak
         /// <param name="e"></param>
         private void frmGame_Load(object sender, EventArgs e)
         {
-            string logPath = ControlsLib.Properties.Resources.logs;
             
-            //ResourceWriter logs = new ResourceWriter("logs.txt");
-            
-
             // Get the players choice of deck size
             frmSelectDeckSize choiceSelect = new frmSelectDeckSize();
             choiceSelect.ShowDialog();
             sizeChoice = choiceSelect.GetSizeChoice();
-
-            //THIS IS THE CODE THAT WRITES TO THE FILE WHICH CAN BE FOUND IN THE Durak/bin/Debug folder in the project itself
-            // using (logs)
-            // {
+                   
             string timestamp = DateTime.Now.ToString();
             logs.WriteLine("The current time is: " + timestamp + Environment.NewLine);
             logs.WriteLine("Player chose a deck of " + choiceSelect.GetSizeChoice() + " cards.");
-           // }
-
+     
             choiceSelect.Close();
             mainDeck = new Deck((SizeOfDecks) sizeChoice);
 
@@ -132,92 +104,12 @@ namespace Durak
             StartGame();
 
             //Testing StatsPlayer Methods
-            txtPlayHistory.Text += Environment.NewLine + "! Welcome to the game, " + playerName + "!"; //Delete for submission
-            logs.WriteLine("Player has started the game");
-            
+            logs.WriteLine("Player has started the game");   
 
         }
 
-        /// <summary>
-        /// When the user clicks on the deck
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cbxDeck_Click(object sender, EventArgs e)
-        {
-            /*
-            lblClickedState.Text = cbxDeck.ToString() + " was last clicked." + Environment.NewLine;
 
-            if (mainDeck.Size >= 0)
-            {
-                PlayingCard card = new PlayingCard();
-                SettingsWithCards();
-
-                //Create a new card
-                card = (mainDeck.Size == 0) ? cbxTrumpCard.Card : cbxDeck.Card;
-                card.FaceUp = true;
-
-                if (card != null)
-                {
-                    //Create new cardbox control based on card drawn
-                    CardBox.CardBox aCardBox = new CardBox.CardBox(card);
-                    aCardBox.Size = normalCardSize;
-                    // wire drag drop
-                    WireCardBoxEventHandlers(aCardBox);
-                    //add new controls to the appropriate panel
-                    pnlPlayerCards.Controls.Add(aCardBox);
-
-                    try
-                    {
-                        if (mainDeck.Size == 0)
-                        {
-                            SettingsOutOfCards();
-                        }
-                        else
-                        {
-                            cbxDeck.Card = mainDeck.DrawCard();
-                        }
-
-                        //realign the controls
-                        RealignAllCards();
-                    }
-                    catch (IndexOutOfRangeException)
-                    {
-                        System.Diagnostics.Debug.WriteLine("Exception caught when trying to draw card out of index.");
-                    }
-                }
-            }*/
-        }
-
-        /// <summary>
-        /// When the Flip Card button is clicked
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btnFlipCard_Click(object sender, EventArgs e)
-        {
-            cbxDeck.FaceUp = !cbxDeck.FaceUp;
-        }
-
-        /// <summary>
-        /// When the selected index is changed for cbxSuit
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cbxSuit_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            cbxDeck.Suit = (CardLib.CardSuit)cbxSuit.SelectedIndex;
-        }
-        /// <summary>
-        /// When the selected index is changed for cbxRank
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void cbxRank_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            cbxDeck.Rank = (CardLib.CardRank)cbxRank.SelectedIndex + 1;
-        }
-
+       
         /// <summary>
         /// When the exit button is clicked by the user. In case user did not mean to press this button
         /// there is a cancel option.
@@ -465,8 +357,6 @@ namespace Durak
             Random rand = new Random(); //initialize a random object
             int computerChoiceIndex = rand.Next(pnlComputerCards.Controls.Count); //generates a random number between 0 and the number of cards the computer has
 
-            txtPlayHistory.Text += Environment.NewLine + "Computers chosen attack index: " + computerChoiceIndex; //Shows the computers randomly chosen card
-
             ReenableAllCards();
 
             if (computerChoiceIndex >= 0)
@@ -475,9 +365,6 @@ namespace Durak
                 logs.WriteLine("Computer Plays " + computerCard.ToString() + " as an attack");
                 pnlComputerCards.Controls.Remove(computerCard); //remove the card from the computers hand
                 pnlActiveCards.Controls.Add(computerCard);      //place the card into the active play panel
-
-                txtPlayHistory.Text += Environment.NewLine + "Computer responds with " + computerCard.ToString(); //Computers choice (RELEVANT FOR GAMEPLAY LOG FILE)
-                txtPlayHistory.Text += "PlayerAttacking bool = " + playerAttacking.ToString();
 
                 if(playerAttacking == false)
                 {
@@ -531,7 +418,6 @@ namespace Durak
 
                 Wait(1500);
 
-                txtPlayHistory.Text += Environment.NewLine + "Computer responds with " + computerCard.ToString(); //Computers choice (RELEVANT FOR GAMEPLAY LOG FILE)
                 DisableInvalidPlayerDefenseChoices(computerCard);
             }
 
@@ -740,7 +626,6 @@ namespace Durak
 
                 // add the trump card back but at the last place in the deck
                 mainDeck.AddCardAtBottom(firstCard);
-                txtPlayHistory.Text += firstCard.Suit + " is the current trump suit."; //displays the trump suit to the log  //USE FOR LOGS
             }
             catch (IndexOutOfRangeException)
             {
@@ -1185,9 +1070,7 @@ namespace Durak
         {
             foreach (CardBox.CardBox card in panelWithCards.Controls)
             {
-                //Debug Log - This will tell us what card we're moving, from which panel, and where to
-                txtPlayHistory.Text += Environment.NewLine + "Moving " + card.ToString() + " from " + panelWithCards.Name + " to " + panelCardsGoTo.Name;
-
+                
                 //Make it a cardbox for the player
                 CardBox.CardBox movedCard = new CardBox.CardBox(card.Card);
                 movedCard.Size = normalCardSize; //resize the card, in case it was already the appropriate size
@@ -1280,8 +1163,6 @@ namespace Durak
                     if (currentCard.Card > cardToBeat.Card)
                     { //current card wins
                         noGoodChoice = false;
-                        txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " could win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit
-                                            + "   " + i + "  " + pnlComputerCards.Controls.IndexOf(currentCard).ToString(); //DELETE FOR SUBMISSION
 
                         // Check to see if option to beat player card is a more efficient (AKA lower value card that current selection) way to beat the opponent and reserve high ranking cards for later
                         if (currentCard.Card < idealChoice.Card)
@@ -1299,9 +1180,7 @@ namespace Durak
                     //    //DELETE FOR SUBMISSION
                     //}
                     else //if neither cards are trump, or both cards are
-                    {
-                        txtPlayHistory.Text += Environment.NewLine + currentCard.Rank + " of " + currentCard.Suit + " CANNOT win against the opponent's " + cardToBeat.Rank + " of " + cardToBeat.Suit;
-
+                    {                       
 
                         if (currentCard.Card > cardToBeat.Card)  //win
                         {
@@ -1316,22 +1195,10 @@ namespace Durak
                 }
             }//end of loop
 
-            if (noGoodChoice && playerAttacking) //computer cannot defend
-            {
-                //txtPlayHistory.Text += "Computer Cannot Defend"; //DELETE FOR SUBMISSION
-                //logs.WriteLine("Computer Cannot Defend");
-            }
-
             // If the computer has no cards prospective to attack or defend, admit defeat and pass the attack or return value that will cause computer to 
             // take the discarded cards
-            if (noGoodChoice == false) //computer wins
+            if (noGoodChoice) //computer wins
             {
-                txtPlayHistory.Text += idealChoiceIndex + " is the index a wise AI would choose here.";
-                //DELETE FOR SUBMISSION
-            }
-            else //computer loses
-            {
-                txtPlayHistory.Text += "AI has no good choices. Human player wins this one!";
                 logs.WriteLine("Computer cannot defend, player wins the attack");
 
                 txtComputerAttacker.Visible = true;
@@ -1355,13 +1222,12 @@ namespace Durak
                 CardBox.CardBox computerCardBox = pnlComputerCards.Controls[computerChoiceIndex] as CardBox.CardBox;
                 pnlComputerCards.Controls.Remove(computerCardBox); //remove from computers hand
                 pnlActiveCards.Controls.Add(computerCardBox);      //add to the active play panel
-                txtPlayHistory.Text += Environment.NewLine + "Computer responds with " + computerCardBox.ToString(); //Computers choice (RELEVANT FOR GAMEPLAY LOG FILE)
+                
                 logs.WriteLine("Computer responds with " + computerCardBox.ToString());
 
                 //Compares cards in players hands, determines if they can attack again by comparing their hand to pair in active panel
                 CardBox.CardBox tempCard = (CardBox.CardBox)pnlActiveCards.Controls[0];
-                //txtPlayHistory.Text += Environment.NewLine + "temp card is " + tempCard.ToString();
-
+           
                 CompareCards(tempCard, computerCardBox, this.initialAttackDefended); //deciding which cards can be played on a successive attack
                 ReenableAllCards();
                 disableInvalidChoices(tempCard.Rank, computerCardBox.Card.Rank);
@@ -1369,8 +1235,6 @@ namespace Durak
             }
             else //Computer Cannot Defend
             {
-               // txtPlayHistory.Text += Environment.NewLine + "COMPUTER HAS NO GOOD CHOICES. Human wins this attack/defense. Things will happen here to proceed with gameplay." + Environment.NewLine;
-                txtPlayHistory.Text += Environment.NewLine + "Number of cards in defended " + pnlDefended.Controls.Count; //DELETE FOR SUBMISSION
                 MoveCards(pnlDefended, pnlComputerCards);
                 MoveCards(pnlActiveCards, pnlComputerCards);                
 
@@ -1418,6 +1282,9 @@ namespace Durak
             }
         }
 
+        private void cbxDeck_Click(object sender, EventArgs e)
+        {
 
+        }
     }
 }
