@@ -1,46 +1,19 @@
-The current time is: 2021-04-15 4:50:59 PM
+The current time is: 2021-04-15 5:05:45 PM
 
-Player chose a deck of 20 cards.
+Player chose a deck of 36 cards.
 Initial Deal Starting: 
 
-Player draws Suit: Hearts of Queen
-Computer draws Face Down
-Player draws Suit: Spades of Queen
-Computer draws Face Down
-Player draws Suit: Spades of Ace
+Player draws Suit: Spades of King
 Computer draws Face Down
 Player draws Suit: Clubs of Queen
 Computer draws Face Down
-Player draws Suit: Hearts of King
+Player draws Suit: Diamonds of Queen
 Computer draws Face Down
-Player draws Suit: Clubs of Ace
+Player draws Suit: Spades of Queen
+Computer draws Face Down
+Player draws Suit: Spades of Ten
+Computer draws Face Down
+Player draws Suit: Clubs of Nine
 Computer draws Face Down
 Player has started the game
-Players plays Suit: Clubs of Queen
-Computer responds with Face Down
-Players plays Suit: Spades of Ace
-Computer responds with Face Down
-Players plays Suit: Hearts of King
-Computer cannot defend, player wins the attack
-Player Draws a Suit: Clubs of Jack
-Computer Draws a Suit: Diamonds of Ace
-Player Draws a Suit: Diamonds of Ten
-Computer Draws a Suit: Diamonds of Queen
-Player Draws a Suit: Spades of Jack
-Computer Plays Face Down as an attack
-Player has accepted defeat, switching turns.
-Player has chosen to hault the attack.
-Computer Plays Face Down as an attack
-Player has accepted defeat, switching turns.
-Computer Draws a Suit: Diamonds of King
-Player has chosen to hault the attack.
-Computer Plays Face Down as an attack
-Player has accepted defeat, switching turns.
-Computer Draws a Suit: Hearts of Ten
-Player has chosen to hault the attack.
-Computer Plays Face Down as an attack
-Player has accepted defeat, switching turns.
-Computer Draws a Trump Card of Face Down
-Players plays Suit: Clubs of Ace
-Computer responds with Face Down
 Player closed the game
