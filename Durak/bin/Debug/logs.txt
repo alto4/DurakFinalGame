@@ -1,19 +1,19 @@
-The current time is: 2021-04-15 5:05:45 PM
+The current time is: 2021-04-15 5:17:59 PM
 
-Player chose a deck of 36 cards.
+Player chose a deck of 20 cards.
 Initial Deal Starting: 
 
 Player draws Suit: Spades of King
 Computer draws Face Down
-Player draws Suit: Clubs of Queen
+Player draws Suit: Clubs of Ten
 Computer draws Face Down
-Player draws Suit: Diamonds of Queen
-Computer draws Face Down
-Player draws Suit: Spades of Queen
+Player draws Suit: Diamonds of Ten
 Computer draws Face Down
 Player draws Suit: Spades of Ten
 Computer draws Face Down
-Player draws Suit: Clubs of Nine
+Player draws Suit: Spades of Queen
+Computer draws Face Down
+Player draws Suit: Clubs of Ace
 Computer draws Face Down
 Player has started the game
 Player closed the game
