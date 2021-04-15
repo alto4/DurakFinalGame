@@ -6,7 +6,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -23,6 +25,13 @@ namespace Durak
          * txtPlayHistory gameplay recordings to write to our log file instead of the
          * txtPlayHistory textbox
          */
+        
+        
+
+        
+        
+        
+
 
         //String used to reference the player in the logs and stats
         string playerName;
@@ -107,10 +116,22 @@ namespace Durak
         /// <param name="e"></param>
         private void frmGame_Load(object sender, EventArgs e)
         {
+            string logPath = ControlsLib.Properties.Resources.logs;
+            StreamWriter logs = new StreamWriter("logs.txt");
+            //ResourceWriter logs = new ResourceWriter("logs.txt");
+            
+
             // Get the players choice of deck size
             frmSelectDeckSize choiceSelect = new frmSelectDeckSize();
             choiceSelect.ShowDialog();
             sizeChoice = choiceSelect.GetSizeChoice();
+
+            //THIS IS THE CODE THAT WRITES TO THE FILE WHICH CAN BE FOUND IN THE Durak/bin/Debug folder in the project itself
+            using (logs)
+            {
+                logs.WriteLine("Player chose a deck of " + choiceSelect.GetSizeChoice() + " cards.");
+            }
+
             choiceSelect.Close();
             mainDeck = new Deck((SizeOfDecks) sizeChoice);
 
@@ -1162,6 +1183,11 @@ namespace Durak
 
         #region EMPTY EVENT HANDLERS
 
+        private void frmGame_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            
+        }
+
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -1314,5 +1340,6 @@ namespace Durak
 
         #endregion
 
+        
     }
 }

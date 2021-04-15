@@ -142,5 +142,8 @@
   <ItemGroup>
     <None Include="Resources\DurakStats.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\logs.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

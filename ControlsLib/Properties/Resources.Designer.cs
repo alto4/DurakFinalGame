@@ -61,13 +61,22 @@ namespace ControlsLib.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to NICK,15,06,08
-        ///SCOT,11,08,04
-        ///ED  ,18,02,10.
+        ///   Looks up a localized string similar to NICK,15,06,08,
+        ///SCOT,11,08,04,
+        ///ED,18,02,10,.
         /// </summary>
         internal static string DurakStats {
             get {
                 return ResourceManager.GetString("DurakStats", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string logs {
+            get {
+                return ResourceManager.GetString("logs", resourceCulture);
             }
         }
     }
