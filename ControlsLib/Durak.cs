@@ -709,7 +709,7 @@ namespace Durak
         private void CheckIfWon()
         {
             // TODO: add logs implementation here
-            if (pnlPlayerCards.Controls.Count == 0)
+            if (pnlPlayerCards.Controls.Count == 0 && mainDeck.Size == 0)
             {
                 MessageBox.Show("Congratilations! You won.");
                 // hidding frmGame
@@ -724,7 +724,7 @@ namespace Durak
                 // close frmGame
                 this.Close();
             }
-            if (pnlComputerCards.Controls.Count == 0)
+            if (pnlComputerCards.Controls.Count == 0 && mainDeck.Size == 0)
             {
                 MessageBox.Show("Sorry! You lost.");
                 // hidding frmGame
