@@ -380,7 +380,7 @@ namespace Durak
                            // MessageBox.Show("DEFENDING CARD" + pnlActiveCards.Controls[1].ToString() + "  ATTACKING CARD" + pnlActiveCards.Controls[0].ToString());
                             MoveCards(pnlActiveCards, pnlDefended);
 
-                            MessageBox.Show("COMPUTER ABOUT TO RESPOND WITH SUCCESSIVE ATTACK!");
+                            //MessageBox.Show("COMPUTER ABOUT TO RESPOND WITH SUCCESSIVE ATTACK!");
 
                             CardBox.CardBox attackCard = (CardBox.CardBox)pnlDefended.Controls[0];
                             CardBox.CardBox defenseCard = (CardBox.CardBox)pnlDefended.Controls[1];
@@ -518,17 +518,18 @@ namespace Durak
         {
             /// ***TODO: Add in draw counter for player stats***
 
-            if (pnlDiscard.Controls.Count != 0)
+            // if the player chooses to stop defending
+            if (!playerAttacking)
             {
-                MessageBox.Show("Computer's turn to attack!"); //delete for submission???
+                MoveCards(pnlActiveCards, pnlPlayerCards);
+                MoveCards(pnlDefended, pnlPlayerCards);
             }
-
-            // Add the cards the player did not defend
-            AddCardsForDefeat();
-
+            else
+            {
+                MoveCards(pnlActiveCards, pnlDiscard); //Move cards from the active panel to discard
+                MoveCards(pnlDefended, pnlDiscard); //Move cards from the defended panel to discard
+            }
             
-            MoveCards(pnlActiveCards, pnlDiscard); //Move cards from the active panel to discard
-            MoveCards(pnlDefended, pnlDiscard); //Move cards from the defended panel to discard
 
             // Flip discarded pile to facedown without flipping every card
             UpdateDefendedAndDiscardPanelControls();
@@ -572,6 +573,8 @@ namespace Durak
             ComputerAttacks(); //proceed with the computer attack
 
             DisableInvalidCardsInHands();
+
+            RealignAllCards();
         }
 
         /// <summary>
@@ -690,6 +693,22 @@ namespace Durak
         #endregion
 
         #region HELPER METHODS
+
+        /// <summary>
+        /// Checks if someone won yet
+        /// </summary>
+        private void CheckIfWon()
+        {
+            // TODO: add logs implementation here
+            if (pnlPlayerCards.Controls.Count == 0)
+            {
+                MessageBox.Show("Congratilations! You won.");
+            }
+            if (pnlComputerCards.Controls.Count == 0)
+            {
+                MessageBox.Show("Sorry! You lost.");
+            }
+        }
 
         /// <summary>
         /// This adds the cards not defended by the player from the defended and the active piles
@@ -855,13 +874,16 @@ namespace Durak
             //DisableInvalidCardsInHands();
             // refresh the logic cards
             RefreshLogicDeckFromPanels();
-            foreach (var card in playerHand)
+            // make sure all players cards are up side
+            foreach(CardBox.CardBox cardBox in pnlPlayerCards.Controls)
             {
-                System.Diagnostics.Debug.WriteLine("Player card" + card.ToString());
+                cardBox.FaceUp = true;
             }
-            foreach (var card in AIHand)
+
+            // make sure discarded cards are facing down
+            foreach (CardBox.CardBox cardBox in pnlDiscard.Controls)
             {
-                System.Diagnostics.Debug.WriteLine("AI card" + card.ToString());
+                cardBox.FaceUp = false;
             }
 
             foreach (var control in cardPanels)
@@ -1059,7 +1081,7 @@ namespace Durak
             try
             {
                 // alternate handing cards until deck is empty or both players have 6 cards.
-                while (mainDeck.Size > 1)
+                while (mainDeck.Size > 0)
                 {
                     // break unless player has less than 5 cards
                     if (playerHand.Count <= 5)
@@ -1071,7 +1093,7 @@ namespace Durak
                         playerHand.Add(card);
                         cbxDeck.Card = mainDeck.DrawCard();
                     }
-                    if (playerHand.Count == 6 && AIHand.Count == 6)
+                    if (playerHand.Count >= 6 && AIHand.Count >= 6)
                     {
                         break;
                     }
@@ -1085,8 +1107,9 @@ namespace Durak
                         pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
                         AIHand.Add(card);
                         cbxDeck.Card = mainDeck.DrawCard();
+                        
                     }
-                    if (playerHand.Count == 6 && AIHand.Count == 6)
+                    if (playerHand.Count >= 6 && AIHand.Count >= 6)
                     {
                         break;
                     }
@@ -1094,15 +1117,26 @@ namespace Durak
 
                 //System.Diagnostics.Debug.WriteLine("Deck size: " + mainDeck.Size);
 
-                if (mainDeck.Size == 0)
+                if (mainDeck.Size == 0 && cbxTrumpCard.Visible != false)
                 {
-                    card = cbxTrumpCard.Card;
-                    card.FaceUp = true;
-                    // add trump card to players hand
-                    pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
-                    playerHand.Add(card);
-                    cbxDeck.Card = mainDeck.DrawCard();
-                    
+                    if (playerHand.Count < 6)
+                    {
+                        card = cbxTrumpCard.Card;
+                        card.FaceUp = true;
+                        // add trump card to players hand
+                        pnlPlayerCards.Controls.Add(new CardBox.CardBox(card));
+                        playerHand.Add(card);
+                        cbxDeck.Card = mainDeck.DrawCard();
+                    }
+                    else if (AIHand.Count < 6)
+                    {
+                        card = cbxTrumpCard.Card;
+                        card.FaceUp = true;
+                        // add trump card to players hand
+                        pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
+                        AIHand.Add(card);
+                        cbxDeck.Card = mainDeck.DrawCard();
+                    }
                 }
             }
             catch (IndexOutOfRangeException)
@@ -1382,6 +1416,8 @@ namespace Durak
         /// </summary>
         private void ReenableAllCards()
         {
+            CheckIfWon();
+
             foreach (CardBox.CardBox playerCard in pnlPlayerCards.Controls)
             {
                 playerCard.Enabled = true;
