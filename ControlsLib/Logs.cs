@@ -16,6 +16,8 @@ namespace ControlsLib
         {
             InitializeComponent();
             Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>(); //StatsPlayer.CreatePlayerDictionary();
+            
+            
             StatsPlayer[] tempArray = StatsPlayer.CreatePlayerArray();
 
 

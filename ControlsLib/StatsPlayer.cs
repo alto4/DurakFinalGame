@@ -143,7 +143,7 @@ namespace ControlsLib
                         columnCounter++;
                     }
                     //temp.Add(tempPlayer);
-                    tempString += tempPlayer.ToString();
+                    //tempString += tempPlayer.ToString();
                 }
                 allPlayers.Add(tempPlayer.getPlayerName(), tempPlayer);
                 // allPlayers.Add(temp[lineCounter].getPlayerName(), temp[lineCounter]);
@@ -222,7 +222,7 @@ namespace ControlsLib
             int arraySize = playersRaw.Length;
             int lineCounter = 0;
 
-            StatsPlayer[] allPlayers = new StatsPlayer[arraySize];
+           // StatsPlayer[] allPlayers = new StatsPlayer[arraySize];
             StatsPlayer[] tempPlayer = new StatsPlayer[arraySize];
             while (lineCounter < arraySize)
             {
@@ -235,7 +235,7 @@ namespace ControlsLib
                 while (columnCounter < NUM_OF_COLUMNS) //this while loop is used for assigning data 
                 {                                     //to a StatsPlayer that will be added to a
                                                       //dictionary of StatsPlayer's
-                    
+                    tempPlayer[lineCounter] = player;
                     //allPlayers[lineCounter] = tempPlayer;
                     if (columnCounter == 0) //first piece of data (name)
                     {
@@ -262,11 +262,11 @@ namespace ControlsLib
                     }
                     
                 }
-                allPlayers[lineCounter] = tempPlayer[lineCounter];
+                //allPlayers[lineCounter] = tempPlayer[lineCounter];
                // allPlayers.
                 lineCounter++;
             }
-            return allPlayers;
+            return tempPlayer;
         }
 
         /// <summary>
