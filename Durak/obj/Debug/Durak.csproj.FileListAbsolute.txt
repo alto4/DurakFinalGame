@@ -196,3 +196,17 @@ D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\obj\Debug\Durak.csp
 D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\obj\Debug\Durak.csproj.CopyComplete
 D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\obj\Debug\Durak.exe
 D:\Computer Programmer DC\Semester 4\OOP\DurakThursday\Durak\obj\Debug\Durak.pdb
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\bin\Debug\Durak.exe.config
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\bin\Debug\Durak.exe
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\bin\Debug\Durak.pdb
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\bin\Debug\CardLib.dll
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\bin\Debug\ControlsLib.dll
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\bin\Debug\ControlsLib.pdb
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\bin\Debug\CardLib.pdb
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\obj\Debug\Durak.csprojAssemblyReference.cache
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\obj\Debug\Durak.Properties.Resources.resources
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\obj\Debug\Durak.csproj.GenerateResource.cache
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\obj\Debug\Durak.csproj.CoreCompileInputs.cache
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\obj\Debug\Durak.csproj.CopyComplete
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\obj\Debug\Durak.exe
+C:\Users\Scott Alton\Desktop\OOP\Durak3\Durak\obj\Debug\Durak.pdb

@@ -50,7 +50,7 @@ namespace Durak
             this.btnRules = new System.Windows.Forms.Button();
             this.lblTrumpCard = new System.Windows.Forms.Label();
             this.lblOutOfCards = new System.Windows.Forms.Label();
-            this.btnStopAttacking = new System.Windows.Forms.Button();
+            this.btnEndTurn = new System.Windows.Forms.Button();
             this.pnlDiscard = new System.Windows.Forms.Panel();
             this.pnlDefended = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
@@ -213,7 +213,7 @@ namespace Durak
             this.panel1.Controls.Add(this.lblClickedState);
             this.panel1.Controls.Add(this.lblFlippedState);
             this.panel1.Location = new System.Drawing.Point(70, 240);
-            this.panel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(201, 81);
             this.panel1.TabIndex = 17;
@@ -233,7 +233,7 @@ namespace Durak
             this.lblTrumpCard.AutoSize = true;
             this.lblTrumpCard.BackColor = System.Drawing.Color.White;
             this.lblTrumpCard.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblTrumpCard.Location = new System.Drawing.Point(40, 11);
+            this.lblTrumpCard.Location = new System.Drawing.Point(39, 9);
             this.lblTrumpCard.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblTrumpCard.Name = "lblTrumpCard";
             this.lblTrumpCard.Size = new System.Drawing.Size(97, 18);
@@ -254,17 +254,17 @@ namespace Durak
             this.lblOutOfCards.Visible = false;
             this.lblOutOfCards.Click += new System.EventHandler(this.lblOutOfCards_Click);
             // 
-            // btnStopAttacking
+            // btnEndTurn
             // 
-            this.btnStopAttacking.BackColor = System.Drawing.Color.Black;
-            this.btnStopAttacking.ForeColor = System.Drawing.Color.White;
-            this.btnStopAttacking.Location = new System.Drawing.Point(888, 457);
-            this.btnStopAttacking.Name = "btnStopAttacking";
-            this.btnStopAttacking.Size = new System.Drawing.Size(75, 42);
-            this.btnStopAttacking.TabIndex = 24;
-            this.btnStopAttacking.Text = "Stop Attacking";
-            this.btnStopAttacking.UseVisualStyleBackColor = false;
-            this.btnStopAttacking.Click += new System.EventHandler(this.btnStopAttacking_Click);
+            this.btnEndTurn.BackColor = System.Drawing.Color.Black;
+            this.btnEndTurn.ForeColor = System.Drawing.Color.White;
+            this.btnEndTurn.Location = new System.Drawing.Point(888, 457);
+            this.btnEndTurn.Name = "btnEndTurn";
+            this.btnEndTurn.Size = new System.Drawing.Size(75, 42);
+            this.btnEndTurn.TabIndex = 24;
+            this.btnEndTurn.Text = "End Turn";
+            this.btnEndTurn.UseVisualStyleBackColor = false;
+            this.btnEndTurn.Click += new System.EventHandler(this.btnEndTurn_Click);
             // 
             // pnlDiscard
             // 
@@ -330,7 +330,7 @@ namespace Durak
             this.cbxDeck.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cbxDeck.FaceUp = false;
             this.cbxDeck.Location = new System.Drawing.Point(28, 70);
-            this.cbxDeck.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxDeck.Margin = new System.Windows.Forms.Padding(4);
             this.cbxDeck.Name = "cbxDeck";
             this.cbxDeck.Rank = CardLib.CardRank.Six;
             this.cbxDeck.Size = new System.Drawing.Size(113, 146);
@@ -349,7 +349,7 @@ namespace Durak
             this.cbxTrumpCard.CardOrientation = System.Windows.Forms.Orientation.Vertical;
             this.cbxTrumpCard.FaceUp = true;
             this.cbxTrumpCard.Location = new System.Drawing.Point(40, 32);
-            this.cbxTrumpCard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cbxTrumpCard.Margin = new System.Windows.Forms.Padding(4);
             this.cbxTrumpCard.Name = "cbxTrumpCard";
             this.cbxTrumpCard.Rank = CardLib.CardRank.Ace;
             this.cbxTrumpCard.Size = new System.Drawing.Size(89, 128);
@@ -368,7 +368,7 @@ namespace Durak
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pnlDefended);
             this.Controls.Add(this.pnlDiscard);
-            this.Controls.Add(this.btnStopAttacking);
+            this.Controls.Add(this.btnEndTurn);
             this.Controls.Add(this.txtComputerAttacker);
             this.Controls.Add(this.lblOutOfCards);
             this.Controls.Add(this.cbxDeck);
@@ -424,7 +424,7 @@ namespace Durak
         private System.Windows.Forms.Label lblTrumpCard;
         private System.Windows.Forms.Label lblOutOfCards;
         private System.Windows.Forms.TextBox txtComputerAttacker;
-        private System.Windows.Forms.Button btnStopAttacking;
+        private System.Windows.Forms.Button btnEndTurn;
         private System.Windows.Forms.Panel pnlDiscard;
         private System.Windows.Forms.Panel pnlDefended;
         private System.Windows.Forms.Label label1;
