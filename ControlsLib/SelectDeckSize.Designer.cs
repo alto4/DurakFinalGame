@@ -29,6 +29,7 @@ namespace ControlsLib
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmSelectDeckSize));
             this.btnSmall = new System.Windows.Forms.Button();
             this.btnNormal = new System.Windows.Forms.Button();
             this.btnLarge = new System.Windows.Forms.Button();
@@ -68,10 +69,10 @@ namespace ControlsLib
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 16.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(112, 69);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 22.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(65, 54);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(229, 32);
+            this.label1.Size = new System.Drawing.Size(322, 44);
             this.label1.TabIndex = 3;
             this.label1.Text = "Select Deck Size";
             // 
@@ -79,12 +80,14 @@ namespace ControlsLib
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(28)))), ((int)(((byte)(85)))));
             this.ClientSize = new System.Drawing.Size(450, 228);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnLarge);
             this.Controls.Add(this.btnNormal);
             this.Controls.Add(this.btnSmall);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "frmSelectDeckSize";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Select Deck Size";

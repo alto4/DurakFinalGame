@@ -881,10 +881,10 @@ namespace Durak
                 InitialDeal();
 
                 PlayingCard firstCard = mainDeck.DrawCard();
-                PlayingCard firstPlayableCard = mainDeck.DrawCard();
+                //PlayingCard firstPlayableCard = mainDeck.DrawCard();
 
                 cbxTrumpCard.Card = firstCard; // Moving the trump card to bottom
-                cbxDeck.Card = firstPlayableCard;
+                //cbxDeck.Card = firstPlayableCard;
 
                 // add the trump card back but at the last place in the deck
                 mainDeck.AddCardAtBottom(firstCard);
