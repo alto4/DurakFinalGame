@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*@project          OOPFinal Project
+ *@file             Durak.cs 
+ *@version          1.0 
+ *@since            2021-04-14
+ *@author           Eduardo San Martin Celi, Scott Alton, Nick Sturch-Flint
+ *@description      This is the StatsPlayer class its been depricated.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

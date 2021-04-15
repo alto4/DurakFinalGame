@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*@project          OOPFinal Project
+ *@file             Rules.cs 
+ *@version          1.0 
+ *@since            2021-03-24 
+ *@author           Eduardo San Martin Celi, Scott Alton, Nick Sturch-Flint
+ *@description      This is the form to show the rules
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

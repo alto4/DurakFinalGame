@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*@project          OOPFinal Project
+ *@file             SelectDeckSize.cs 
+ *@version          1.0 
+ *@since            2021-03-04 
+ *@author           Eduardo San Martin Celi, Scott Alton, Nick Sturch-Flint
+ *@description      This is the select deck size form.
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

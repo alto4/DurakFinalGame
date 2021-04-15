@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*@project          OOPFinal Project
+ *@file             CardBox.cs 
+ *@version          1.0 
+ *@since            2021-03-04 
+ *@author           Eduardo San Martin Celi, Scott Alton, Nick Sturch-Flint
+ *@description      This is the user control class for a CardBox
+ */
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;

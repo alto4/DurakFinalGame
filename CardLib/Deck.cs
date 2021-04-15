@@ -1,4 +1,4 @@
-﻿/*@project          OOPFinal Projct
+﻿/*@project          OOPFinal Project
  *@file             Deck.cs 
  *@version          1.0 
  *@since            2021-03-04 

@@ -1,4 +1,12 @@
-﻿using CardLib;
+﻿/*@project          OOPFinal Project
+ *@file             Durak.cs 
+ *@version          1.0 
+ *@since            2021-03-04 
+ *@author           Eduardo San Martin Celi, Scott Alton, Nick Sturch-Flint
+ *@description      This is the main game logic and event handling for a game of Durak.
+ */
+
+using CardLib;
 using ControlsLib;
 using System;
 using System.Collections;
@@ -108,8 +116,6 @@ namespace Durak
 
         }
 
-
-       
         /// <summary>
         /// When the exit button is clicked by the user. In case user did not mean to press this button
         /// there is a cancel option.
@@ -334,6 +340,8 @@ namespace Durak
                 MoveCards(pnlActiveCards, pnlDiscard); //Move cards from the active panel to discard
                 MoveCards(pnlDefended, pnlDiscard); //Move cards from the defended panel to discard
 
+                
+
                 // Flip discarded pile to facedown without flipping every card
                 UpdateDefendedAndDiscardPanelControls();
                 RoundDeal(); //Deal cards until both players have at least 6 cards
@@ -347,6 +355,7 @@ namespace Durak
            //DisableInvalidCardsInHands(); //Determine what the player can defend with
 
             RealignAllCards();
+            //ReenableAllCards();
         }
 
         /// <summary>
@@ -420,10 +429,8 @@ namespace Durak
 
                 DisableInvalidPlayerDefenseChoices(computerCard);
             }
-
             UpdateDefendedAndDiscardPanelControls();
             DisableInvalidCardsInHands();
-            
         }
 
         #endregion
@@ -454,8 +461,6 @@ namespace Durak
                 mainMenu.ShowDialog();
                 Application.Exit(); // close frmGame
                 
-
-                
             }
             if (pnlComputerCards.Controls.Count == 0 && mainDeck.Size == 0)
             {
@@ -474,23 +479,8 @@ namespace Durak
                 // show the frmMainMenu form
                 //this.close() // close frmGame
                 mainMenu.ShowDialog();
-                Application.Exit();
-                
-
-                
+                Application.Exit();  
             }
-
-        }
-
-        /// <summary>
-        /// This adds the cards not defended by the player from the defended and the active piles
-        /// </summary>
-        private void AddCardsForDefeat()
-        {
-            //MoveCards(pnlActiveCards, pnlPlayerCards);
-            //MoveCards(pnlDefended, pnlPlayerCards);
-
-            //RealignAllCards();
         }
 
         /// <summary>
@@ -575,6 +565,8 @@ namespace Durak
                 cardBox.Left = (pnlDiscard.Width - normalCardSize.Width) / 2;
                 cardBox.Top = (pnlDiscard.Height - normalCardSize.Height) / 2;
             }
+
+            ReenableAllCards();
         }
 
         /// <summary>
@@ -657,6 +649,8 @@ namespace Durak
             {
                 RealignCards(control);
             }
+
+            ReenableAllCards();
         }
 
         /// <summary>
@@ -676,6 +670,7 @@ namespace Durak
         /// </summary>
         private void SettingsOutOfCards()
         {
+           
             cbxDeck.FaceUp = false;
             lblOutOfCards.Visible = true;
             cbxDeck.Enabled = false;
@@ -880,7 +875,7 @@ namespace Durak
                     else if (AIHand.Count < 6)
                     {
                         card = cbxTrumpCard.Card;
-                        card.FaceUp = true;
+                        card.FaceUp = false;
                         // add trump card to players hand
                         logs.WriteLine("Computer Draws a Trump Card of " + card.ToString());
                         pnlComputerCards.Controls.Add(new CardBox.CardBox(card));
@@ -1094,6 +1089,7 @@ namespace Durak
             {
                 panelWithCards.Controls.RemoveAt(0);
             }
+            ReenableAllCards();
         }
 
         //TODO: Create a function that will move a single card from one panel to another

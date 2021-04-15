@@ -1,4 +1,11 @@
-﻿/** IMAGE ATTRIBUTION
+﻿/*@project          OOPFinal Project
+ *@file             MainMenu.cs 
+ *@version          1.0 
+ *@since            2021-03-04 
+ *@author           Eduardo San Martin Celi, Scott Alton, Nick Sturch-Flint
+ *@description      This main menu form
+ */
+/** IMAGE ATTRIBUTION
 *   ==================
 *   <div>Icon made by <a href="https://www.flaticon.com/authors/bqlqn" 
 *   title="bqlqn">bqlqn</a> 
