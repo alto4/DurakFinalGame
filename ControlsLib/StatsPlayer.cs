@@ -23,10 +23,10 @@ namespace ControlsLib
         public StatsPlayer() 
         {
             //For testing only
-            setPlayerName("Nick");
-            setPlayerWins(11);
-            setPlayerTies(3);
-            setPlayerLosses(5);
+            setPlayerName("Player 1");
+            setPlayerWins(0);
+            setPlayerTies(0);
+            setPlayerLosses(0);
         }
         //Parameterized Constructors
         public StatsPlayer(string name, int wins, int ties, int losses)
@@ -91,57 +91,176 @@ namespace ControlsLib
         /// This method will return a dictionary of StatsPlayers that can be used later for output
         /// </summary>
         /// <returns>Dictionary<string, StatsPlayer></returns>
-        public static Dictionary<string, StatsPlayer> CreatePlayerDictionary()
+        //public static Dictionary<string, StatsPlayer> CreatePlayerDictionary()
+   /*     public static List<StatsPlayer> CreatePlayerList()
         {
             const int NUM_OF_COLUMNS = 4;//we know the number of columns in this case
             //Creates an array of strings that equal an individual line from LogsAndStats.dat
             string[] playersRaw = Properties.Resources.DurakStats.Split('\n');
-            //int numberOfLines = playersRaw.Length; //gives us the number of lines
-            //StatsPlayer[] players = new StatsPlayer[numberOfLines]; //a place to hold our players
             // before transferring them to the dictionary
-            Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>(); //Initialize the dictionary
+            
             int lineCounter = 0;
-            //string line;
-            //Declare a StreamReader
-           // StreamReader file = new StreamReader(Properties.Resources.DurakStats);
-
+            
+            Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>(); //Initialize the dictionary
+            List<StatsPlayer> temp = new List<StatsPlayer>();
+            int arraySize = playersRaw.Length;
             //while ((line = file.ReadLine()) != null) //assigns the current line to our variable, and does so until it is null 
-            while (lineCounter < playersRaw.Length)
+            while (lineCounter < arraySize)
             {
                 int columnCounter = 0;
                 string[] columns = playersRaw[lineCounter].Split(','); //splits the line variable into an array using 
-                                                    // a comma as a delimeter
-                StatsPlayer tempPlayer = new StatsPlayer();
+                                                                       // a comma as a delimeter
+               // Dictionary<string, StatsPlayer> tempPlayers = new Dictionary<string, StatsPlayer>(); //Initialize the dictionary
 
-                while(columnCounter < NUM_OF_COLUMNS) //this while loop is used for assigning data 
+               StatsPlayer tempPlayer = new StatsPlayer();
+                while (columnCounter < NUM_OF_COLUMNS) //this while loop is used for assigning data 
                 {                                     //to a StatsPlayer that will be added to a
                                                       //dictionary of StatsPlayer's
                     if (columnCounter == 0) //first piece of data (name)
                     {
                         tempPlayer.setPlayerName(columns[columnCounter]);
+                        columnCounter++;
                     }
 
                     if (columnCounter == 1) //second piece of data (wins)
                     {
                         tempPlayer.setPlayerWins(int.Parse(columns[columnCounter]));
+                        columnCounter++;
                     }
 
                     if (columnCounter == 2) //third piece of data (ties)
                     {
                         tempPlayer.setPlayerTies(int.Parse(columns[columnCounter]));
+                        columnCounter++;
                     }
 
                     if (columnCounter == 3) //fourth piece of data (losses)
                     {
                         tempPlayer.setPlayerLosses(int.Parse(columns[columnCounter]));
+                        columnCounter++;
                     }
-                    columnCounter++;
+                    temp.Add(tempPlayer);
                 }
-                allPlayers.Add(tempPlayer.getPlayerName(), tempPlayer);
-                Console.WriteLine(allPlayers.ElementAt(lineCounter).ToString());
+                // allPlayers.Add(tempPlayer.getPlayerName(), tempPlayer);
+                // allPlayers.Add(temp[lineCounter].getPlayerName(), temp[lineCounter]);
+
+                //tempPlayer = null;
+                // Console.WriteLine(allPlayers.ElementAt(lineCounter).ToString());
+
+                //temp.Add(tempPlayer);
+
                 lineCounter++;
             }
-            return allPlayers; //return the dictionary
+            return temp;
+            //return allPlayers; //return the dictionary
+        }*/
+
+        public static StatsPlayer SearchForExistingUser(string username)
+        {
+            const int NUM_OF_COLUMNS = 4; //we know the length of each line
+            string[] playersRaw = Properties.Resources.DurakStats.Split('\n');
+            int lineCounter = 0;
+            StatsPlayer tempPlayer = new StatsPlayer();
+            while (lineCounter < playersRaw.Length)
+            {
+                int columnCounter = 0;
+                string[] columns = playersRaw[lineCounter].Split(',');
+
+                while (columnCounter < NUM_OF_COLUMNS)
+                {
+                    if (username == columns[columnCounter].ToString()) //if the username is found
+                    {
+                        tempPlayer.setPlayerName(columnCounter.ToString());
+                        tempPlayer.setPlayerWins(int.Parse(columns[columnCounter + 1]));
+                        tempPlayer.setPlayerTies(int.Parse(columns[columnCounter + 2]));
+                        tempPlayer.setPlayerLosses(int.Parse(columns[columnCounter + 3]));
+                        break;
+                    }
+
+                }
+            }
+            if (tempPlayer == new StatsPlayer())
+            {
+                tempPlayer = new StatsPlayer(username);
+            }
+
+            return tempPlayer;
+        }
+
+        public static string PrintLogs()
+        {
+            const int NUM_OF_COLUMNS = 4; //we know the length of each line
+            string[] playersRaw = Properties.Resources.DurakStats.Split('\n');
+            int lineCounter = 0;
+            string tempString = "";
+            
+            while (lineCounter < playersRaw.Length)
+            {
+                int columnCounter = 0;
+                string[] columns = playersRaw[lineCounter].Split(',');
+
+                while (columnCounter < NUM_OF_COLUMNS)
+                {
+                    tempString += Environment.NewLine + columns[columnCounter] + ": Wins: " + columns[columnCounter + 1].ToString();
+                    tempString += "  Ties: " + columns[columnCounter + 2].ToString() + "  Losses: " + columns[columnCounter + 3].ToString();
+                }
+            }
+            return tempString;
+        }
+
+        public static StatsPlayer[] CreatePlayerArray()
+        {
+            const int NUM_OF_COLUMNS = 4;//we know the number of columns in this case
+            //Creates an array of strings that equal an individual line from LogsAndStats.dat
+            string[] playersRaw = Properties.Resources.DurakStats.Split('\n');
+            // before transferring them to the dictionary
+            int arraySize = playersRaw.Length;
+            int lineCounter = 0;
+
+            StatsPlayer[] allPlayers = new StatsPlayer[arraySize];
+
+            while (lineCounter < arraySize)
+            {
+                int columnCounter = 0;
+                string[] columns = playersRaw[lineCounter].Split(','); //splits the line variable into an array using 
+                                                                       // a comma as a delimeter
+                                                                       // Dictionary<string, StatsPlayer> tempPlayers = new Dictionary<string, StatsPlayer>(); //Initialize the dictionary
+                StatsPlayer tempPlayer = new StatsPlayer();
+                while (columnCounter < NUM_OF_COLUMNS) //this while loop is used for assigning data 
+                {                                     //to a StatsPlayer that will be added to a
+                                                      //dictionary of StatsPlayer's
+                    allPlayers[lineCounter] = tempPlayer;
+                    if (columnCounter == 0) //first piece of data (name)
+                    {
+                        allPlayers[lineCounter].setPlayerName(columns[columnCounter]);
+                        columnCounter++;
+                    }
+
+                    if (columnCounter == 1) //second piece of data (wins)
+                    {
+                        allPlayers[lineCounter].setPlayerWins(int.Parse(columns[columnCounter]));
+                        columnCounter++;
+                    }
+
+                    if (columnCounter == 2) //third piece of data (ties)
+                    {
+                        allPlayers[lineCounter].setPlayerTies(int.Parse(columns[columnCounter]));
+                        columnCounter++;
+                    }
+
+                    if (columnCounter == 3) //fourth piece of data (losses)
+                    {
+                        allPlayers[lineCounter].setPlayerLosses(int.Parse(columns[columnCounter]));
+                        columnCounter++;
+                    }
+                    
+                }
+                //allPlayers[lineCounter] = tempPlayer;
+                lineCounter++;
+            }
+
+
+            return allPlayers;
         }
 
         /// <summary>

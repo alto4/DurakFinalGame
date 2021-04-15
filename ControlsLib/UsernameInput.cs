@@ -47,10 +47,6 @@ namespace ControlsLib
             {
                 //Make username all caps
                 username.ToUpper();
-
-                
-
-
                 //But for now just create a player
                 StatsPlayer currentPlayer = new StatsPlayer(username);
                 //We want this currentPlayer to be Global and persist across windows

@@ -51,10 +51,11 @@ namespace ControlsLib
             this.ClientSize = new System.Drawing.Size(600, 450);
             this.Controls.Add(this.lblTestLabel);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "frmLogs";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Logs";
+            this.Load += new System.EventHandler(this.frmLogs_Load);
             this.ResumeLayout(false);
 
         }

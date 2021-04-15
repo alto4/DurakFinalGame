@@ -18,28 +18,21 @@ namespace Durak
 
         #region FIELDS AND PROPERTIES
 
-        //Testing Player Class Methods
-        //StatsPlayer nick = new StatsPlayer();
         //String used to reference the player in the logs and stats
         string playerName;
 
+        //Card and Deck Specifics Declarations
         int sizeChoice;
-        
         // generate PlayingCard objects from a Deck
         Deck mainDeck;
-
         // enlarge a card by this value
         private const int ENLARGE = 35;
-
         // The default size of a card
         static private Size normalCardSize = new Size(100, 135);
-
         // makes card draggable
         private CardBox.CardBox dragCard;
-
         // to collect all of the card panels
         List<Panel> cardPanels = new List<Panel>();
-
         CardRank rankOfLastDefense;
         bool playerAttacking = true;
         bool initialAttackDefended = false;
@@ -74,13 +67,35 @@ namespace Durak
             InitializeComponent();
 
             playerName = "Player 1";
+            StatsPlayer currentPlayer = new StatsPlayer(playerName);
         }
 
         public frmGame(string name)
         {
+            
+
             InitializeComponent();
 
             playerName = name;
+            //Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>();
+            //List<StatsPlayer> tempAllPlayers = StatsPlayer.CreatePlayerList();
+
+            //for (int i = 0; i < tempAllPlayers.Count; i++)
+            //{
+            //    allPlayers.Add(tempAllPlayers[i].getPlayerName(), tempAllPlayers[i]);
+            //}
+
+
+            //if (allPlayers.ContainsKey(name)) //this username already exists
+            //{
+            //    StatsPlayer currentPlayer = allPlayers[name];
+            //    txtPlayHistory.Text += currentPlayer.ToString();
+            //}
+            //else //first time player
+            //{
+            //    StatsPlayer currentPlayer = new StatsPlayer(name);
+            //    txtPlayHistory.Text += currentPlayer.ToString();
+            //}
         }
 
         /// <summary>
@@ -541,6 +556,8 @@ namespace Durak
                 txtComputerAttacker.Visible = false; //Flash the image that shows the computer is attacking
                 btnStopAttacking.Visible = true; //remove the button that lets the user end their attacking turn
                 playerAttacking = true; //mark that the computers attack is starting
+
+                //Increment losses for game stats
             }
             else //if the player chooses to stop attacking
             {
@@ -558,17 +575,6 @@ namespace Durak
                 ComputerAttacks(); //proceed with the computer attack
 
             }
-            
-            //IF THERES NO ISSUES WITH ENDING A TURN ON ATTACK OR DEFENSE, DELETE BELOW
-            // Flip discarded pile to facedown without flipping every card
-            //UpdateDefendedAndDiscardPanelControls();
-            //RoundDeal(); //Deal cards until both players have at least 6 cards
-            //ReenableAllCards(); //Allows the player to use their cards again
-            ////USE THESE: for switching the attack roles, at least visibly/
-            //txtComputerAttacker.Visible = true; //Flash the image that shows the computer is attacking
-            //btnStopAttacking.Visible = false; //remove the button that lets the user end their attacking turn
-            //playerAttacking = false; //mark that the computers attack is starting
-            //ComputerAttacks(); //proceed with the computer attack
 
             DisableInvalidCardsInHands(); //Determine what the player can defend with
             RealignAllCards();
