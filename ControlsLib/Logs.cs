@@ -15,30 +15,34 @@ namespace ControlsLib
         public frmLogs()
         {
             InitializeComponent();
-            //Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>(StatsPlayer.CreatePlayerDictionary());
+            Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>(); //StatsPlayer.CreatePlayerDictionary();
+            StatsPlayer[] tempArray = StatsPlayer.CreatePlayerArray();
 
-           // Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>();
+
+            // Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>();
             // List<StatsPlayer> tempAllPlayers = StatsPlayer.CreatePlayerList();
 
-          //  StatsPlayer[] allPlayers = StatsPlayer.CreatePlayerArray();
+            //  StatsPlayer[] allPlayers = StatsPlayer.CreatePlayerArray();
 
-           // for (int i = 0; i < tempAllPlayers.Count; i++)
-           // {
-           //     allPlayers.Add(tempAllPlayers[i].getPlayerName(), tempAllPlayers[i]);
-           // }
+            for (int i = 0; i < tempArray.Length; i++)
+            {
+                MessageBox.Show(tempArray[i].ToString());
+                //allPlayers.Add(tempArray[i].getPlayerName(), tempArray[i]);
+            }
 
 
-            
-            //for (int i = 0; i < allPlayers.Length; i++)
-            //{
-            //    lblTestLabel.Text += Environment.NewLine + allPlayers[i].ToString();   //ElementAt(i).ToString(); //Iterates through the dictionary
-            //}
+
+            for (int i = 0; i < allPlayers.Count; i++)
+            {
+                
+                lblTestLabel.Text += Environment.NewLine + allPlayers.ElementAt(i).ToString();   //ElementAt(i).ToString(); //Iterates through the dictionary
+            }
         }
 
         public void frmLogs_Load(object sender, EventArgs e)
         {
-            lblTestLabel.Text = "Player Name | Wins | Ties | Losses"; //prints the header
-            lblTestLabel.Text += StatsPlayer.PrintLogs();
+            //lblTestLabel.Text = "Player Name | Wins | Ties | Losses"; //prints the header
+            //lblTestLabel.Text += StatsPlayer.PrintLogs();
         }
     }
 }

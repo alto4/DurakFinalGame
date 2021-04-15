@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace ControlsLib
 {
@@ -91,9 +92,11 @@ namespace ControlsLib
         /// This method will return a dictionary of StatsPlayers that can be used later for output
         /// </summary>
         /// <returns>Dictionary<string, StatsPlayer></returns>
-        //public static Dictionary<string, StatsPlayer> CreatePlayerDictionary()
-   /*     public static List<StatsPlayer> CreatePlayerList()
+        public static Dictionary<string, StatsPlayer> CreatePlayerDictionary()
+       // public static List<StatsPlayer> CreatePlayerList()
         {
+            string tempString = "";
+            
             const int NUM_OF_COLUMNS = 4;//we know the number of columns in this case
             //Creates an array of strings that equal an individual line from LogsAndStats.dat
             string[] playersRaw = Properties.Resources.DurakStats.Split('\n');
@@ -102,10 +105,10 @@ namespace ControlsLib
             int lineCounter = 0;
             
             Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>(); //Initialize the dictionary
-            List<StatsPlayer> temp = new List<StatsPlayer>();
-            int arraySize = playersRaw.Length;
+            //List<StatsPlayer> temp = new List<StatsPlayer>();
+            int numberOfLines = playersRaw.Length;
             //while ((line = file.ReadLine()) != null) //assigns the current line to our variable, and does so until it is null 
-            while (lineCounter < arraySize)
+            while (lineCounter < numberOfLines)
             {
                 int columnCounter = 0;
                 string[] columns = playersRaw[lineCounter].Split(','); //splits the line variable into an array using 
@@ -139,9 +142,10 @@ namespace ControlsLib
                         tempPlayer.setPlayerLosses(int.Parse(columns[columnCounter]));
                         columnCounter++;
                     }
-                    temp.Add(tempPlayer);
+                    //temp.Add(tempPlayer);
+                    tempString += tempPlayer.ToString();
                 }
-                // allPlayers.Add(tempPlayer.getPlayerName(), tempPlayer);
+                allPlayers.Add(tempPlayer.getPlayerName(), tempPlayer);
                 // allPlayers.Add(temp[lineCounter].getPlayerName(), temp[lineCounter]);
 
                 //tempPlayer = null;
@@ -151,9 +155,10 @@ namespace ControlsLib
 
                 lineCounter++;
             }
-            return temp;
-            //return allPlayers; //return the dictionary
-        }*/
+            // return temp;
+            MessageBox.Show(tempString);
+            return allPlayers; //return the dictionary
+        }
 
         public static StatsPlayer SearchForExistingUser(string username)
         {
@@ -218,48 +223,49 @@ namespace ControlsLib
             int lineCounter = 0;
 
             StatsPlayer[] allPlayers = new StatsPlayer[arraySize];
-
+            StatsPlayer[] tempPlayer = new StatsPlayer[arraySize];
             while (lineCounter < arraySize)
             {
                 int columnCounter = 0;
                 string[] columns = playersRaw[lineCounter].Split(','); //splits the line variable into an array using 
                                                                        // a comma as a delimeter
                                                                        // Dictionary<string, StatsPlayer> tempPlayers = new Dictionary<string, StatsPlayer>(); //Initialize the dictionary
-                StatsPlayer tempPlayer = new StatsPlayer();
+                StatsPlayer player = new StatsPlayer();
+
                 while (columnCounter < NUM_OF_COLUMNS) //this while loop is used for assigning data 
                 {                                     //to a StatsPlayer that will be added to a
                                                       //dictionary of StatsPlayer's
-                    allPlayers[lineCounter] = tempPlayer;
+                    
+                    //allPlayers[lineCounter] = tempPlayer;
                     if (columnCounter == 0) //first piece of data (name)
                     {
-                        allPlayers[lineCounter].setPlayerName(columns[columnCounter]);
+                        tempPlayer[lineCounter].setPlayerName(columns[columnCounter]);
                         columnCounter++;
                     }
 
                     if (columnCounter == 1) //second piece of data (wins)
                     {
-                        allPlayers[lineCounter].setPlayerWins(int.Parse(columns[columnCounter]));
+                        tempPlayer[lineCounter].setPlayerWins(int.Parse(columns[columnCounter]));
                         columnCounter++;
                     }
 
                     if (columnCounter == 2) //third piece of data (ties)
                     {
-                        allPlayers[lineCounter].setPlayerTies(int.Parse(columns[columnCounter]));
+                        tempPlayer[lineCounter].setPlayerTies(int.Parse(columns[columnCounter]));
                         columnCounter++;
                     }
 
                     if (columnCounter == 3) //fourth piece of data (losses)
                     {
-                        allPlayers[lineCounter].setPlayerLosses(int.Parse(columns[columnCounter]));
+                        tempPlayer[lineCounter].setPlayerLosses(int.Parse(columns[columnCounter]));
                         columnCounter++;
                     }
                     
                 }
-                //allPlayers[lineCounter] = tempPlayer;
+                allPlayers[lineCounter] = tempPlayer[lineCounter];
+               // allPlayers.
                 lineCounter++;
             }
-
-
             return allPlayers;
         }
 

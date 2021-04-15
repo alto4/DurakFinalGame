@@ -77,6 +77,10 @@ namespace Durak
             InitializeComponent();
 
             playerName = name;
+
+            StatsPlayer currentPlayer = StatsPlayer.SearchForExistingUser(name);
+
+            txtPlayHistory.Text += currentPlayer.ToString();
             //Dictionary<string, StatsPlayer> allPlayers = new Dictionary<string, StatsPlayer>();
             //List<StatsPlayer> tempAllPlayers = StatsPlayer.CreatePlayerList();
 
